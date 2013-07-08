@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="89">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>include/Base58.h</itemPath>
+      <itemPath>include/CoreDefs.h</itemPath>
+      <itemPath>include/HexCode.h</itemPath>
+      <itemPath>include/Util.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>source/Base58.cpp</itemPath>
+      <itemPath>source/HexCode.cpp</itemPath>
+      <itemPath>source/Util.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f1"
+                   displayName="Test Helpers"
+                   projectFiles="true"
+                   kind="ROOT">
+      <logicalFolder name="f1" displayName="json" projectFiles="true" kind="ROOT">
+        <itemPath>tests/Base58.json</itemPath>
+        <itemPath>tests/Base58Keys.json</itemPath>
+      </logicalFolder>
+      <itemPath>tests/TestLib.cpp</itemPath>
+      <itemPath>tests/TestLib.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+      <logicalFolder name="f1" displayName="Base58" projectFiles="true" kind="TEST">
+        <itemPath>tests/Base58Test.cpp</itemPath>
+        <itemPath>tests/Base58Test.h</itemPath>
+        <itemPath>tests/Base58TestRunner.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="Util" projectFiles="true" kind="TEST">
+        <itemPath>tests/UtilTest.cpp</itemPath>
+        <itemPath>tests/UtilTest.h</itemPath>
+        <itemPath>tests/UtilTestRunner.cpp</itemPath>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>source</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="3">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <commandLine>`pkg-config --cflags glib-2.0`</commandLine>
+        </ccTool>
+        <archiverTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin.a</output>
+        </archiverTool>
+      </compileType>
+      <folder path="TestFiles">
+        <linkerTool>
+          <linkerLibItems>
+            <linkerOptionItem>`pkg-config --libs glib-2.0`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs openssl`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs jansson`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <item path="include/Base58.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/CoreDefs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/HexCode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Util.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/Base58.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/HexCode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/Util.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/Base58.json" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/Base58Keys.json" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/Base58Test.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/Base58Test.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/Base58TestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/TestLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/TestLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/UtilTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/UtilTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/UtilTestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="3">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <commandLine>`pkg-config --cflags glib-2.0`</commandLine>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <archiverTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin.a</output>
+        </archiverTool>
+      </compileType>
+      <folder path="TestFiles">
+        <linkerTool>
+          <linkerLibItems>
+            <linkerOptionItem>`pkg-config --libs glib-2.0`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs openssl`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs jansson`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <item path="include/Base58.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/CoreDefs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/HexCode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Util.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="source/Base58.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/HexCode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/Util.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/Base58.json" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/Base58Keys.json" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/Base58Test.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/Base58Test.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/Base58TestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/UtilTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/UtilTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/UtilTestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
