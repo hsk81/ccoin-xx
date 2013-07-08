@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 #
 # Generated - do not edit!
@@ -13,9 +13,9 @@ CND_BUILDDIR=build
 CND_DLIB_EXT=so
 NBTMPDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin.a
-OUTPUT_BASENAME=libccoin.a
-PACKAGE_TOP_DIR=ccoin++/
+OUTPUT_PATH=${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin-xx.a
+OUTPUT_BASENAME=libccoin-xx.a
+PACKAGE_TOP_DIR=ccoin-xx/
 
 # Functions
 function checkReturnCode
@@ -60,15 +60,15 @@ mkdir -p ${NBTMPDIR}
 
 # Copy files and create directories and links
 cd "${TOP}"
-makeDirectory "${NBTMPDIR}/ccoin++/lib"
+makeDirectory "${NBTMPDIR}/ccoin-xx/lib"
 copyFileToTmpDir "${OUTPUT_PATH}" "${NBTMPDIR}/${PACKAGE_TOP_DIR}lib/${OUTPUT_BASENAME}" 0644
 
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/ccoin++.tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/ccoin-xx.tgz
 cd ${NBTMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/ccoin++.tar *
+tar -vzcf ../../../../${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/ccoin-xx.tgz *
 checkReturnCode
 
 # Cleanup

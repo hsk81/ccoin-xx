@@ -71,7 +71,8 @@
       </compileType>
       <packaging>
         <packType>Tar</packType>
-        <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/ccoin-xx.tar</output>
+        <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/ccoin-xx.tgz</output>
+        <additionalOptions>-vz</additionalOptions>
         <packFileList>
           <packFileListElem type="File"
                             to="${PACKAGE_TOP_DIR}lib/${OUTPUT_BASENAME}"
@@ -175,9 +176,23 @@
           <developmentMode>5</developmentMode>
         </asmTool>
         <archiverTool>
-          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin.a</output>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin-xx.a</output>
         </archiverTool>
       </compileType>
+      <packaging>
+        <packType>Tar</packType>
+        <verbose>false</verbose>
+        <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/ccoin-xx.tgz</output>
+        <additionalOptions>-vz</additionalOptions>
+        <packFileList>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}lib/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="644"
+                            owner="root"
+                            group="bin"/>
+        </packFileList>
+      </packaging>
       <folder path="TestFiles">
         <linkerTool>
           <linkerLibItems>

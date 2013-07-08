@@ -66,9 +66,9 @@ copyFileToTmpDir "${OUTPUT_PATH}" "${NBTMPDIR}/${PACKAGE_TOP_DIR}lib/${OUTPUT_BA
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/ccoin-xx.tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/ccoin-xx.tgz
 cd ${NBTMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/ccoin-xx.tar *
+tar -vzcf ../../../../${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/ccoin-xx.tgz *
 checkReturnCode
 
 # Cleanup
