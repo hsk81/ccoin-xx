@@ -66,13 +66,13 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin.a
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin-xx.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin.a: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin-xx.a: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin.a
-	${AR} -rv ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin.a ${OBJECTFILES} 
-	$(RANLIB) ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin.a
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin-xx.a
+	${AR} -rv ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin-xx.a ${OBJECTFILES} 
+	$(RANLIB) ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin-xx.a
 
 ${OBJECTDIR}/source/Base58.o: source/Base58.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
@@ -197,7 +197,7 @@ ${OBJECTDIR}/tests/TestLib_nomain.o: ${OBJECTDIR}/tests/TestLib.o tests/TestLib.
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin.a
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin-xx.a
 
 # Subprojects
 .clean-subprojects:

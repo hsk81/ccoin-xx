@@ -66,9 +66,21 @@
           <commandLine>`pkg-config --cflags glib-2.0`</commandLine>
         </ccTool>
         <archiverTool>
-          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin.a</output>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin-xx.a</output>
         </archiverTool>
       </compileType>
+      <packaging>
+        <packType>Tar</packType>
+        <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/ccoin-xx.tar</output>
+        <packFileList>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}lib/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="644"
+                            owner="root"
+                            group="bin"/>
+        </packFileList>
+      </packaging>
       <folder path="TestFiles">
         <linkerTool>
           <linkerLibItems>
