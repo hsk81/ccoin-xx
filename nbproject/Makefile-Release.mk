@@ -46,6 +46,7 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 # Test Files
 TESTFILES= \
 	${TESTDIR}/TestFiles/f1 \
+	${TESTDIR}/TestFiles/f4 \
 	${TESTDIR}/TestFiles/f3 \
 	${TESTDIR}/TestFiles/f2
 
@@ -104,6 +105,10 @@ ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/Base58Test.o ${TESTDIR}/tests/Base58Te
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
 
+${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/FileIOTest.o ${TESTDIR}/tests/FileIOTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
+
 ${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/HexCodeTest.o ${TESTDIR}/tests/HexCodeTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs` `cppunit-config --libs`   
@@ -123,6 +128,18 @@ ${TESTDIR}/tests/Base58TestRunner.o: tests/Base58TestRunner.cpp
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
 	$(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0`   `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/Base58TestRunner.o tests/Base58TestRunner.cpp
+
+
+${TESTDIR}/tests/FileIOTest.o: tests/FileIOTest.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} $@.d
+	$(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0`   `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/FileIOTest.o tests/FileIOTest.cpp
+
+
+${TESTDIR}/tests/FileIOTestRunner.o: tests/FileIOTestRunner.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} $@.d
+	$(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0`   `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/FileIOTestRunner.o tests/FileIOTestRunner.cpp
 
 
 ${TESTDIR}/tests/HexCodeTest.o: tests/HexCodeTest.cpp 
@@ -206,6 +223,7 @@ ${OBJECTDIR}/source/Util_nomain.o: ${OBJECTDIR}/source/Util.o source/Util.cpp
 	@if [ "${TEST}" = "" ]; \
 	then  \
 	    ${TESTDIR}/TestFiles/f1 || true; \
+	    ${TESTDIR}/TestFiles/f4 || true; \
 	    ${TESTDIR}/TestFiles/f3 || true; \
 	    ${TESTDIR}/TestFiles/f2 || true; \
 	else  \

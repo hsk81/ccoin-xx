@@ -8,7 +8,11 @@
 #include "../include/Util.h"
 
 #include <openssl/sha.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include <string.h>
+#include <fcntl.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -20,6 +24,9 @@ void Util::reverse_copy(unsigned char* target, const unsigned char* source,
         target[length - i - 1] = source[i];
     }
 }
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
 void Util::Hash(unsigned char *md256, const void *data,
         size_t data_length) {
@@ -35,6 +42,57 @@ void Util::Hash4(unsigned char *md32, const void *data,
     unsigned char md256[SHA256_DIGEST_LENGTH];
     Util::Hash(md256, data, data_length);
     memcpy(md32, md256, 4);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+int Util::open_file(const char *filename) {
+
+	int fd = open(filename, O_RDONLY | O_LARGEFILE);
+	if (fd < 0) return -1;
+
+#if _XOPEN_SOURCE >= 600 || _POSIX_C_SOURCE >= 200112L
+	posix_fadvise(fd, 0, 0, POSIX_FADV_SEQUENTIAL);
+#endif
+
+	return fd;
+}
+
+bool Util::read_file(const char *filename, void **data, size_t *data_length,
+        size_t max_file_length) {
+
+	void *data_;
+	struct stat st;
+
+	*data = NULL;
+	*data_length = 0;
+    ssize_t rrc;
+
+	int fd = Util::open_file(filename);
+	if (fd < 0) return false;
+
+	if (fstat(fd, &st) < 0) goto err_out_fd;
+	if (st.st_size > max_file_length) goto err_out_fd;
+
+	data_ = malloc(st.st_size);
+	if (!data_) goto err_out_fd;
+	rrc = read(fd, data_, st.st_size);
+	if (rrc != st.st_size) goto err_out_mem;
+
+	close(fd);
+	fd = -1;
+
+	*data = data_;
+	*data_length = st.st_size;
+
+	return true;
+
+err_out_mem:
+	free(data_);
+err_out_fd:
+	if (fd >= 0) close(fd);
+	return false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

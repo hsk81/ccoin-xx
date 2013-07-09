@@ -35,6 +35,11 @@
         <itemPath>tests/Base58Test.h</itemPath>
         <itemPath>tests/Base58TestRunner.cpp</itemPath>
       </logicalFolder>
+      <logicalFolder name="f4" displayName="FileIO" projectFiles="true" kind="TEST">
+        <itemPath>tests/FileIOTest.cpp</itemPath>
+        <itemPath>tests/FileIOTest.h</itemPath>
+        <itemPath>tests/FileIOTestRunner.cpp</itemPath>
+      </logicalFolder>
       <logicalFolder name="f3" displayName="HexCode" projectFiles="true" kind="TEST">
         <itemPath>tests/HexCodeTest.cpp</itemPath>
         <itemPath>tests/HexCodeTest.h</itemPath>
@@ -135,6 +140,20 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f4">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f4</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="include/Base58.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/CoreDefs.h" ex="false" tool="3" flavor2="0">
@@ -162,6 +181,12 @@
       <item path="tests/Base58Test.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/Base58TestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/FileIOTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/FileIOTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/FileIOTestRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/HexCodeTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -271,6 +296,20 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f4">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f4</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="include/Base58.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/CoreDefs.h" ex="false" tool="3" flavor2="0">
@@ -298,6 +337,12 @@
       <item path="tests/Base58Test.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/Base58TestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/FileIOTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/FileIOTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/FileIOTestRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/HexCodeTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
