@@ -34,8 +34,8 @@ public:
 private:
     void testEncode1Method();
     void testEncode2Method();
-    void testDecode1Method();
-    void testDecode2Method();
+    void testDecode1Method(); //req-before: testEncode{1,2}Method!
+    void testDecode2Method(); //req-before: testEncode{1,2}Method!
 };
 
 ///////////////////////////////////////////////////////////////////////////////
