@@ -18,15 +18,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 namespace Util {
-    namespace Bu {
-        void reverse_copy(unsigned char *target, const unsigned char *source,
-                size_t length);
 
-        void Hash(unsigned char *md256, const void *data, size_t data_length);
-        void Hash4(unsigned char *md32, const void *data, size_t data_length);
-    }
+    void reverse_copy(unsigned char *target, const unsigned char *source,
+            size_t length);
 
-    namespace Bn {
+    void Hash(unsigned char *md256, const void *data, size_t data_length);
+    void Hash4(unsigned char *md32, const void *data, size_t data_length);
+
+    namespace BigNum {
         GString *getvch(const BIGNUM *value);
         void setvch(BIGNUM *value, const void *data, size_t data_length);
     }

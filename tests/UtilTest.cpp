@@ -27,7 +27,7 @@ void UtilTest::testReverseCopyMethod() {
 	size_t a_len = strlen(s_a);
 	char buf[a_len + 1];
     
-    Util::Bu::reverse_copy((unsigned char *)buf, (unsigned char *)s_a, a_len);
+    Util::reverse_copy((unsigned char *)buf, (unsigned char *)s_a, a_len);
 	buf[a_len] = 0;
 
 	CPPUNIT_ASSERT(!strcmp(s_b, buf));

@@ -38,10 +38,10 @@ GString *Base58::encode(const void* data, size_t data_length) {
     BN_set_word(&bn0, 0);
 
     unsigned char swapbuf[data_length + 1];
-    Util::Bu::reverse_copy(swapbuf, data_, data_length);
+    Util::reverse_copy(swapbuf, data_, data_length);
     swapbuf[data_length] = 0;
 
-    Util::Bn::setvch(&bn, swapbuf, sizeof(swapbuf));
+    Util::BigNum::setvch(&bn, swapbuf, sizeof(swapbuf));
     GString *rs = g_string_sized_new(data_length * 138 / 100 + 1);
     GString *rs_swap;
 
@@ -64,7 +64,7 @@ GString *Base58::encode(const void* data, size_t data_length) {
     rs_swap = g_string_sized_new(rs->len);
     g_string_set_size(rs_swap, rs->len);
 
-    Util::Bu::reverse_copy(
+    Util::reverse_copy(
         (unsigned char *) rs_swap->str, (unsigned char *) rs->str, rs->len);
 
     g_string_free(rs, TRUE);
@@ -95,7 +95,7 @@ GString *Base58::encode_check(
     g_string_append_len(s, (gchar*)data, data_length);
 
     unsigned char md32[4];
-    Util::Bu::Hash4(md32, s->str, s->len);
+    Util::Hash4(md32, s->str, s->len);
 
     g_string_append_len(s, (gchar*)md32, 4);
     GString *s_enc = Base58::encode(s->str, s->len);
@@ -142,7 +142,7 @@ GString *Base58::decode(const char* string_in) {
         if (!BN_add(&bn, &bn, &bnChar)) goto out;
     }
 
-    tmp = Util::Bn::getvch(&bn);
+    tmp = Util::BigNum::getvch(&bn);
 
     if ((tmp->len >= 2) &&
         (tmp->str[tmp->len - 1] == 0) &&
@@ -157,7 +157,7 @@ GString *Base58::decode(const char* string_in) {
     g_string_set_size(tmp_be, be_sz);
     memset(tmp_be->str, 0, be_sz);
 
-    Util::Bu::reverse_copy((unsigned char *)tmp_be->str + leading_zero,
+    Util::reverse_copy((unsigned char *)tmp_be->str + leading_zero,
         (unsigned char *)tmp->str, tmp->len);
 
     g_string_free(tmp, TRUE);
@@ -183,10 +183,8 @@ GString *Base58::decode_check(unsigned char* address_type,
     if (s->len < 4) goto err_out;
 
     /* validate with trailing hash, then remove hash */
-    Util::Bu::Hash4(md32, s->str, s->len - 4);
-    if (memcmp(md32, &s->str[s->len - 4], 4))
-        goto err_out;
-
+    Util::Hash4(md32, s->str, s->len - 4);
+    if (memcmp(md32, &s->str[s->len - 4], 4)) goto err_out;
     g_string_set_size(s, s->len - 4);
 
     /* if address_type requested, remove from front of data string */
