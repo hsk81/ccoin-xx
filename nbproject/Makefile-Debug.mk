@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/source/Base58.o \
 	${OBJECTDIR}/source/HexCode.o \
+	${OBJECTDIR}/source/Net.o \
 	${OBJECTDIR}/source/Util.o \
 	${OBJECTDIR}/tests/TestLib.o
 
@@ -83,6 +84,11 @@ ${OBJECTDIR}/source/HexCode.o: source/HexCode.cpp
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} $@.d
 	$(COMPILE.cc) -g `pkg-config --cflags glib-2.0` -MMD -MP -MF $@.d -o ${OBJECTDIR}/source/HexCode.o source/HexCode.cpp
+
+${OBJECTDIR}/source/Net.o: source/Net.cpp 
+	${MKDIR} -p ${OBJECTDIR}/source
+	${RM} $@.d
+	$(COMPILE.cc) -g `pkg-config --cflags glib-2.0` -MMD -MP -MF $@.d -o ${OBJECTDIR}/source/Net.o source/Net.cpp
 
 ${OBJECTDIR}/source/Util.o: source/Util.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
@@ -156,6 +162,19 @@ ${OBJECTDIR}/source/HexCode_nomain.o: ${OBJECTDIR}/source/HexCode.o source/HexCo
 	    $(COMPILE.cc) -g `pkg-config --cflags glib-2.0` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/source/HexCode_nomain.o source/HexCode.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/source/HexCode.o ${OBJECTDIR}/source/HexCode_nomain.o;\
+	fi
+
+${OBJECTDIR}/source/Net_nomain.o: ${OBJECTDIR}/source/Net.o source/Net.cpp 
+	${MKDIR} -p ${OBJECTDIR}/source
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Net.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -g `pkg-config --cflags glib-2.0` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/source/Net_nomain.o source/Net.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/source/Net.o ${OBJECTDIR}/source/Net_nomain.o;\
 	fi
 
 ${OBJECTDIR}/source/Util_nomain.o: ${OBJECTDIR}/source/Util.o source/Util.cpp 

@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=ccoin++
+PROJECTNAME=ccoin-xx.git
 
 # Active Configuration
 DEFAULTCONF=Debug
