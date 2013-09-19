@@ -22,16 +22,21 @@ namespace Util {
     void reverse_copy(unsigned char *target, const unsigned char *source,
             size_t length);
 
-    void Hash(unsigned char *md256, const void *data, size_t data_length);
-    void Hash4(unsigned char *md32, const void *data, size_t data_length);
+    void Hash(unsigned char *md256, const void *data, size_t length);
+    void Hash4(unsigned char *md32, const void *data, size_t length);
 
     int open_file(const char *filename);
-    bool read_file(const char *filename, void **data, size_t *data_length,
-            size_t max_file_length);
+    bool read_file(const char *filename, void **data, size_t *length,
+            size_t max_file_size);
 
     namespace BigNum {
         GString *getvch(const BIGNUM *value);
-        void setvch(BIGNUM *value, const void *data, size_t data_length);
+        void setvch(BIGNUM *value, const void *data, size_t length);
+    }
+    
+    namespace Djb2 {
+        unsigned long hash(unsigned long hash, const void *buffer,
+                size_t length);
     }
 }
 

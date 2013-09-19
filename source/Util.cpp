@@ -28,19 +28,17 @@ void Util::reverse_copy(unsigned char* target, const unsigned char* source,
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void Util::Hash(unsigned char *md256, const void *data,
-        size_t data_length) {
+void Util::Hash(unsigned char *md256, const void *data, size_t length) {
 
     unsigned char md1[SHA256_DIGEST_LENGTH];
-    SHA256((const unsigned char*)data, data_length, md1);
+    SHA256((const unsigned char*)data, length, md1);
     SHA256(md1, SHA256_DIGEST_LENGTH, md256);
 }
 
-void Util::Hash4(unsigned char *md32, const void *data,
-        size_t data_length) {
+void Util::Hash4(unsigned char *md32, const void *data, size_t length) {
 
     unsigned char md256[SHA256_DIGEST_LENGTH];
-    Util::Hash(md256, data, data_length);
+    Util::Hash(md256, data, length);
     memcpy(md32, md256, 4);
 }
 
@@ -59,21 +57,21 @@ int Util::open_file(const char *filename) {
 	return fd;
 }
 
-bool Util::read_file(const char *filename, void **data, size_t *data_length,
-        size_t max_file_length) {
+bool Util::read_file(const char *filename, void **data, size_t *length,
+        size_t max_file_size) {
 
 	void *data_;
 	struct stat st;
 
 	*data = NULL;
-	*data_length = 0;
+	*length = 0;
     ssize_t rrc;
 
 	int fd = Util::open_file(filename);
 	if (fd < 0) return false;
 
 	if (fstat(fd, &st) < 0) goto err_out_fd;
-	if (st.st_size > max_file_length) goto err_out_fd;
+	if (st.st_size > max_file_size) goto err_out_fd;
 
 	data_ = malloc(st.st_size);
 	if (!data_) goto err_out_fd;
@@ -84,7 +82,7 @@ bool Util::read_file(const char *filename, void **data, size_t *data_length,
 	fd = -1;
 
 	*data = data_;
-	*data_length = st.st_size;
+	*length = st.st_size;
 
 	return true;
 
@@ -98,19 +96,18 @@ err_out_fd:
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void Util::BigNum::setvch(BIGNUM* value, const void* data, 
-        size_t data_length) {
+void Util::BigNum::setvch(BIGNUM* value, const void* data, size_t length) {
     
     const unsigned char *data_ = (unsigned char*)data;
-    unsigned int vch_sz = data_length + 4;
+    unsigned int vch_sz = length + 4;
     unsigned char vch[vch_sz];
 
-    vch[0] = (data_length >> 24) & 0xff;
-    vch[1] = (data_length >> 16) & 0xff;
-    vch[2] = (data_length >> 8) & 0xff;
-    vch[3] = (data_length >> 0) & 0xff;
+    vch[0] = (length >> 24) & 0xff;
+    vch[1] = (length >> 16) & 0xff;
+    vch[2] = (length >> 8) & 0xff;
+    vch[3] = (length >> 0) & 0xff;
 
-    reverse_copy(vch + 4, data_, data_length);
+    reverse_copy(vch + 4, data_, length);
     BN_mpi2bn(vch, vch_sz, value);
 }
 
@@ -135,6 +132,26 @@ GString *Util::BigNum::getvch(const BIGNUM* value) {
     g_string_free(s_be, TRUE);
     return s_le;
 }
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+unsigned long Util::Djb2::hash(unsigned long hash, const void *buffer,
+        size_t length) {
+    
+	const unsigned char *puch = (unsigned char*)buffer;
+	int ch;
+
+	while (length > 0) {
+		ch = *puch++;
+		length--;
+        
+		hash = ((hash << 5) + hash) ^ ch; /* hash * 33 ^ c */
+	}
+
+	return hash;
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
