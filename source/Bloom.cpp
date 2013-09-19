@@ -151,7 +151,6 @@ void Bloom::insert(struct bloom *bf, const void *data, size_t length) {
     };
 
 	for (unsigned int i = 0; i < bf->n_hash_funcs; i++) {
-
 		unsigned int n_index = bloom_hash(bf, i, &v_key);
 		g_string_resize(bf->v_data, n_index >> 3);
 		bf->v_data->str[n_index >> 3] |= bit_mask[7 & n_index];
