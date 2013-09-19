@@ -21,23 +21,23 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 namespace Serialize {
-    void bytes(GString *s, const void *p, size_t len);
-    void u16(GString *s, uint16_t v_);
-    void u32(GString *s, uint32_t v_);
-    void u64(GString *s, uint64_t v_);
+    void bytes(GString *g_string, const void *pointer, size_t length);
+    void u16(GString *g_string, uint16_t value);
+    void u32(GString *g_string, uint32_t value);
+    void u64(GString *g_string, uint64_t value);
 
-    void varlen(GString *s, uint32_t vlen);
-    void varstr(GString *s, GString *s_in);
+    void varlen(GString *g_string, uint32_t length);
+    void varstr(GString *g_string, GString *g_string_in);
 }
 
 namespace Deserialize {
-    bool bytes(void *po, struct const_buffer *buf, size_t len);
-    bool u16(uint16_t *vo, struct const_buffer *buf);
-    bool u32(uint32_t *vo, struct const_buffer *buf);
-    bool u64(uint64_t *vo, struct const_buffer *buf);
+    bool bytes(void *pointer, struct const_buffer *buffer, size_t length);
+    bool u16(uint16_t *value, struct const_buffer *buffer);
+    bool u32(uint32_t *value, struct const_buffer *buffer);
+    bool u64(uint64_t *value, struct const_buffer *buffer);
 
-    bool varlen(uint32_t *lo, struct const_buffer *buf);
-    bool varstr(GString **so, struct const_buffer *buf);
+    bool varlen(uint32_t *length, struct const_buffer *buffer);
+    bool varstr(GString **g_string, struct const_buffer *buffer);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

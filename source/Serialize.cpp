@@ -16,133 +16,136 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void Serialize::bytes(GString *s, const void *p, size_t len) {
-	g_string_append_len(s, (const gchar*)p, len);
+void Serialize::bytes(GString *g_string, const void *pointer, size_t length) {
+	g_string_append_len(g_string, (const gchar*)pointer, length);
 }
 
-void Serialize::u16(GString *s, uint16_t v_) {
-	uint16_t v = GUINT16_TO_LE(v_);
-	g_string_append_len(s, (gchar*)&v, sizeof(v));
+void Serialize::u16(GString *g_string, uint16_t value) {
+	uint16_t v = GUINT16_TO_LE(value);
+	g_string_append_len(g_string, (gchar*)&v, sizeof(v));
 }
 
-void Serialize::u32(GString *s, uint32_t v_) {
-	uint32_t v = GUINT32_TO_LE(v_);
-	g_string_append_len(s, (gchar*)&v, sizeof(v));
+void Serialize::u32(GString *g_string, uint32_t value) {
+	uint32_t v = GUINT32_TO_LE(value);
+	g_string_append_len(g_string, (gchar*)&v, sizeof(v));
 }
 
-void Serialize::u64(GString *s, uint64_t v_) {
-	uint64_t v = GUINT64_TO_LE(v_);
-	g_string_append_len(s, (gchar*)&v, sizeof(v));
+void Serialize::u64(GString *g_string, uint64_t value) {
+	uint64_t v = GUINT64_TO_LE(value);
+	g_string_append_len(g_string, (gchar*)&v, sizeof(v));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 
-void Serialize::varlen(GString *s, uint32_t vlen) {
+void Serialize::varlen(GString *g_string, uint32_t length) {
 
-	if (vlen < 253) {
-		unsigned char uch = vlen;
-		Serialize::bytes(s, &uch, 1);
-	} else if (vlen < 0x10000) {
+	if (length < 253) {
+		unsigned char uch = length;
+		Serialize::bytes(g_string, &uch, 1);
+	} else if (length < 0x10000) {
 		unsigned char uch = 253;
-		Serialize::bytes(s, &uch, 1);
-		Serialize::u16(s, (uint16_t) vlen);
+		Serialize::bytes(g_string, &uch, 1);
+		Serialize::u16(g_string, (uint16_t) length);
 	} else {
 		unsigned char uch = 254;
-		Serialize::bytes(s, &uch, 1);
-		Serialize::u32(s, vlen);
+		Serialize::bytes(g_string, &uch, 1);
+		Serialize::u32(g_string, length);
 	}
 
 	// u64 case intentionally not implemented
 }
 
-void Serialize::varstr(GString *s, GString *s_in) {
+void Serialize::varstr(GString *g_string, GString *g_string_in) {
 
-	if (!s_in || !s_in->len) {
-		Serialize::varlen(s, 0);
+	if (!g_string_in || !g_string_in->len) {
+		Serialize::varlen(g_string, 0);
 		return;
 	}
 
-	Serialize::varlen(s, s_in->len);
-	Serialize::bytes(s, s_in->str, s_in->len);
+	Serialize::varlen(g_string, g_string_in->len);
+	Serialize::bytes(g_string, g_string_in->str, g_string_in->len);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-bool Deserialize::bytes(void *po, struct const_buffer *buf, size_t len) {
-	if (buf->length < len) return false;
+bool Deserialize::bytes(void *pointer, struct const_buffer *buffer,
+        size_t length) {
 
-	memcpy(po, buf->pointer, len);
-	buf->pointer += len;
-	buf->length -= len;
+	if (buffer->length < length)
+        return false;
+
+	memcpy(pointer, buffer->pointer, length);
+	buffer->pointer += length;
+	buffer->length -= length;
 
 	return true;
 }
 
-bool Deserialize::u16(uint16_t *vo, struct const_buffer *buf) {
-	uint16_t v; if (!Deserialize::bytes(&v, buf, sizeof(v))) return false;
-	*vo = GUINT16_FROM_LE(v);
+bool Deserialize::u16(uint16_t *value, struct const_buffer *buffer) {
+	uint16_t v; if (!Deserialize::bytes(&v, buffer, sizeof(v))) return false;
+	*value = GUINT16_FROM_LE(v);
 	return true;
 }
 
-bool Deserialize::u32(uint32_t *vo, struct const_buffer *buf) {
-	uint32_t v; if (!Deserialize::bytes(&v, buf, sizeof(v))) return false;
-	*vo = GUINT32_FROM_LE(v);
+bool Deserialize::u32(uint32_t *value, struct const_buffer *buffer) {
+	uint32_t v; if (!Deserialize::bytes(&v, buffer, sizeof(v))) return false;
+	*value = GUINT32_FROM_LE(v);
 	return true;
 }
 
-bool Deserialize::u64(uint64_t *vo, struct const_buffer *buf) {
-	uint64_t v; if (!Deserialize::bytes(&v, buf, sizeof(v))) return false;
-	*vo = GUINT64_FROM_LE(v);
+bool Deserialize::u64(uint64_t *value, struct const_buffer *buffer) {
+	uint64_t v; if (!Deserialize::bytes(&v, buffer, sizeof(v))) return false;
+	*value = GUINT64_FROM_LE(v);
 	return true;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 
-bool Deserialize::varlen(uint32_t *lo, struct const_buffer *buf) {
+bool Deserialize::varlen(uint32_t *length, struct const_buffer *buffer) {
 
 	uint32_t len;
-	unsigned char c;
-	if (!Deserialize::bytes(&c, buf, 1)) return false;
+	unsigned char uch;
+	if (!Deserialize::bytes(&uch, buffer, 1)) return false;
 
-	if (c == 253) {
+	if (uch == 253) {
 		uint16_t v16;
-		if (!Deserialize::u16(&v16, buf)) return false;
+		if (!Deserialize::u16(&v16, buffer)) return false;
 		len = v16;
-	} else if (c == 254) {
+	} else if (uch == 254) {
 		uint32_t v32;
-		if (!Deserialize::u32(&v32, buf)) return false;
+		if (!Deserialize::u32(&v32, buffer)) return false;
 		len = v32;
-	} else if (c == 255) {
+	} else if (uch == 255) {
 		uint64_t v64;
-		if (!Deserialize::u64(&v64, buf)) return false;
+		if (!Deserialize::u64(&v64, buffer)) return false;
 		len = (uint32_t) v64; // WARNING: truncate!
 	} else {
-		len = c;
+		len = uch;
     }
 
-	*lo = len;
+	*length = len;
 	return true;
 }
 
-bool Deserialize::varstr(GString **so, struct const_buffer *buf) {
+bool Deserialize::varstr(GString **g_string, struct const_buffer *buffer) {
     
-	if (*so) {
-		g_string_free(*so, TRUE);
-		*so = NULL;
+	if (*g_string) {
+		g_string_free(*g_string, TRUE);
+		*g_string = NULL;
 	}
 
 	uint32_t len;
-	if (!Deserialize::varlen(&len, buf)) return false;
-	if (buf->length < len) return false;
+	if (!Deserialize::varlen(&len, buffer)) return false;
+	if (buffer->length < len) return false;
 
 	GString *s = g_string_sized_new(len);
-	g_string_append_len(s, (const gchar*)buf->pointer, len);
+	g_string_append_len(s, (const gchar*)buffer->pointer, len);
 
-	buf->pointer += len;
-	buf->length -= len;
+	buffer->pointer += len;
+	buffer->length -= len;
 
-	*so = s;
+	*g_string = s;
 	return true;
 }
 
