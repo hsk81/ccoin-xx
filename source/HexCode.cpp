@@ -9,10 +9,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "../include/HexCode.h"
-
 #include <string.h>
-#include <stdbool.h>
-#include <glib.h>
+#include <exception>
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -41,13 +39,13 @@ static const char hexdigit[] = "0123456789abcdef";
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void HexCode::encode(char* hex_string, const void* pointer, size_t length) {
+void HexCode::encode(char *hex_string, const void *pointer, size_t length) {
 
-    const unsigned char *p = (unsigned char*)pointer;
+    const unsigned char *puch = (unsigned char*)pointer;
     for (unsigned int i = 0; i < length; i++) {
         unsigned char v, n1, n2;
 
-        v = p[i];
+        v = puch[i];
         n1 = v >> 4;
         n2 = v & 0xf;
 
@@ -58,66 +56,65 @@ void HexCode::encode(char* hex_string, const void* pointer, size_t length) {
     *hex_string = 0;
 }
 
-bool HexCode::decode(void* pointer, size_t max_len, const char* hex_string,
-        size_t* out_length) {
+bool HexCode::decode(void *pointer, size_t max_length, const char *hex_string,
+        size_t *out_length) {
 
     if (!pointer || !hex_string)
         return false;
     if (!strncmp(hex_string, "0x", 2))
         hex_string += 2;
-    if (strlen(hex_string) > (max_len * 2))
+    if (strlen(hex_string) > (max_length * 2))
         return false;
 
-    unsigned char *buf = (unsigned char*)pointer;
-    size_t out_len = 0;
+    unsigned char *buffer = (unsigned char*)pointer;
+    size_t length = 0;
 
     while (*hex_string) {
         unsigned char c1 = (unsigned char) hex_string[0];
-        unsigned char c2 = (unsigned char) hex_string[1];
-
         unsigned char v1 = hexdigit_val[c1];
+        if (!v1 && (c1 != '0')) return false;
+
+        unsigned char c2 = (unsigned char) hex_string[1];
         unsigned char v2 = hexdigit_val[c2];
+        if (!v2 && (c2 != '0')) return false;
 
-        if (!v1 && (c1 != '0'))
-            return false;
-        if (!v2 && (c2 != '0'))
-            return false;
+        *buffer = (v1 << 4) | v2;
 
-        *buf = (v1 << 4) | v2;
-
-        out_len++;
-        buf++;
+        length++;
+        buffer++;
         hex_string += 2;
     }
 
-    if (out_length)
-        *out_length = out_len;
+    if (out_length) {
+        *out_length = length;
+    }
+
     return true;
 }
 
-GString *HexCode::to_string(const char* hex_string) {
+GString *HexCode::to_string(const char *hex_string) {
     
     if (!hex_string || !*hex_string) return NULL;
     if (!strncmp(hex_string, "0x", 2)) hex_string += 2;
 
-    size_t slen = strlen(hex_string) / 2;
-    GString *s = g_string_sized_new(slen);
-    g_string_set_size(s, slen);
-    memset(s->str, 0, slen);
+    size_t length = strlen(hex_string) / 2;
+    GString *g_string = g_string_sized_new(length);
+    g_string_set_size(g_string, length);
+    memset(g_string->str, 0, length);
 
-    size_t outlen = 0;
-    bool rc = HexCode::decode(s->str, slen, hex_string, &outlen);
+    size_t out_length = 0;
+    bool rc = HexCode::decode(g_string->str, length, hex_string, &out_length);
 
-    if (!rc || (slen != outlen)) {
-        g_string_free(s, TRUE);
+    if (!rc || (length != out_length)) {
+        g_string_free(g_string, TRUE);
         return NULL;
     }
 
-    return s;
+    return g_string;
 }
 
-bool HexCode::is_hex(const char* hex_string, bool require_prefix) {
-    
+bool HexCode::is_hex(const char *hex_string, bool require_prefix) {
+    throw "not implemented";
 }
 
 ///////////////////////////////////////////////////////////////////////////////

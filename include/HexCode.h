@@ -19,7 +19,7 @@
 
 namespace HexCode {
     void encode(char *hex_string, const void *pointer, size_t length);
-    bool decode(void *pointer, size_t max_len, const char *hex_string,
+    bool decode(void *pointer, size_t max_length, const char *hex_string,
             size_t *out_length);
     GString *to_string(const char *hex_string);
     bool is_hex(const char *hex_string, bool require_prefix);
