@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/source/Base58.o \
+	${OBJECTDIR}/source/Bloom.o \
 	${OBJECTDIR}/source/HexCode.o \
 	${OBJECTDIR}/source/Net.o \
 	${OBJECTDIR}/source/Util.o
@@ -46,6 +47,7 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 # Test Files
 TESTFILES= \
 	${TESTDIR}/TestFiles/f1 \
+	${TESTDIR}/TestFiles/f5 \
 	${TESTDIR}/TestFiles/f4 \
 	${TESTDIR}/TestFiles/f3 \
 	${TESTDIR}/TestFiles/f2
@@ -81,6 +83,11 @@ ${OBJECTDIR}/source/Base58.o: source/Base58.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0` -MMD -MP -MF $@.d -o ${OBJECTDIR}/source/Base58.o source/Base58.cpp
 
+${OBJECTDIR}/source/Bloom.o: source/Bloom.cpp 
+	${MKDIR} -p ${OBJECTDIR}/source
+	${RM} $@.d
+	$(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0` -MMD -MP -MF $@.d -o ${OBJECTDIR}/source/Bloom.o source/Bloom.cpp
+
 ${OBJECTDIR}/source/HexCode.o: source/HexCode.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} $@.d
@@ -105,6 +112,10 @@ ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/Base58Test.o ${TESTDIR}/tests/Base58Te
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
 
+${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/BloomTest.o ${TESTDIR}/tests/BloomTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
+
 ${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/FileIOTest.o ${TESTDIR}/tests/FileIOTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
@@ -128,6 +139,18 @@ ${TESTDIR}/tests/Base58TestRunner.o: tests/Base58TestRunner.cpp
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
 	$(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0`   `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/Base58TestRunner.o tests/Base58TestRunner.cpp
+
+
+${TESTDIR}/tests/BloomTest.o: tests/BloomTest.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} $@.d
+	$(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0`   `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/BloomTest.o tests/BloomTest.cpp
+
+
+${TESTDIR}/tests/BloomTestRunner.o: tests/BloomTestRunner.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} $@.d
+	$(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0`   `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/BloomTestRunner.o tests/BloomTestRunner.cpp
 
 
 ${TESTDIR}/tests/FileIOTest.o: tests/FileIOTest.cpp 
@@ -179,6 +202,19 @@ ${OBJECTDIR}/source/Base58_nomain.o: ${OBJECTDIR}/source/Base58.o source/Base58.
 	    ${CP} ${OBJECTDIR}/source/Base58.o ${OBJECTDIR}/source/Base58_nomain.o;\
 	fi
 
+${OBJECTDIR}/source/Bloom_nomain.o: ${OBJECTDIR}/source/Bloom.o source/Bloom.cpp 
+	${MKDIR} -p ${OBJECTDIR}/source
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Bloom.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/source/Bloom_nomain.o source/Bloom.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/source/Bloom.o ${OBJECTDIR}/source/Bloom_nomain.o;\
+	fi
+
 ${OBJECTDIR}/source/HexCode_nomain.o: ${OBJECTDIR}/source/HexCode.o source/HexCode.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/HexCode.o`; \
@@ -223,6 +259,7 @@ ${OBJECTDIR}/source/Util_nomain.o: ${OBJECTDIR}/source/Util.o source/Util.cpp
 	@if [ "${TEST}" = "" ]; \
 	then  \
 	    ${TESTDIR}/TestFiles/f1 || true; \
+	    ${TESTDIR}/TestFiles/f5 || true; \
 	    ${TESTDIR}/TestFiles/f4 || true; \
 	    ${TESTDIR}/TestFiles/f3 || true; \
 	    ${TESTDIR}/TestFiles/f2 || true; \

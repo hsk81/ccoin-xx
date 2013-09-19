@@ -5,6 +5,7 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>include/Base58.h</itemPath>
+      <itemPath>include/Bloom.h</itemPath>
       <itemPath>include/CoreDefs.h</itemPath>
       <itemPath>include/HexCode.h</itemPath>
       <itemPath>include/Net.h</itemPath>
@@ -14,6 +15,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>source/Base58.cpp</itemPath>
+      <itemPath>source/Bloom.cpp</itemPath>
       <itemPath>source/HexCode.cpp</itemPath>
       <itemPath>source/Net.cpp</itemPath>
       <itemPath>source/Util.cpp</itemPath>
@@ -34,6 +36,11 @@
         <itemPath>tests/Base58Test.cpp</itemPath>
         <itemPath>tests/Base58Test.h</itemPath>
         <itemPath>tests/Base58TestRunner.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f5" displayName="Bloom" projectFiles="true" kind="TEST">
+        <itemPath>tests/BloomTest.cpp</itemPath>
+        <itemPath>tests/BloomTest.h</itemPath>
+        <itemPath>tests/BloomTestRunner.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f4" displayName="FileIO" projectFiles="true" kind="TEST">
         <itemPath>tests/FileIOTest.cpp</itemPath>
@@ -154,7 +161,23 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f5">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f5</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="include/Base58.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Bloom.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/CoreDefs.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -165,6 +188,8 @@
       <item path="include/Util.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="source/Base58.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/Bloom.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/HexCode.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -181,6 +206,12 @@
       <item path="tests/Base58Test.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/Base58TestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/BloomTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/BloomTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/BloomTestRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/FileIOTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -310,7 +341,23 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f5">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f5</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="include/Base58.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Bloom.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/CoreDefs.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -321,6 +368,8 @@
       <item path="include/Util.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="source/Base58.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/Bloom.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/HexCode.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -337,6 +386,12 @@
       <item path="tests/Base58Test.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/Base58TestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/BloomTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/BloomTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/BloomTestRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/FileIOTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
