@@ -7,6 +7,7 @@
 
 #include "../include/Bloom.h"
 #include "../include/Buffer.h"
+#include "../include/Serialize.h"
 
 #include <math.h>
 #include <string.h>
@@ -115,7 +116,7 @@ bool Bloom::init(struct bloom *bf, unsigned int n_elements, double fp_rate) {
 }
 
 void Bloom::__init(struct bloom *bf) {
-    
+	memset(bf, 0, sizeof(*bf));
 }
 
 void Bloom::free(struct bloom *bf) {
@@ -123,6 +124,21 @@ void Bloom::free(struct bloom *bf) {
 		g_string_free(bf->v_data, TRUE);
 		bf->v_data = NULL;
 	}
+}
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+void Bloom::serialize(GString *g_string, const struct bloom *bf) {
+	Serialize::varstr(g_string, bf->v_data);
+	Serialize::u32(g_string, bf->n_hash_funcs);
+}
+
+bool Bloom::deserialize(struct bloom *bf, struct const_buffer *buffer) {
+	if (!Deserialize::varstr(&bf->v_data, buffer)) return false;
+	if (!Deserialize::u32(&bf->n_hash_funcs, buffer)) return false;
+
+	return true;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

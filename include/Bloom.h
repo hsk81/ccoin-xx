@@ -11,6 +11,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
+#include "Buffer.h"
 #include <stdbool.h>
 #include <glib.h>
 
@@ -22,11 +23,7 @@ struct bloom {
 	unsigned int    n_hash_funcs;
 };
 
-namespace Bloom {
-
-    //
-    // 20k items with FP rate < 0.1% or 10k items and < 0.0001%
-    //
+namespace Bloom { // 20k items with FP rate < 0.1% or 10k items and < 0.0001%
 
     enum {
         MAX_FILTER_SIZE = 36000, // bytes
@@ -37,6 +34,9 @@ namespace Bloom {
     void __init(struct bloom *bf);
     void free(struct bloom *bf);
 
+    void serialize(GString *g_string, const struct bloom *bf);
+    bool deserialize(struct bloom *bf, struct const_buffer *buffer);
+    
     void insert(struct bloom *bf, const void *data, size_t length);
     bool contains(struct bloom *bf, const void *data, size_t length);
 }

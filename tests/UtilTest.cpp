@@ -6,6 +6,8 @@
  */
 
 #include "UtilTest.h"
+#include "TestLib.h"
+
 #include "../include/Util.h"
 #include "../include/Net.h"
 

@@ -10,6 +10,7 @@
       <itemPath>include/CoreDefs.h</itemPath>
       <itemPath>include/HexCode.h</itemPath>
       <itemPath>include/Net.h</itemPath>
+      <itemPath>include/Serialize.h</itemPath>
       <itemPath>include/Util.h</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
@@ -20,6 +21,7 @@
       <itemPath>source/Buffer.cpp</itemPath>
       <itemPath>source/HexCode.cpp</itemPath>
       <itemPath>source/Net.cpp</itemPath>
+      <itemPath>source/Serialize.cpp</itemPath>
       <itemPath>source/Util.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="f1" displayName="Test Helpers" projectFiles="true">
@@ -189,6 +191,8 @@
       </item>
       <item path="include/Net.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/Serialize.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Util.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="source/Base58.cpp" ex="false" tool="1" flavor2="0">
@@ -200,6 +204,8 @@
       <item path="source/HexCode.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/Net.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/Serialize.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/Util.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -373,6 +379,8 @@
       </item>
       <item path="include/Net.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/Serialize.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Util.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="source/Base58.cpp" ex="false" tool="1" flavor2="0">
@@ -384,6 +392,8 @@
       <item path="source/HexCode.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/Net.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/Serialize.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/Util.cpp" ex="false" tool="1" flavor2="0">
       </item>

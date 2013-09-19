@@ -40,6 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/source/Buffer.o \
 	${OBJECTDIR}/source/HexCode.o \
 	${OBJECTDIR}/source/Net.o \
+	${OBJECTDIR}/source/Serialize.o \
 	${OBJECTDIR}/source/Util.o
 
 # Test Directory
@@ -103,6 +104,11 @@ ${OBJECTDIR}/source/Net.o: source/Net.cpp
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} $@.d
 	$(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0` -MMD -MP -MF $@.d -o ${OBJECTDIR}/source/Net.o source/Net.cpp
+
+${OBJECTDIR}/source/Serialize.o: source/Serialize.cpp 
+	${MKDIR} -p ${OBJECTDIR}/source
+	${RM} $@.d
+	$(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0` -MMD -MP -MF $@.d -o ${OBJECTDIR}/source/Serialize.o source/Serialize.cpp
 
 ${OBJECTDIR}/source/Util.o: source/Util.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
@@ -258,6 +264,19 @@ ${OBJECTDIR}/source/Net_nomain.o: ${OBJECTDIR}/source/Net.o source/Net.cpp
 	    $(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/source/Net_nomain.o source/Net.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/source/Net.o ${OBJECTDIR}/source/Net_nomain.o;\
+	fi
+
+${OBJECTDIR}/source/Serialize_nomain.o: ${OBJECTDIR}/source/Serialize.o source/Serialize.cpp 
+	${MKDIR} -p ${OBJECTDIR}/source
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Serialize.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/source/Serialize_nomain.o source/Serialize.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/source/Serialize.o ${OBJECTDIR}/source/Serialize_nomain.o;\
 	fi
 
 ${OBJECTDIR}/source/Util_nomain.o: ${OBJECTDIR}/source/Util.o source/Util.cpp 

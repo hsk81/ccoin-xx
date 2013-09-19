@@ -19,8 +19,7 @@
 class BloomTest : public CPPUNIT_NS::TestFixture {
 
     CPPUNIT_TEST_SUITE(BloomTest);
-    CPPUNIT_TEST(testInitAndFree);
-    CPPUNIT_TEST(testInsert);
+    CPPUNIT_TEST(testAll);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -30,8 +29,7 @@ public:
     void tearDown() {};
 
 private:
-    void testInitAndFree();
-    void testInsert();
+    void testAll();
 };
 
 ///////////////////////////////////////////////////////////////////////////////

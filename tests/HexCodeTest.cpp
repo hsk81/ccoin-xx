@@ -6,6 +6,8 @@
  */
 
 #include "HexCodeTest.h"
+#include "TestLib.h"
+
 #include "../include/HexCode.h"
 
 #include <string.h>
