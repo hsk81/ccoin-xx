@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/source/Base58.o \
 	${OBJECTDIR}/source/Bloom.o \
+	${OBJECTDIR}/source/Buffer.o \
 	${OBJECTDIR}/source/HexCode.o \
 	${OBJECTDIR}/source/Net.o \
 	${OBJECTDIR}/source/Util.o
@@ -87,6 +88,11 @@ ${OBJECTDIR}/source/Bloom.o: source/Bloom.cpp
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} $@.d
 	$(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0` -MMD -MP -MF $@.d -o ${OBJECTDIR}/source/Bloom.o source/Bloom.cpp
+
+${OBJECTDIR}/source/Buffer.o: source/Buffer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/source
+	${RM} $@.d
+	$(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0` -MMD -MP -MF $@.d -o ${OBJECTDIR}/source/Buffer.o source/Buffer.cpp
 
 ${OBJECTDIR}/source/HexCode.o: source/HexCode.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
@@ -213,6 +219,19 @@ ${OBJECTDIR}/source/Bloom_nomain.o: ${OBJECTDIR}/source/Bloom.o source/Bloom.cpp
 	    $(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/source/Bloom_nomain.o source/Bloom.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/source/Bloom.o ${OBJECTDIR}/source/Bloom_nomain.o;\
+	fi
+
+${OBJECTDIR}/source/Buffer_nomain.o: ${OBJECTDIR}/source/Buffer.o source/Buffer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/source
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Buffer.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/source/Buffer_nomain.o source/Buffer.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/source/Buffer.o ${OBJECTDIR}/source/Buffer_nomain.o;\
 	fi
 
 ${OBJECTDIR}/source/HexCode_nomain.o: ${OBJECTDIR}/source/HexCode.o source/HexCode.cpp 

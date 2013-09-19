@@ -37,8 +37,8 @@ namespace Bloom {
     void __init(struct bloom *bf);
     void free(struct bloom *bf);
 
-    void insert(struct bloom *bf, const void *data, size_t data_length);
-    bool contains(struct bloom *bf, const void *data, size_t data_length);
+    void insert(struct bloom *bf, const void *data, size_t length);
+    bool contains(struct bloom *bf, const void *data, size_t length);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

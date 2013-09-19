@@ -6,6 +6,7 @@
                    projectFiles="true">
       <itemPath>include/Base58.h</itemPath>
       <itemPath>include/Bloom.h</itemPath>
+      <itemPath>include/Buffer.h</itemPath>
       <itemPath>include/CoreDefs.h</itemPath>
       <itemPath>include/HexCode.h</itemPath>
       <itemPath>include/Net.h</itemPath>
@@ -16,6 +17,7 @@
                    projectFiles="true">
       <itemPath>source/Base58.cpp</itemPath>
       <itemPath>source/Bloom.cpp</itemPath>
+      <itemPath>source/Buffer.cpp</itemPath>
       <itemPath>source/HexCode.cpp</itemPath>
       <itemPath>source/Net.cpp</itemPath>
       <itemPath>source/Util.cpp</itemPath>
@@ -179,6 +181,8 @@
       </item>
       <item path="include/Bloom.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/Buffer.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/CoreDefs.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/HexCode.h" ex="false" tool="3" flavor2="0">
@@ -190,6 +194,8 @@
       <item path="source/Base58.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/Bloom.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/Buffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/HexCode.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -359,6 +365,8 @@
       </item>
       <item path="include/Bloom.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/Buffer.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/CoreDefs.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/HexCode.h" ex="false" tool="3" flavor2="0">
@@ -370,6 +378,8 @@
       <item path="source/Base58.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/Bloom.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/Buffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/HexCode.cpp" ex="false" tool="1" flavor2="0">
       </item>
