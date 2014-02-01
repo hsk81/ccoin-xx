@@ -32,8 +32,8 @@ namespace Key {
 ///////////////////////////////////////////////////////////////////////////////
 
 struct keyset {
-	GHashTable	*pubkey;
-	GHashTable	*pubkey_hash; //RIPEMD160
+	GHashTable *pubkey;
+	GHashTable *pubkey_hash; //RIPEMD160
 };
 
 namespace Keyset {
