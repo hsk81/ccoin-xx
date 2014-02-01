@@ -8,6 +8,7 @@
 #include "../include/Util.h"
 
 #include <openssl/sha.h>
+#include <openssl/ripemd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -40,6 +41,13 @@ void Util::Hash4(unsigned char *md32, const void *data, size_t length) {
     unsigned char md256[SHA256_DIGEST_LENGTH];
     Util::Hash(md256, data, length);
     memcpy(md32, md256, 4);
+}
+
+void Util::Hash160(unsigned char *md160, const void *data, size_t length)
+{
+	unsigned char md1[SHA256_DIGEST_LENGTH];
+	SHA256((unsigned char*)data, length, md1);
+	RIPEMD160((unsigned char*)md1, SHA256_DIGEST_LENGTH, md160);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

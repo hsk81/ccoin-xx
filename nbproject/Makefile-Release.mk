@@ -39,6 +39,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/source/Bloom.o \
 	${OBJECTDIR}/source/Buffer.o \
 	${OBJECTDIR}/source/HexCode.o \
+	${OBJECTDIR}/source/Key.o \
 	${OBJECTDIR}/source/Net.o \
 	${OBJECTDIR}/source/Serialize.o \
 	${OBJECTDIR}/source/Util.o
@@ -52,6 +53,7 @@ TESTFILES= \
 	${TESTDIR}/TestFiles/f5 \
 	${TESTDIR}/TestFiles/f4 \
 	${TESTDIR}/TestFiles/f3 \
+	${TESTDIR}/TestFiles/f6 \
 	${TESTDIR}/TestFiles/f2
 
 # C Compiler Flags
@@ -100,6 +102,11 @@ ${OBJECTDIR}/source/HexCode.o: source/HexCode.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0` -MMD -MP -MF $@.d -o ${OBJECTDIR}/source/HexCode.o source/HexCode.cpp
 
+${OBJECTDIR}/source/Key.o: source/Key.cpp 
+	${MKDIR} -p ${OBJECTDIR}/source
+	${RM} $@.d
+	$(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0` -MMD -MP -MF $@.d -o ${OBJECTDIR}/source/Key.o source/Key.cpp
+
 ${OBJECTDIR}/source/Net.o: source/Net.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} $@.d
@@ -135,6 +142,10 @@ ${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/FileIOTest.o ${TESTDIR}/tests/FileIOTe
 ${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/HexCodeTest.o ${TESTDIR}/tests/HexCodeTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs` `cppunit-config --libs`   
+
+${TESTDIR}/TestFiles/f6: ${TESTDIR}/tests/KeysetTest.o ${TESTDIR}/tests/KeysetTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f6 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs` `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/UtilTest.o ${TESTDIR}/tests/UtilTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
@@ -187,6 +198,18 @@ ${TESTDIR}/tests/HexCodeTestRunner.o: tests/HexCodeTestRunner.cpp
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
 	$(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0`   `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/HexCodeTestRunner.o tests/HexCodeTestRunner.cpp
+
+
+${TESTDIR}/tests/KeysetTest.o: tests/KeysetTest.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} $@.d
+	$(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0`   `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/KeysetTest.o tests/KeysetTest.cpp
+
+
+${TESTDIR}/tests/KeysetTestRunner.o: tests/KeysetTestRunner.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} $@.d
+	$(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0`   `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/KeysetTestRunner.o tests/KeysetTestRunner.cpp
 
 
 ${TESTDIR}/tests/UtilTest.o: tests/UtilTest.cpp 
@@ -253,6 +276,19 @@ ${OBJECTDIR}/source/HexCode_nomain.o: ${OBJECTDIR}/source/HexCode.o source/HexCo
 	    ${CP} ${OBJECTDIR}/source/HexCode.o ${OBJECTDIR}/source/HexCode_nomain.o;\
 	fi
 
+${OBJECTDIR}/source/Key_nomain.o: ${OBJECTDIR}/source/Key.o source/Key.cpp 
+	${MKDIR} -p ${OBJECTDIR}/source
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Key.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/source/Key_nomain.o source/Key.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/source/Key.o ${OBJECTDIR}/source/Key_nomain.o;\
+	fi
+
 ${OBJECTDIR}/source/Net_nomain.o: ${OBJECTDIR}/source/Net.o source/Net.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Net.o`; \
@@ -300,6 +336,7 @@ ${OBJECTDIR}/source/Util_nomain.o: ${OBJECTDIR}/source/Util.o source/Util.cpp
 	    ${TESTDIR}/TestFiles/f5 || true; \
 	    ${TESTDIR}/TestFiles/f4 || true; \
 	    ${TESTDIR}/TestFiles/f3 || true; \
+	    ${TESTDIR}/TestFiles/f6 || true; \
 	    ${TESTDIR}/TestFiles/f2 || true; \
 	else  \
 	    ./${TEST} || true; \

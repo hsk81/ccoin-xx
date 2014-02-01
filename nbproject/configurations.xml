@@ -9,6 +9,7 @@
       <itemPath>include/Buffer.h</itemPath>
       <itemPath>include/CoreDefs.h</itemPath>
       <itemPath>include/HexCode.h</itemPath>
+      <itemPath>include/Key.h</itemPath>
       <itemPath>include/Net.h</itemPath>
       <itemPath>include/Serialize.h</itemPath>
       <itemPath>include/Util.h</itemPath>
@@ -20,6 +21,7 @@
       <itemPath>source/Bloom.cpp</itemPath>
       <itemPath>source/Buffer.cpp</itemPath>
       <itemPath>source/HexCode.cpp</itemPath>
+      <itemPath>source/Key.cpp</itemPath>
       <itemPath>source/Net.cpp</itemPath>
       <itemPath>source/Serialize.cpp</itemPath>
       <itemPath>source/Util.cpp</itemPath>
@@ -55,6 +57,11 @@
         <itemPath>tests/HexCodeTest.cpp</itemPath>
         <itemPath>tests/HexCodeTest.h</itemPath>
         <itemPath>tests/HexCodeTestRunner.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f6" displayName="Keyset" projectFiles="true" kind="TEST">
+        <itemPath>tests/KeysetTest.cpp</itemPath>
+        <itemPath>tests/KeysetTest.h</itemPath>
+        <itemPath>tests/KeysetTestRunner.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="Util" projectFiles="true" kind="TEST">
         <itemPath>tests/UtilTest.cpp</itemPath>
@@ -179,6 +186,21 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f6">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f6</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="include/Base58.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Bloom.h" ex="false" tool="3" flavor2="0">
@@ -188,6 +210,8 @@
       <item path="include/CoreDefs.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/HexCode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Key.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Net.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -202,6 +226,8 @@
       <item path="source/Buffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/HexCode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/Key.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/Net.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -236,6 +262,12 @@
       <item path="tests/HexCodeTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/HexCodeTestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/KeysetTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/KeysetTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/KeysetTestRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/TestLib.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -367,6 +399,21 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f6">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f6</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="include/Base58.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Bloom.h" ex="false" tool="3" flavor2="0">
@@ -376,6 +423,8 @@
       <item path="include/CoreDefs.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/HexCode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Key.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Net.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -390,6 +439,8 @@
       <item path="source/Buffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/HexCode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/Key.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/Net.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -424,6 +475,12 @@
       <item path="tests/HexCodeTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/HexCodeTestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/KeysetTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/KeysetTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/KeysetTestRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/UtilTest.cpp" ex="false" tool="1" flavor2="0">
       </item>

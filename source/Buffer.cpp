@@ -36,18 +36,17 @@ gboolean Buffer::g_equal(gconstpointer lhs, gconstpointer rhs) {
 }
 
 void Buffer::free(struct buffer *buffer) {
-    
 	if (!buffer) return;
 
 	::free(buffer->pointer);
-	::free(buffer->pointer);
+	::free(buffer);
 }
 
 void Buffer::g_free(gpointer data) {
 	Buffer::free((struct buffer*)data);
 }
 
-struct buffer *copy(const void *data, size_t length) {
+struct buffer* Buffer::copy(const void *data, size_t length) {
     
 	struct buffer *buffer = (struct buffer*)malloc(sizeof(*buffer));
 	if (!buffer) goto err_out;

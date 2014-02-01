@@ -17,6 +17,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
+#ifndef ARRAY_SIZE
+#define ARRAY_SIZE(array) (sizeof(array) / sizeof((array)[0]))
+#endif
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
 namespace Util {
 
     void reverse_copy(unsigned char *target, const unsigned char *source,
@@ -24,6 +31,7 @@ namespace Util {
 
     void Hash(unsigned char *md256, const void *data, size_t length);
     void Hash4(unsigned char *md32, const void *data, size_t length);
+    void Hash160(unsigned char *md160, const void *data, size_t length);
 
     int open_file(const char *filename);
     bool read_file(const char *filename, void **data, size_t *length,
