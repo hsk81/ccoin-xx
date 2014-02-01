@@ -17,13 +17,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 struct buffer {
-	void    *pointer;
-	size_t  length;
+	void *pointer;
+	size_t length;
 };
 
 struct const_buffer {
-    const void  *pointer;
-    size_t      length;
+    const void *pointer;
+    size_t length;
 };
 
 namespace Buffer {
