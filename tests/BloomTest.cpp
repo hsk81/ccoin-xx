@@ -56,7 +56,7 @@ void bf_init(struct bloom *bloom) {
 
 void bf_free(struct bloom *bloom) {
     Bloom::free(bloom);
-	CPPUNIT_ASSERT(bloom->v_data == NULL);
+	CPPUNIT_ASSERT(bloom->data == NULL);
 }
 
 void bf_op(struct bloom *bloom, unsigned char *md1, unsigned char *md2) {
@@ -78,9 +78,9 @@ void bf_serdes(struct bloom *bloom1, unsigned char *md1,
 	CPPUNIT_ASSERT(Bloom::deserialize(bloom2, &buffer));
 
 	CPPUNIT_ASSERT(bloom1->n_hash_funcs == bloom2->n_hash_funcs);
-	CPPUNIT_ASSERT(bloom1->v_data->len == bloom2->v_data->len);
+	CPPUNIT_ASSERT(bloom1->data->len == bloom2->data->len);
 	CPPUNIT_ASSERT(0 == memcmp(
-        bloom1->v_data->str, bloom2->v_data->str, bloom2->v_data->len
+        bloom1->data->str, bloom2->data->str, bloom2->data->len
     ));
 
 	CPPUNIT_ASSERT(Bloom::contains(bloom2, md1, sizeof(md1)) == true);

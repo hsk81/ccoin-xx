@@ -89,7 +89,7 @@ static unsigned int bloom_hash(struct bloom *bf, unsigned int n_hash_num,
 	h1 *= 0xc2b2ae35;
 	h1 ^= h1 >> 16;
 
-	return h1 % (bf->v_data->len * 8);
+	return h1 % (bf->data->len * 8);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -104,11 +104,11 @@ bool Bloom::init(struct bloom *bf, unsigned int n_elements, double fp_rate) {
         Bloom::MAX_FILTER_SIZE * 8
     ) / 8;
 
-	bf->v_data = g_string_sized_new(filter_size);
-	g_string_resize(bf->v_data, filter_size - 1);
+	bf->data = g_string_sized_new(filter_size);
+	g_string_resize(bf->data, filter_size - 1);
 
 	bf->n_hash_funcs = MIN(
-        (unsigned int)(bf->v_data->len * 8 / n_elements * LN2),
+        (unsigned int)(bf->data->len * 8 / n_elements * LN2),
         Bloom::MAX_HASH_FUNCS
     );
 
@@ -120,9 +120,9 @@ void Bloom::__init(struct bloom *bf) {
 }
 
 void Bloom::free(struct bloom *bf) {
-	if (bf->v_data) {
-		g_string_free(bf->v_data, TRUE);
-		bf->v_data = NULL;
+	if (bf->data) {
+		g_string_free(bf->data, TRUE);
+		bf->data = NULL;
 	}
 }
 
@@ -130,12 +130,12 @@ void Bloom::free(struct bloom *bf) {
 ///////////////////////////////////////////////////////////////////////////////
 
 void Bloom::serialize(GString *g_string, const struct bloom *bf) {
-	Serialize::varstr(g_string, bf->v_data);
+	Serialize::varstr(g_string, bf->data);
 	Serialize::u32(g_string, bf->n_hash_funcs);
 }
 
 bool Bloom::deserialize(struct bloom *bf, struct const_buffer *buffer) {
-	if (!Deserialize::varstr(&bf->v_data, buffer)) return false;
+	if (!Deserialize::varstr(&bf->data, buffer)) return false;
 	if (!Deserialize::u32(&bf->n_hash_funcs, buffer)) return false;
 
 	return true;
@@ -152,8 +152,8 @@ void Bloom::insert(struct bloom *bf, const void *data, size_t length) {
 
 	for (unsigned int i = 0; i < bf->n_hash_funcs; i++) {
 		unsigned int n_index = bloom_hash(bf, i, &v_key);
-		g_string_resize(bf->v_data, n_index >> 3);
-		bf->v_data->str[n_index >> 3] |= bit_mask[7 & n_index];
+		g_string_resize(bf->data, n_index >> 3);
+		bf->data->str[n_index >> 3] |= bit_mask[7 & n_index];
 	}
 }
 
@@ -165,8 +165,8 @@ bool Bloom::contains(struct bloom *bf, const void *data, size_t length) {
 
 	for (unsigned int i = 0; i < bf->n_hash_funcs; i++) {
 		unsigned int n_index = bloom_hash(bf, i, &v_key);
-		g_string_resize(bf->v_data, n_index >> 3);
-		if (!(bf->v_data->str[n_index >> 3] & bit_mask[7 & n_index])) {
+		g_string_resize(bf->data, n_index >> 3);
+		if (!(bf->data->str[n_index >> 3] & bit_mask[7 & n_index])) {
 			return false;
         }
 	}

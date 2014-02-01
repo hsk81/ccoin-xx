@@ -19,8 +19,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 struct bloom {
-	GString         *v_data;
-	unsigned int    n_hash_funcs;
+	GString *data;
+	unsigned int n_hash_funcs;
 };
 
 namespace Bloom { // 20k items with FP rate < 0.1% or 10k items and < 0.0001%
