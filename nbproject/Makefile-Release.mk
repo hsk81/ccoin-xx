@@ -40,6 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/source/Buffer.o \
 	${OBJECTDIR}/source/HexCode.o \
 	${OBJECTDIR}/source/Key.o \
+	${OBJECTDIR}/source/Message.o \
 	${OBJECTDIR}/source/Net.o \
 	${OBJECTDIR}/source/Serialize.o \
 	${OBJECTDIR}/source/Util.o
@@ -50,6 +51,7 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 # Test Files
 TESTFILES= \
 	${TESTDIR}/TestFiles/f1 \
+	${TESTDIR}/TestFiles/f7 \
 	${TESTDIR}/TestFiles/f5 \
 	${TESTDIR}/TestFiles/f4 \
 	${TESTDIR}/TestFiles/f3 \
@@ -107,6 +109,11 @@ ${OBJECTDIR}/source/Key.o: source/Key.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0` -MMD -MP -MF $@.d -o ${OBJECTDIR}/source/Key.o source/Key.cpp
 
+${OBJECTDIR}/source/Message.o: source/Message.cpp 
+	${MKDIR} -p ${OBJECTDIR}/source
+	${RM} $@.d
+	$(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0` -MMD -MP -MF $@.d -o ${OBJECTDIR}/source/Message.o source/Message.cpp
+
 ${OBJECTDIR}/source/Net.o: source/Net.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} $@.d
@@ -130,6 +137,10 @@ ${OBJECTDIR}/source/Util.o: source/Util.cpp
 ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/Base58Test.o ${TESTDIR}/tests/Base58TestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
+
+${TESTDIR}/TestFiles/f7: ${TESTDIR}/tests/BlockTest.o ${TESTDIR}/tests/BlockTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f7 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/BloomTest.o ${TESTDIR}/tests/BloomTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
@@ -162,6 +173,18 @@ ${TESTDIR}/tests/Base58TestRunner.o: tests/Base58TestRunner.cpp
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} $@.d
 	$(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0`   `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/Base58TestRunner.o tests/Base58TestRunner.cpp
+
+
+${TESTDIR}/tests/BlockTest.o: tests/BlockTest.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} $@.d
+	$(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0`   `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/BlockTest.o tests/BlockTest.cpp
+
+
+${TESTDIR}/tests/BlockTestRunner.o: tests/BlockTestRunner.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} $@.d
+	$(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0`   `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/BlockTestRunner.o tests/BlockTestRunner.cpp
 
 
 ${TESTDIR}/tests/BloomTest.o: tests/BloomTest.cpp 
@@ -289,6 +312,19 @@ ${OBJECTDIR}/source/Key_nomain.o: ${OBJECTDIR}/source/Key.o source/Key.cpp
 	    ${CP} ${OBJECTDIR}/source/Key.o ${OBJECTDIR}/source/Key_nomain.o;\
 	fi
 
+${OBJECTDIR}/source/Message_nomain.o: ${OBJECTDIR}/source/Message.o source/Message.cpp 
+	${MKDIR} -p ${OBJECTDIR}/source
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Message.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -O2 `pkg-config --cflags glib-2.0` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/source/Message_nomain.o source/Message.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/source/Message.o ${OBJECTDIR}/source/Message_nomain.o;\
+	fi
+
 ${OBJECTDIR}/source/Net_nomain.o: ${OBJECTDIR}/source/Net.o source/Net.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Net.o`; \
@@ -333,6 +369,7 @@ ${OBJECTDIR}/source/Util_nomain.o: ${OBJECTDIR}/source/Util.o source/Util.cpp
 	@if [ "${TEST}" = "" ]; \
 	then  \
 	    ${TESTDIR}/TestFiles/f1 || true; \
+	    ${TESTDIR}/TestFiles/f7 || true; \
 	    ${TESTDIR}/TestFiles/f5 || true; \
 	    ${TESTDIR}/TestFiles/f4 || true; \
 	    ${TESTDIR}/TestFiles/f3 || true; \

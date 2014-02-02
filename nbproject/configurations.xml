@@ -10,6 +10,7 @@
       <itemPath>include/CoreDefs.h</itemPath>
       <itemPath>include/HexCode.h</itemPath>
       <itemPath>include/Key.h</itemPath>
+      <itemPath>include/Message.h</itemPath>
       <itemPath>include/Net.h</itemPath>
       <itemPath>include/Serialize.h</itemPath>
       <itemPath>include/Util.h</itemPath>
@@ -22,6 +23,7 @@
       <itemPath>source/Buffer.cpp</itemPath>
       <itemPath>source/HexCode.cpp</itemPath>
       <itemPath>source/Key.cpp</itemPath>
+      <itemPath>source/Message.cpp</itemPath>
       <itemPath>source/Net.cpp</itemPath>
       <itemPath>source/Serialize.cpp</itemPath>
       <itemPath>source/Util.cpp</itemPath>
@@ -42,6 +44,11 @@
         <itemPath>tests/Base58Test.cpp</itemPath>
         <itemPath>tests/Base58Test.h</itemPath>
         <itemPath>tests/Base58TestRunner.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f7" displayName="Block" projectFiles="true" kind="TEST">
+        <itemPath>tests/BlockTest.cpp</itemPath>
+        <itemPath>tests/BlockTest.h</itemPath>
+        <itemPath>tests/BlockTestRunner.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f5" displayName="Bloom" projectFiles="true" kind="TEST">
         <itemPath>tests/BloomTest.cpp</itemPath>
@@ -201,6 +208,20 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f7">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f7</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="include/Base58.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Bloom.h" ex="false" tool="3" flavor2="0">
@@ -212,6 +233,8 @@
       <item path="include/HexCode.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Key.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Message.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Net.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -229,6 +252,8 @@
       </item>
       <item path="source/Key.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="source/Message.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="source/Net.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/Serialize.cpp" ex="false" tool="1" flavor2="0">
@@ -244,6 +269,12 @@
       <item path="tests/Base58Test.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/Base58TestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/BlockTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/BlockTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/BlockTestRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/BloomTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -414,6 +445,20 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f7">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f7</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="include/Base58.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Bloom.h" ex="false" tool="3" flavor2="0">
@@ -425,6 +470,8 @@
       <item path="include/HexCode.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Key.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Message.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Net.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -442,6 +489,8 @@
       </item>
       <item path="source/Key.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="source/Message.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="source/Net.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/Serialize.cpp" ex="false" tool="1" flavor2="0">
@@ -457,6 +506,12 @@
       <item path="tests/Base58Test.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/Base58TestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/BlockTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/BlockTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/BlockTestRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/BloomTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
