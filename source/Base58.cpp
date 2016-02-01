@@ -180,28 +180,25 @@ exit:
 GString *Base58::decode_check(
         guchar* address_type, const gchar* characters) {
 
+    GString *result = Base58::decode(characters);
+    if (!result) return NULL;
+    if (result->len < 4) goto exit_error;
+
     guchar md32[4];
 
-    // decode base58 string
-    GString *string = Base58::decode(characters);
-    if (!string) return NULL;
-    if (string->len < 4) goto exit_error;
+    Util::Hash4(md32, result->str, result->len - 4);
+    if (memcmp(md32, &result->str[result->len - 4], 4)) goto exit_error;
+    g_string_set_size(result, result->len - 4);
 
-    // validate with trailing hash, then remove hash
-    Util::Hash4(md32, string->str, string->len - 4);
-    if (memcmp(md32, &string->str[string->len - 4], 4)) goto exit_error;
-    g_string_set_size(string, string->len - 4);
-
-    // if address_type requested, remove from front of data string
     if (address_type) {
-        *address_type = (guchar) string->str[0];
-        g_string_erase(string, 0, 1);
+        *address_type = (guchar) result->str[0];
+        g_string_erase(result, 0, 1);
     }
 
-    return string;
+    return result;
 
 exit_error:
-    g_string_free(string, TRUE);
+    g_string_free(result, TRUE);
     return NULL;
 }
 
