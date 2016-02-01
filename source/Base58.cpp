@@ -24,17 +24,17 @@ GString *Base58::encode(
         gconstpointer data_pointer, gsize data_length) {
 
     const guchar *data = (guchar*) data_pointer;
-    BIGNUM divisor, zero, dividend, quotient, remainder;
+    BIGNUM zero, divisor, dividend, quotient, remainder;
     BN_CTX *context = BN_CTX_new();
 
-    BN_init(&divisor);
     BN_init(&zero);
+    BN_init(&divisor);
     BN_init(&dividend);
     BN_init(&quotient);
     BN_init(&remainder);
 
-    BN_set_word(&divisor, 58);
     BN_set_word(&zero, 0);
+    BN_set_word(&divisor, 58);
 
     guchar swapbuf[data_length + 1];
     Util::reverse_copy(swapbuf, data, data_length);
