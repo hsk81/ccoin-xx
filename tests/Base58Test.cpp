@@ -1,8 +1,6 @@
 /*
  * File:   Base58Test.cpp
  * Author: hsk81
- *
- * Created on Jul 6, 2013, 8:51:25 AM
  */
 
 #include "Base58Test.h"

@@ -1,8 +1,6 @@
 /*
  * File:   Base58Test.h
  * Author: hsk81
- *
- * Created on Jul 6, 2013, 8:51:25 AM
  */
 
 #ifndef BASE58TEST_H
