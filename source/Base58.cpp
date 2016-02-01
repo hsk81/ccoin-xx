@@ -20,10 +20,9 @@ namespace Base58 {
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-GString *Base58::encode(
-        gconstpointer data_pointer, gsize data_length) {
+GString *Base58::encode(gconstpointer data, gsize size) {
 
-    const guchar *data = (guchar*) data_pointer;
+    const guchar *data_pointer = (guchar*) data;
     BIGNUM zero, divisor, dividend, quotient, remainder;
     BN_CTX *context = BN_CTX_new();
 
@@ -36,12 +35,12 @@ GString *Base58::encode(
     BN_set_word(&zero, 0);
     BN_set_word(&divisor, 58);
 
-    guchar swapbuf[data_length + 1];
-    Util::reverse_copy(swapbuf, data, data_length);
-    swapbuf[data_length] = 0;
+    guchar swapbuf[size + 1];
+    Util::reverse_copy(swapbuf, data_pointer, size);
+    swapbuf[size] = 0;
 
     Util::BigNum::setvch(&dividend, swapbuf, sizeof (swapbuf));
-    GString *result = g_string_sized_new(data_length * 138 / 100 + 1);
+    GString *result = g_string_sized_new(size * 138 / 100 + 1);
     GString *result_swap;
 
     while (BN_cmp(&dividend, &zero) > 0) {
@@ -54,8 +53,8 @@ GString *Base58::encode(
         g_string_append_c(result, Base58::chars[index]);
     }
 
-    for (guint index = 0; index < data_length; index++) {
-        if (data[index] == 0) {
+    for (guint index = 0; index < size; index++) {
+        if (data_pointer[index] == 0) {
             g_string_append_c(result, Base58::chars[0]);
         } else {
             break;
@@ -88,7 +87,7 @@ exit_error:
 }
 
 GString *Base58::encode_check(
-        guchar address_type, bool has_address_type,
+        guchar address_type, gboolean has_address_type,
         gconstpointer data_pointer, gsize data_length) {
 
     GString *string = g_string_sized_new(data_length + 1 + 4);

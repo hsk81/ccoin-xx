@@ -63,9 +63,9 @@ void Keyset::init(struct keyset *keyset) {
 
     memset(keyset, 0, sizeof (*keyset));
     keyset->pubkey = g_hash_table_new_full(
-            Buffer::g_hash, Buffer::g_equal, Buffer::g_free, NULL);
+            Buffer::hash, Buffer::equal, Buffer::free, NULL);
     keyset->pubkey_hash = g_hash_table_new_full(
-            Buffer::g_hash, Buffer::g_equal, Buffer::g_free, NULL);
+            Buffer::hash, Buffer::equal, Buffer::free, NULL);
 }
 
 void Keyset::free(struct keyset *keyset) {
@@ -77,18 +77,18 @@ void Keyset::free(struct keyset *keyset) {
 bool Keyset::add(struct keyset *keyset, struct key *key) {
 
     void *pointer = NULL;
-    size_t length = 0;
+    size_t size = 0;
 
-    if (!Key::get_public(key, &pointer, &length)) {
+    if (!Key::get_public(key, &pointer, &size)) {
         return false;
     }
 
     struct buffer *pubkey = (buffer*) malloc(sizeof (struct buffer));
     pubkey->pointer = pointer;
-    pubkey->length = length;
+    pubkey->size = size;
 
     unsigned char md160[RIPEMD160_DIGEST_LENGTH];
-    Util::Hash160(md160, pointer, length);
+    Util::Hash160(md160, pointer, size);
 
     struct buffer *pubkey_hash = Buffer::copy(md160, RIPEMD160_DIGEST_LENGTH);
 

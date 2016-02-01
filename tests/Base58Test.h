@@ -10,7 +10,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <cppunit/extensions/HelperMacros.h>
-#include <stdbool.h>
 #include <glib.h>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -47,24 +46,24 @@ private:
     void checkPrivateKeyEnc(
             const gchar *b58_characters,
             GString *payload,
-            bool do_compress,
-            bool is_testnet);
+            gboolean do_compress,
+            gboolean is_testnet);
     void checkPrivateKeyDec(
             const gchar *b58_characters,
             GString *payload,
-            bool do_compress,
-            bool is_testnet);
+            gboolean do_compress,
+            gboolean is_testnet);
 
     void checkPublicKeyEnc(
             const gchar *b58_characters,
             GString *payload,
             const gchar *address_type,
-            bool is_testnet);
+            gboolean is_testnet);
     void checkPublicKeyDec(
             const gchar *b58_characters,
             GString *payload,
             const gchar *address_type,
-            bool is_testnet);
+            gboolean is_testnet);
 
 private:
     void testKeysMethod();

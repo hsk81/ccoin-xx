@@ -72,12 +72,12 @@ void Serialize::varstr(GString *g_string, GString *g_string_in) {
 bool Deserialize::bytes(void *pointer, struct const_buffer *buffer,
         size_t length) {
 
-	if (buffer->length < length)
+	if (buffer->size < length)
         return false;
 
 	memcpy(pointer, buffer->pointer, length);
 	buffer->pointer += length;
-	buffer->length -= length;
+	buffer->size -= length;
 
 	return true;
 }
@@ -137,13 +137,13 @@ bool Deserialize::varstr(GString **g_string, struct const_buffer *buffer) {
 
 	uint32_t len;
 	if (!Deserialize::varlen(&len, buffer)) return false;
-	if (buffer->length < len) return false;
+	if (buffer->size < len) return false;
 
 	GString *s = g_string_sized_new(len);
 	g_string_append_len(s, (const gchar*)buffer->pointer, len);
 
 	buffer->pointer += len;
-	buffer->length -= len;
+	buffer->size -= len;
 
 	*g_string = s;
 	return true;

@@ -1,8 +1,6 @@
 /* 
  * File:   Buffer.h
  * Author: hsk81
- *
- * Created on September 19, 2013, 12:46 PM
  */
 
 #ifndef BUFFER_H
@@ -17,21 +15,21 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 struct buffer {
-    void *pointer;
-    size_t length;
+    gpointer pointer;
+    gsize size;
 };
 
 struct const_buffer {
-    const void *pointer;
-    size_t length;
+    gconstpointer pointer;
+    gsize size;
 };
 
 namespace Buffer {
-    unsigned int g_hash(const void *key);
-    bool g_equal(const void *lhs, const void *rhs);
+    guint hash(gconstpointer key);
+    gboolean equal(gconstpointer lhs, gconstpointer rhs);
     void free(struct buffer *buffer);
-    void g_free(void *data);
-    struct buffer *copy(const void *data, size_t length);
+    void free(gpointer data);
+    struct buffer *copy(gconstpointer data, gsize size);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

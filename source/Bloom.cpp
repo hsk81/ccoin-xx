@@ -50,7 +50,7 @@ static unsigned int bloom_hash(struct bloom *bf, unsigned int n_hash_num,
 	const uint32_t c1 = 0xcc9e2d51;
 	const uint32_t c2 = 0x1b873593;
 	const unsigned char *puch = (unsigned char*)v_data_to_hash->pointer;
-	const int n_block = v_data_to_hash->length / 4;
+	const int n_block = v_data_to_hash->size / 4;
 
 	//----------
 	// body
@@ -73,7 +73,7 @@ static unsigned int bloom_hash(struct bloom *bf, unsigned int n_hash_num,
 	const uint8_t * tail = (const uint8_t*)(&puch[0] + n_block*4);
 
 	uint32_t k1 = 0;
-	switch(v_data_to_hash->length & 3) {
+	switch(v_data_to_hash->size & 3) {
         case 3: k1 ^= tail[2] << 16;
         case 2: k1 ^= tail[1] << 8;
         case 1: k1 ^= tail[0];
@@ -82,7 +82,7 @@ static unsigned int bloom_hash(struct bloom *bf, unsigned int n_hash_num,
 
 	//----------
 	// finalization
-	h1 ^= v_data_to_hash->length;
+	h1 ^= v_data_to_hash->size;
 	h1 ^= h1 >> 16;
 	h1 *= 0x85ebca6b;
 	h1 ^= h1 >> 13;

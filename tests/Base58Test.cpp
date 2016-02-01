@@ -27,7 +27,7 @@ void Base58Test::encode(
     guchar *raw = (guchar*) calloc(1, hex_length);
     gsize raw_length;
 
-    bool decoded = HexCode::decode(
+    gboolean decoded = HexCode::decode(
             raw, hex_length, hex_characters, &raw_length);
     CPPUNIT_ASSERT(decoded);
 
@@ -45,7 +45,7 @@ void Base58Test::decode(
     guchar *raw = (guchar*) calloc(1, hex_length);
     gsize raw_length;
 
-    bool decoded = HexCode::decode(
+    gboolean decoded = HexCode::decode(
             raw, hex_length, hex_characters, &raw_length);
     CPPUNIT_ASSERT(decoded);
 
@@ -102,7 +102,7 @@ void Base58Test::testEncodeAndDecodeMethod() {
 
 void Base58Test::checkPrivateKeyEnc(
         const gchar* b58_characters, GString* payload,
-        bool do_compress, bool is_testnet) {
+        gboolean do_compress, gboolean is_testnet) {
 
     CPPUNIT_ASSERT(payload != NULL);
 
@@ -124,7 +124,7 @@ void Base58Test::checkPrivateKeyEnc(
 
 void Base58Test::checkPrivateKeyDec(
         const gchar* b58_characters, GString* payload,
-        bool do_compress, bool is_testnet) {
+        gboolean do_compress, gboolean is_testnet) {
 
     CPPUNIT_ASSERT(payload != NULL);
 
@@ -164,12 +164,12 @@ void Base58Test::checkPrivateKeyDec(
 
 void Base58Test::checkPublicKeyEnc(
         const gchar *b58_characters, GString *payload,
-        const gchar *address_type, bool is_testnet) {
+        const gchar *address_type, gboolean is_testnet) {
 
     CPPUNIT_ASSERT(payload != NULL);
 
-    bool address_type_pubkey = (strcmp(address_type, "pubkey") == 0);
-    bool address_type_script = (strcmp(address_type, "script") == 0);
+    gboolean address_type_pubkey = (strcmp(address_type, "pubkey") == 0);
+    gboolean address_type_script = (strcmp(address_type, "script") == 0);
     CPPUNIT_ASSERT(address_type_pubkey || address_type_script);
 
     enum AddressType a_type = address_type_pubkey
@@ -187,12 +187,12 @@ void Base58Test::checkPublicKeyEnc(
 
 void Base58Test::checkPublicKeyDec(
         const gchar* b58_characters, GString* payload,
-        const gchar* address_type, bool is_testnet) {
+        const gchar* address_type, gboolean is_testnet) {
 
     CPPUNIT_ASSERT(payload != NULL);
 
-    bool address_type_pubkey = (strcmp(address_type, "pubkey") == 0);
-    bool address_type_script = (strcmp(address_type, "script") == 0);
+    gboolean address_type_pubkey = (strcmp(address_type, "pubkey") == 0);
+    gboolean address_type_script = (strcmp(address_type, "script") == 0);
     CPPUNIT_ASSERT(address_type_pubkey || address_type_script);
 
     enum AddressType type = (address_type_pubkey)
@@ -242,8 +242,8 @@ void Base58Test::testKeysMethod() {
         CPPUNIT_ASSERT(!j_compress || json_is_true(j_compress) 
                 || json_is_false(j_compress));
 
-        bool is_privkey = json_is_true(json_object_get(j_meta, "isPrivkey"));
-        bool is_testnet = json_is_true(json_object_get(j_meta, "isTestnet"));
+        gboolean is_privkey = json_is_true(json_object_get(j_meta, "isPrivkey"));
+        gboolean is_testnet = json_is_true(json_object_get(j_meta, "isTestnet"));
 
         if (is_privkey) {
             this->checkPrivateKeyEnc(

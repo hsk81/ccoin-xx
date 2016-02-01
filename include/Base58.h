@@ -9,7 +9,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <stdbool.h>
 #include <glib.h>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -17,14 +16,15 @@
 
 namespace Base58 {
     GString* encode(
-            gconstpointer data_pointer,
-            gsize data_length);
+            gconstpointer data,
+            gsize size
+    );
 
     GString* encode_check(
             guchar address_type,
-            bool has_address_type,
-            gconstpointer data_pointer,
-            gsize data_length);
+            gboolean has_address_type,
+            gconstpointer data,
+            gsize size);
 
     GString* decode(
             const gchar *characters);

@@ -1,67 +1,62 @@
 /* 
  * File:   Buffer.cpp
  * Author: hsk81
- * 
- * Created on September 19, 2013, 12:46 PM
  */
 
 #include "../include/Buffer.h"
 #include "../include/Util.h"
 
-#include <stdlib.h>
 #include <string.h>
 #include <glib.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-unsigned int Buffer::g_hash(const void *key) {
+guint Buffer::hash(gconstpointer key) {
 
-	const struct buffer *buffer = (struct buffer*)key;
-	return Util::Djb2::hash(0x1721, buffer->pointer, buffer->length);
+    const struct buffer *buffer = (struct buffer*) key;
+    return Util::Djb2::hash(0x1721, buffer->pointer, buffer->size);
 }
 
-bool Buffer::g_equal(const void *lhs, const void *rhs) {
-    
-	const struct buffer *lhs_buffer = (struct buffer*)lhs;
-	const struct buffer *rhs_buffer = (struct buffer*)rhs;
+gboolean Buffer::equal(gconstpointer lhs, gconstpointer rhs) {
 
-	if (lhs_buffer->length != rhs_buffer->length) {
-		return FALSE;
+    const struct buffer *lhs_buffer = (struct buffer*) lhs;
+    const struct buffer *rhs_buffer = (struct buffer*) rhs;
+
+    if (lhs_buffer->size != rhs_buffer->size) {
+        return FALSE;
     }
 
-	return 0 == memcmp(
-        lhs_buffer->pointer, rhs_buffer->pointer, lhs_buffer->length
-    );
+    return 0 == memcmp(
+            lhs_buffer->pointer, rhs_buffer->pointer, lhs_buffer->size);
 }
 
 void Buffer::free(struct buffer *buffer) {
-	if (!buffer) return;
+    if (!buffer) return;
 
-	::free(buffer->pointer);
-	::free(buffer);
+    ::free(buffer->pointer);
+    ::free(buffer);
 }
 
-void Buffer::g_free(void *data) {
-	Buffer::free((struct buffer*)data);
+void Buffer::free(gpointer data) {
+    Buffer::free((struct buffer*) data);
 }
 
-struct buffer* Buffer::copy(const void *data, size_t length) {
-    
-	struct buffer *buffer = (struct buffer*)malloc(sizeof(*buffer));
-	if (!buffer) goto err_out;
-	buffer->pointer = malloc(length);
-	if (!buffer->pointer) goto err_out_free;
+struct buffer* Buffer::copy(gconstpointer data, gsize size) {
 
-	memcpy(buffer->pointer, data, length);
-	buffer->length = length;
+    struct buffer *buffer = (struct buffer*) malloc(sizeof (*buffer));
+    if (!buffer) goto exit_error;
+    buffer->pointer = malloc(size);
+    if (!buffer->pointer) goto exit_error_free;
 
-	return buffer;
+    memcpy(buffer->pointer, data, size);
+    buffer->size = size;
 
-err_out_free:
-	Buffer::free(buffer);
-err_out:
-	return NULL;
+    return buffer;
+exit_error_free:
+    Buffer::free(buffer);
+exit_error:
+    return NULL;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
