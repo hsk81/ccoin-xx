@@ -30,58 +30,58 @@ static char *hex_string;
 
 void HexCodeTest::testEncode1Method() {
 
-	const char *data1 = "\xf1\x1f";
-	size_t data1_len = strlen(data1);
+    const char *data1 = "\xf1\x1f";
+    size_t data1_len = strlen(data1);
 
-	size_t alloc_len = (data_length * 2) + 1000;
-	char *hexstr1 = (char*)malloc(alloc_len);
-	memset(hexstr1, 0xef, alloc_len);
+    size_t alloc_len = (data_length * 2) + 1000;
+    char *hexstr1 = (char*) malloc(alloc_len);
+    memset(hexstr1, 0xef, alloc_len);
 
     HexCode::encode(hexstr1, data1, data1_len);
-	CPPUNIT_ASSERT(strcmp(hexstr1, "f11f") == 0);
-	free(hexstr1);
+    CPPUNIT_ASSERT(strcmp(hexstr1, "f11f") == 0);
+    free(hexstr1);
 }
 
 void HexCodeTest::testEncode2Method() {
 
-	size_t alloc_len = (data_length * 2) + 1000;
-	hex_string = (char*)malloc(alloc_len);
-	memset(hex_string, 0xef, alloc_len);
+    size_t alloc_len = (data_length * 2) + 1000;
+    hex_string = (char*) malloc(alloc_len);
+    memset(hex_string, 0xef, alloc_len);
 
-	HexCode::encode(hex_string, data, data_length);
-	CPPUNIT_ASSERT(strlen(hex_string) == (data_length * 2));
-	CPPUNIT_ASSERT((unsigned char)hex_string[(data_length * 2) + 1] == 0xef);
+    HexCode::encode(hex_string, data, data_length);
+    CPPUNIT_ASSERT(strlen(hex_string) == (data_length * 2));
+    CPPUNIT_ASSERT((unsigned char) hex_string[(data_length * 2) + 1] == 0xef);
 }
 
 void HexCodeTest::testDecode1Method() {
 
-	char decode_buf[(data_length * 2) + 1000];
-	memset(decode_buf, 0xef, sizeof(decode_buf));
+    char decode_buf[(data_length * 2) + 1000];
+    memset(decode_buf, 0xef, sizeof (decode_buf));
 
-	size_t out_len = 0;
-	bool rc = HexCode::decode(decode_buf, 10, hex_string, &out_len);
+    size_t out_len = 0;
+    bool rc = HexCode::decode(decode_buf, 10, hex_string, &out_len);
 
-	CPPUNIT_ASSERT(!rc);
-	CPPUNIT_ASSERT(out_len == 0);
+    CPPUNIT_ASSERT(!rc);
+    CPPUNIT_ASSERT(out_len == 0);
 
-	memset(decode_buf, 0xef, sizeof(decode_buf));
-	rc = HexCode::decode(decode_buf, sizeof(decode_buf), hex_string, &out_len);
+    memset(decode_buf, 0xef, sizeof (decode_buf));
+    rc = HexCode::decode(decode_buf, sizeof (decode_buf), hex_string, &out_len);
 
-	CPPUNIT_ASSERT(rc);
-	CPPUNIT_ASSERT(out_len == data_length);
-	CPPUNIT_ASSERT(memcmp(data, decode_buf, out_len) == 0);
-	CPPUNIT_ASSERT((unsigned char)decode_buf[out_len] == 0xef);
+    CPPUNIT_ASSERT(rc);
+    CPPUNIT_ASSERT(out_len == data_length);
+    CPPUNIT_ASSERT(memcmp(data, decode_buf, out_len) == 0);
+    CPPUNIT_ASSERT((unsigned char) decode_buf[out_len] == 0xef);
 }
 
 void HexCodeTest::testDecode2Method() {
 
-	GString *s = HexCode::to_string(hex_string);
+    GString *s = HexCode::to_string(hex_string);
 
-	CPPUNIT_ASSERT(s != NULL);
-	CPPUNIT_ASSERT(s->len == data_length);
-	CPPUNIT_ASSERT(memcmp(s->str, data, data_length) == 0);
+    CPPUNIT_ASSERT(s != NULL);
+    CPPUNIT_ASSERT(s->len == data_length);
+    CPPUNIT_ASSERT(memcmp(s->str, data, data_length) == 0);
 
-	g_string_free(s, TRUE);
+    g_string_free(s, TRUE);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -1,40 +1,26 @@
 /* 
- * File:   Buffer.h
+ * File:   MBR.h
  * Author: hsk81
  *
- * Created on September 19, 2013, 12:46 PM
+ * Created on February 2, 2014, 10:26 PM
  */
 
-#ifndef BUFFER_H
-#define BUFFER_H
+#ifndef MBR_H
+#define	MBR_H
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <glib.h>
+#include "Message.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-struct buffer {
-    void *pointer;
-    size_t length;
-};
-
-struct const_buffer {
-    const void *pointer;
-    size_t length;
-};
-
-namespace Buffer {
-    unsigned int g_hash(const void *key);
-    bool g_equal(const void *lhs, const void *rhs);
-    void free(struct buffer *buffer);
-    void g_free(void *data);
-    struct buffer *copy(const void *data, size_t length);
+namespace MBR {
+    bool read_message(int fd, struct p2p_message *message, bool *read_ok);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-#endif /* BUFFER_H */
+#endif	/* MBR_H */

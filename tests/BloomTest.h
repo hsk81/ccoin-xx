@@ -6,7 +6,7 @@
  */
 
 #ifndef BLOOMTEST_H
-#define	BLOOMTEST_H
+#define BLOOMTEST_H
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -18,7 +18,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 class BloomTest : public CPPUNIT_NS::TestFixture {
-
     CPPUNIT_TEST_SUITE(BloomTest);
     CPPUNIT_TEST(testInitAndFree);
     CPPUNIT_TEST(testInsertAndContains);
@@ -35,7 +34,7 @@ private:
     void testInitAndFree();
     void testInsertAndContains();
     void testSerializedAndDeserialize();
-    
+
 private:
     struct bloom *bloom1, *bloom2;
     unsigned char *md1, *md2;
@@ -44,4 +43,4 @@ private:
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-#endif	/* BLOOMTEST_H */
+#endif /* BLOOMTEST_H */

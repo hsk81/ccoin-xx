@@ -6,7 +6,7 @@
  */
 
 #ifndef BASE58TEST_H
-#define	BASE58TEST_H
+#define BASE58TEST_H
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -19,7 +19,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 class Base58Test : public CPPUNIT_NS::TestFixture {
-
     CPPUNIT_TEST_SUITE(Base58Test);
     CPPUNIT_TEST(testEncodeMethod);
     CPPUNIT_TEST(testDecodeMethod);
@@ -34,23 +33,41 @@ public:
     void tearDown() {};
 
 private:
-    void encode(const char *hex_string, const char *b58_string);
-    void decode(const char *hex_string, const char *b58_string);    
+    void encode(
+            const gchar *hex_characters,
+            const gchar *b58_characters);
+    void decode(
+            const gchar *hex_characters,
+            const gchar *b58_characters);
+
 private:
     void testEncodeMethod();
     void testDecodeMethod();
-    void testEncodeAndDecodeMethod();    
+    void testEncodeAndDecodeMethod();
 
 private:
-    void checkPrivateKeyEnc(const char *b58_string, GString *payload, 
-            bool compress, bool is_testnet);
-    void checkPrivateKeyDec(const char *b58_string, GString *payload,
-            bool compress, bool is_testnet);
+    void checkPrivateKeyEnc(
+            const gchar *b58_characters,
+            GString *payload,
+            bool do_compress,
+            bool is_testnet);
+    void checkPrivateKeyDec(
+            const gchar *b58_characters,
+            GString *payload,
+            bool do_compress,
+            bool is_testnet);
 
-    void checkPublicKeyEnc(const char *b58_string, GString *payload,
-            const char *address_type_string, bool is_testnet);
-    void checkPublicKeyDec(const char *b58_string, GString *payload,
-            const char *address_type_string, bool is_testnet);
+    void checkPublicKeyEnc(
+            const gchar *b58_characters,
+            GString *payload,
+            const gchar *address_type,
+            bool is_testnet);
+    void checkPublicKeyDec(
+            const gchar *b58_characters,
+            GString *payload,
+            const gchar *address_type,
+            bool is_testnet);
+
 private:
     void testKeysMethod();
 };
@@ -58,4 +75,4 @@ private:
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-#endif	/* BASE58TEST_H */
+#endif /* BASE58TEST_H */

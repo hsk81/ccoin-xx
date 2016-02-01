@@ -21,18 +21,18 @@ CPPUNIT_TEST_SUITE_REGISTRATION(BlockTest);
 ///////////////////////////////////////////////////////////////////////////////
 
 void runTest(const char *filename_json, const char *filename_ser) {
-    
+
     char* path_json = TestLib::filename(filename_json);
-	json_t *meta = TestLib::read_json(path_json);
-	CPPUNIT_ASSERT(json_is_object(meta));
+    json_t *meta = TestLib::read_json(path_json);
+    CPPUNIT_ASSERT(json_is_object(meta));
 
     char* path_ser = TestLib::filename(filename_ser);
-	int fd_ser = Util::open_file(path_ser);
-	if (fd_ser < 0) {
-		perror(path_ser);
-		exit(1);
-	}
-    
+    int fd_ser = Util::open_file(path_ser);
+    if (fd_ser < 0) {
+        perror(path_ser);
+        exit(1);
+    }
+
     struct p2p_message msg = {};
 
     free(path_json);

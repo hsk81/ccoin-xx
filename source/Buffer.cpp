@@ -15,13 +15,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-guint Buffer::g_hash(gconstpointer key) {
+unsigned int Buffer::g_hash(const void *key) {
 
 	const struct buffer *buffer = (struct buffer*)key;
 	return Util::Djb2::hash(0x1721, buffer->pointer, buffer->length);
 }
 
-gboolean Buffer::g_equal(gconstpointer lhs, gconstpointer rhs) {
+bool Buffer::g_equal(const void *lhs, const void *rhs) {
     
 	const struct buffer *lhs_buffer = (struct buffer*)lhs;
 	const struct buffer *rhs_buffer = (struct buffer*)rhs;
@@ -42,7 +42,7 @@ void Buffer::free(struct buffer *buffer) {
 	::free(buffer);
 }
 
-void Buffer::g_free(gpointer data) {
+void Buffer::g_free(void *data) {
 	Buffer::free((struct buffer*)data);
 }
 

@@ -35,7 +35,7 @@ void FileIOTest::setUp() {
 };
 
 void FileIOTest::tearDown() {
-	free(this->filename);
+    free(this->filename);
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -43,21 +43,21 @@ void FileIOTest::tearDown() {
 
 void FileIOTest::testReadMethod() {
 
-	bool rc = Util::read_file(this->filename, &data, &data_length, 100);
-	CPPUNIT_ASSERT(!rc);
-	CPPUNIT_ASSERT(data == NULL);
-	CPPUNIT_ASSERT(data_length == 0);
+    bool rc = Util::read_file(this->filename, &data, &data_length, 100);
+    CPPUNIT_ASSERT(!rc);
+    CPPUNIT_ASSERT(data == NULL);
+    CPPUNIT_ASSERT(data_length == 0);
 
-	rc = Util::read_file(this->filename, &data, &data_length, 100 * 1024*1024);
-	CPPUNIT_ASSERT(rc);
-	CPPUNIT_ASSERT(data != NULL);
-	CPPUNIT_ASSERT(data_length == 8193);
+    rc = Util::read_file(this->filename, &data, &data_length, 100 * 1024 * 1024);
+    CPPUNIT_ASSERT(rc);
+    CPPUNIT_ASSERT(data != NULL);
+    CPPUNIT_ASSERT(data_length == 8193);
 
-	unsigned char md[SHA_DIGEST_LENGTH];
-	SHA1((const unsigned char*)data, data_length, md);
-	char hexstr[(SHA_DIGEST_LENGTH * 2) + 1];
-	HexCode::encode(hexstr, md, SHA_DIGEST_LENGTH);
-	CPPUNIT_ASSERT(strcmp(hexstr, RANDOM_DATA_SHA1SUM) == 0);
+    unsigned char md[SHA_DIGEST_LENGTH];
+    SHA1((const unsigned char*) data, data_length, md);
+    char hexstr[(SHA_DIGEST_LENGTH * 2) + 1];
+    HexCode::encode(hexstr, md, SHA_DIGEST_LENGTH);
+    CPPUNIT_ASSERT(strcmp(hexstr, RANDOM_DATA_SHA1SUM) == 0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

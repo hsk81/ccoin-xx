@@ -1,12 +1,10 @@
 /* 
  * File:   Base58.h
  * Author: hsk81
- *
- * Created on July 5, 2013, 4:52 PM
  */
 
 #ifndef BASE58_H
-#define	BASE58_H
+#define BASE58_H
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -17,16 +15,26 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-namespace Base58 {    
-    GString* encode(const void *data, size_t data_length);
-    GString* encode_check(unsigned char address_type, bool has_address_type,
-            const void* data, size_t data_length);
+namespace Base58 {
+    GString* encode(
+            gconstpointer data_pointer,
+            gsize data_length);
 
-    GString* decode(const char *string_in);
-    GString* decode_check(unsigned char *address_type, const char *string_in);
+    GString* encode_check(
+            guchar address_type,
+            bool has_address_type,
+            gconstpointer data,
+            gsize data_length);
+
+    GString* decode(
+            const gchar *characters);
+
+    GString* decode_check(
+            guchar *address_type, 
+            const gchar *characters);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-#endif	/* BASE58_H */
+#endif /* BASE58_H */
