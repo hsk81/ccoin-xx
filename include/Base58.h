@@ -23,7 +23,7 @@ namespace Base58 {
     GString* encode_check(
             guchar address_type,
             bool has_address_type,
-            gconstpointer data,
+            gconstpointer data_pointer,
             gsize data_length);
 
     GString* decode(
