@@ -24,34 +24,34 @@ GString *Base58::encode(
         gconstpointer data_pointer, gsize data_length) {
 
     const guchar *data = (guchar*) data_pointer;
-    BIGNUM bn58, bn0, bn, dv, rem;
+    BIGNUM divisor, zero, dividend, quotient, remainder;
     BN_CTX *context = BN_CTX_new();
 
-    BN_init(&bn58);
-    BN_init(&bn0);
-    BN_init(&bn);
-    BN_init(&dv);
-    BN_init(&rem);
+    BN_init(&divisor);
+    BN_init(&zero);
+    BN_init(&dividend);
+    BN_init(&quotient);
+    BN_init(&remainder);
 
-    BN_set_word(&bn58, 58);
-    BN_set_word(&bn0, 0);
+    BN_set_word(&divisor, 58);
+    BN_set_word(&zero, 0);
 
     guchar swapbuf[data_length + 1];
     Util::reverse_copy(swapbuf, data, data_length);
     swapbuf[data_length] = 0;
 
-    Util::BigNum::setvch(&bn, swapbuf, sizeof (swapbuf));
+    Util::BigNum::setvch(&dividend, swapbuf, sizeof (swapbuf));
     GString *result = g_string_sized_new(data_length * 138 / 100 + 1);
     GString *result_swap;
 
-    while (BN_cmp(&bn, &bn0) > 0) {
-        if (!BN_div(&dv, &rem, &bn, &bn58, context)) {
+    while (BN_cmp(&dividend, &zero) > 0) {
+        if (!BN_div(&quotient, &remainder, &dividend, &divisor, context)) {
             goto exit_error;
         }
 
-        BN_copy(&bn, &dv);
-        gint c = BN_get_word(&rem);
-        g_string_append_c(result, Base58::chars[c]);
+        BN_copy(&dividend, &quotient);
+        gint index = BN_get_word(&remainder);
+        g_string_append_c(result, Base58::chars[index]);
     }
 
     for (guint index = 0; index < data_length; index++) {
@@ -72,11 +72,11 @@ GString *Base58::encode(
     result = result_swap;
 
 exit:
-    BN_clear_free(&bn58);
-    BN_clear_free(&bn0);
-    BN_clear_free(&bn);
-    BN_clear_free(&dv);
-    BN_clear_free(&rem);
+    BN_clear_free(&divisor);
+    BN_clear_free(&zero);
+    BN_clear_free(&dividend);
+    BN_clear_free(&quotient);
+    BN_clear_free(&remainder);
     BN_CTX_free(context);
 
     return result;
@@ -99,10 +99,10 @@ GString *Base58::encode_check(
     Util::Hash4(md32, string->str, string->len);
 
     g_string_append_len(string, (gchar*) md32, 4);
-    GString *s_enc = Base58::encode(string->str, string->len);
+    GString *string_enc = Base58::encode(string->str, string->len);
     g_string_free(string, TRUE);
 
-    return s_enc;
+    return string_enc;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
