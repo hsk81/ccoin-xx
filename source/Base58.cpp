@@ -110,14 +110,14 @@ GString *Base58::encode_check(
 
 GString *Base58::decode(const gchar* characters) {
 
+    GString *result = NULL;
     BIGNUM bn58, bn, bn_char;
     BN_CTX *context;
-    GString *result = NULL;
 
-    GString *tmp;
     guint leading_zero = 0;
-    guint be_size;
-    GString *tmp_be;
+    GString *tmp_string;
+    guint be_length;
+    GString *be_string;
 
     context = BN_CTX_new();
     BN_init(&bn58);
@@ -132,41 +132,41 @@ GString *Base58::decode(const gchar* characters) {
     }
 
     for (const gchar *pch = characters; *pch; pch++) {
-        const gchar *pch_ = strchr(Base58::chars, *pch);
-        if (!pch_) {
+        const gchar *pch_b58 = strchr(Base58::chars, *pch);
+        if (!pch_b58) {
             while (isspace(*pch)) pch++;
             if (*pch != '\0') goto exit;
             break;
         }
 
-        BN_set_word(&bn_char, pch_ - Base58::chars);
+        BN_set_word(&bn_char, pch_b58 - Base58::chars);
         if (!BN_mul(&bn, &bn, &bn58, context)) goto exit;
         if (!BN_add(&bn, &bn, &bn_char)) goto exit;
     }
 
-    tmp = Util::BigNum::getvch(&bn);
+    tmp_string = Util::BigNum::getvch(&bn);
 
-    if ((tmp->len >= 2) &&
-            (tmp->str[tmp->len - 1] == 0) &&
-            ((guchar) tmp->str[tmp->len - 2] >= 0x80)) {
-        g_string_set_size(tmp, tmp->len - 1);
+    if ((tmp_string->len >= 2) &&
+            (tmp_string->str[tmp_string->len - 1] == 0) &&
+            ((guchar) tmp_string->str[tmp_string->len - 2] >= 0x80)) {
+        g_string_set_size(tmp_string, tmp_string->len - 1);
     }
 
     for (const gchar *pch = characters; *pch == Base58::chars[0]; pch++) {
         leading_zero++;
     }
 
-    be_size = tmp->len + leading_zero;
-    tmp_be = g_string_sized_new(be_size);
-    g_string_set_size(tmp_be, be_size);
-    memset(tmp_be->str, 0, be_size);
+    be_length = tmp_string->len + leading_zero;
+    be_string = g_string_sized_new(be_length);
+    g_string_set_size(be_string, be_length);
+    memset(be_string->str, 0, be_length);
 
     Util::reverse_copy(
-            (guchar *) tmp_be->str + leading_zero, 
-            (guchar *) tmp->str, tmp->len);
+            (guchar *) be_string->str + leading_zero, 
+            (guchar *) tmp_string->str, tmp_string->len);
 
-    g_string_free(tmp, TRUE);
-    result = tmp_be;
+    g_string_free(tmp_string, TRUE);
+    result = be_string;
 
 exit:
     BN_clear_free(&bn58);
