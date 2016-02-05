@@ -1,12 +1,10 @@
 /* 
  * File:   Key.h
  * Author: hsk81
- *
- * Created on February 1, 2014, 1:42 PM
  */
 
 #ifndef KEY_H
-#define	KEY_H
+#define KEY_H
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -18,33 +16,34 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 struct key {
-	EC_KEY *ec_key;
+    EC_KEY *ec_key;
 };
 
 namespace Key {
-    bool init(struct key *key);
+    gboolean init(struct key *key);
     void free(struct key *key);
-    bool generate(struct key *key);
-    bool get_public(struct key *key, void **pointer, size_t *length);
+    gboolean generate(struct key *key);
+    gboolean get_public(struct key *key, gpointer *pointer, gsize *size);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
 struct keyset {
-	GHashTable *pubkey;
-	GHashTable *pubkey_hash; //RIPEMD160
+    GHashTable *pubkey;
+    GHashTable *pubkey_hash; //RIPEMD160
 };
 
 namespace Keyset {
     void init(struct keyset *keyset);
     void free(struct keyset *keyset);
-    bool add(struct keyset *keyset, struct key *key);
-    bool lookup(const struct keyset *keyset, const void *data, size_t length,
-        bool is_hash);
+    gboolean add(struct keyset *keyset, struct key *key);
+    gboolean lookup(
+            const struct keyset *keyset, gconstpointer data, gsize size,
+            gboolean is_hash);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-#endif	/* KEY_H */
+#endif /* KEY_H */

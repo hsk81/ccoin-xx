@@ -1,8 +1,6 @@
 /*
  * File:   KeysetTest.h
  * Author: hsk81
- *
- * Created on Feb 1, 2014, 1:30:35 PM
  */
 
 #ifndef KEYSETTEST_H

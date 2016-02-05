@@ -1,8 +1,6 @@
 /*
  * File:   KeysetTestRunner.cpp
  * Author: hsk81
- *
- * Created on Feb 1, 2014, 1:30:35 PM
  */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -19,23 +17,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 int main() {
-    // Create the event manager and test controller
     CPPUNIT_NS::TestResult controller;
-
-    // Add a listener that collects test result
     CPPUNIT_NS::TestResultCollector result;
-    controller.addListener(&result);
-
-    // Add a listener that print dots as test run.
     CPPUNIT_NS::BriefTestProgressListener progress;
+    CPPUNIT_NS::TestRunner runner;
+
+    controller.addListener(&result);
     controller.addListener(&progress);
 
-    // Add the top suite to the test runner
-    CPPUNIT_NS::TestRunner runner;
     runner.addTest(CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest());
     runner.run(controller);
 
-    // Print test in a compiler compatible format.
     CPPUNIT_NS::CompilerOutputter outputter(&result, CPPUNIT_NS::stdCOut());
     outputter.write();
 
