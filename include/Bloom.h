@@ -1,47 +1,48 @@
 /* 
  * File:   Bloom.h
  * Author: hsk81
- *
- * Created on September 19, 2013, 9:16 AM
  */
 
 #ifndef BLOOM_H
-#define	BLOOM_H
+#define BLOOM_H
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "Buffer.h"
-#include <stdbool.h>
 #include <glib.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
 struct bloom {
-	GString *data;
-	unsigned int n_hash_funcs;
+    GString *data;
+    guint n_hash_funcs;
 };
 
-namespace Bloom { // 20k items with FP rate < 0.1% or 10k items and < 0.0001%
+//
+// 20k items with an FP rate less than 0.1% or 10k items and less than 0.0001%
+//
+
+namespace Bloom {
 
     enum {
         MAX_FILTER_SIZE = 36000, // bytes
         MAX_HASH_FUNCS = 50,
     };
 
-    bool init(struct bloom *bf, unsigned int n_elements, double fp_rate);
-    void __init(struct bloom *bf);
+    gboolean init(struct bloom *bf, guint n_elements, gdouble fp_rate);
+    void init(struct bloom *bf);
     void free(struct bloom *bf);
 
-    void serialize(GString *g_string, const struct bloom *bf);
-    bool deserialize(struct bloom *bf, struct const_buffer *buffer);
-    
-    void insert(struct bloom *bf, const void *data, size_t length);
-    bool contains(struct bloom *bf, const void *data, size_t length);
+    void serialize(GString *string, const struct bloom *bf);
+    gboolean deserialize(struct bloom *bf, struct const_buffer *buffer);
+
+    void insert(struct bloom *bf, gconstpointer data, gsize length);
+    gboolean contains(struct bloom *bf, gconstpointer data, gsize length);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-#endif	/* BLOOM_H */
+#endif /* BLOOM_H */

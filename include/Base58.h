@@ -17,8 +17,7 @@
 namespace Base58 {
     GString* encode(
             gconstpointer data,
-            gsize size
-    );
+            gsize size);
 
     GString* encode_check(
             guchar address_type,
@@ -30,7 +29,7 @@ namespace Base58 {
             const gchar *characters);
 
     GString* decode_check(
-            guchar *address_type, 
+            guchar *address_type,
             const gchar *characters);
 }
 

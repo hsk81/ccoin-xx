@@ -1,8 +1,6 @@
 /*
  * File:   BloomTest.h
  * Author: hsk81
- *
- * Created on Sep 19, 2013, 9:05:40 AM
  */
 
 #ifndef BLOOMTEST_H
@@ -37,7 +35,7 @@ private:
 
 private:
     struct bloom *bloom1, *bloom2;
-    unsigned char *md1, *md2;
+    guchar *md1, *md2;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
