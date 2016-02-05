@@ -1,8 +1,6 @@
 /* 
  * File:   HexCode.h
  * Author: hsk81
- *
- * Created on July 7, 2013, 3:13 PM
  */
 
 #ifndef HEXCODE_H
@@ -11,18 +9,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <stdbool.h>
 #include <glib.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
 namespace HexCode {
-    void encode(char *hex_string, const void *pointer, size_t length);
-    bool decode(void *pointer, size_t max_length, const char *hex_string,
-            size_t *out_length);
-    GString *to_string(const char *hex_string);
-    bool is_hex(const char *hex_string, bool require_prefix);
+    void encode(gchar *hex_string, gconstpointer pointer, gsize length);
+    gboolean decode(
+            gpointer pointer, gsize max_length,
+            const gchar *hex_string, gsize *out_length);
+
+    GString *to_string(const gchar *hex_string);
+    gboolean is_hex(const gchar *hex_string, gboolean prefix);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -1,8 +1,6 @@
 /*
  * File:   HexCode.cpp
  * Author: hsk81
- *
- * Created on Jul 7, 2013, 5:20:15 PM
  */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -15,7 +13,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-static const unsigned char hexdigit_val[256] = {
+static const guchar hexdigit_val[256] = {
     0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, //008
     0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, //016
     0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, //024
@@ -34,16 +32,16 @@ static const unsigned char hexdigit_val[256] = {
     0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, //128
 };
 
-static const char hexdigit[] = "0123456789abcdef";
+static const gchar hexdigit[] = "0123456789abcdef";
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void HexCode::encode(char *hex_string, const void *pointer, size_t length) {
+void HexCode::encode(gchar *hex_string, gconstpointer pointer, gsize length) {
 
-    const unsigned char *puch = (unsigned char*)pointer;
-    for (unsigned int i = 0; i < length; i++) {
-        unsigned char v, n1, n2;
+    const guchar *puch = (guchar*) pointer;
+    for (guint i = 0; i < length; i++) {
+        guchar v, n1, n2;
 
         v = puch[i];
         n1 = v >> 4;
@@ -56,27 +54,28 @@ void HexCode::encode(char *hex_string, const void *pointer, size_t length) {
     *hex_string = 0;
 }
 
-bool HexCode::decode(void *pointer, size_t max_length, const char *hex_string,
-        size_t *out_length) {
+gboolean HexCode::decode(
+        gpointer pointer, gsize max_length,
+        const gchar *hex_string, gsize *hex_length) {
 
     if (!pointer || !hex_string)
-        return false;
+        return FALSE;
     if (!strncmp(hex_string, "0x", 2))
         hex_string += 2;
     if (strlen(hex_string) > (max_length * 2))
-        return false;
+        return FALSE;
 
-    unsigned char *buffer = (unsigned char*)pointer;
-    size_t length = 0;
+    guchar *buffer = (guchar*) pointer;
+    gsize length = 0;
 
     while (*hex_string) {
-        unsigned char c1 = (unsigned char) hex_string[0];
-        unsigned char v1 = hexdigit_val[c1];
-        if (!v1 && (c1 != '0')) return false;
+        guchar c1 = (guchar) hex_string[0];
+        guchar v1 = hexdigit_val[c1];
+        if (!v1 && (c1 != '0')) return FALSE;
 
-        unsigned char c2 = (unsigned char) hex_string[1];
-        unsigned char v2 = hexdigit_val[c2];
-        if (!v2 && (c2 != '0')) return false;
+        guchar c2 = (guchar) hex_string[1];
+        guchar v2 = hexdigit_val[c2];
+        if (!v2 && (c2 != '0')) return FALSE;
 
         *buffer = (v1 << 4) | v2;
 
@@ -85,35 +84,35 @@ bool HexCode::decode(void *pointer, size_t max_length, const char *hex_string,
         hex_string += 2;
     }
 
-    if (out_length) {
-        *out_length = length;
+    if (hex_length) {
+        *hex_length = length;
     }
 
-    return true;
+    return TRUE;
 }
 
-GString *HexCode::to_string(const char *hex_string) {
-    
+GString *HexCode::to_string(const gchar *hex_string) {
+
     if (!hex_string || !*hex_string) return NULL;
     if (!strncmp(hex_string, "0x", 2)) hex_string += 2;
 
-    size_t length = strlen(hex_string) / 2;
-    GString *g_string = g_string_sized_new(length);
-    g_string_set_size(g_string, length);
-    memset(g_string->str, 0, length);
+    gsize length = strlen(hex_string) / 2;
+    GString *string = g_string_sized_new(length);
+    g_string_set_size(string, length);
+    memset(string->str, 0, length);
 
-    size_t out_length = 0;
-    bool rc = HexCode::decode(g_string->str, length, hex_string, &out_length);
+    gsize out_length = 0;
+    gboolean rc = HexCode::decode(string->str, length, hex_string, &out_length);
 
     if (!rc || (length != out_length)) {
-        g_string_free(g_string, TRUE);
+        g_string_free(string, TRUE);
         return NULL;
     }
 
-    return g_string;
+    return string;
 }
 
-bool HexCode::is_hex(const char *hex_string, bool require_prefix) {
+gboolean HexCode::is_hex(const gchar *hex_string, gboolean prefix) {
     throw "not implemented";
 }
 

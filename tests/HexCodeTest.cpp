@@ -1,17 +1,13 @@
 /*
  * File:   HexCodeTest.cpp
  * Author: hsk81
- *
- * Created on Jul 9, 2013, 10:27:13 AM
  */
 
 #include "HexCodeTest.h"
 #include "TestLib.h"
 
 #include "../include/HexCode.h"
-
 #include <string.h>
-#include <stdlib.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -21,20 +17,20 @@ CPPUNIT_TEST_SUITE_REGISTRATION(HexCodeTest);
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-static const char *data = "domitilla cantat lucius ridet\x1\x2\x3\x4";
-static size_t data_length = strlen(data);
-static char *hex_string;
+static const gchar *data = "domitilla cantat lucius ridet\x1\x2\x3\x4";
+static gsize length = strlen(data);
+static gchar *hex_string;
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
 void HexCodeTest::testEncode1Method() {
 
-    const char *data1 = "\xf1\x1f";
-    size_t data1_len = strlen(data1);
+    const gchar *data1 = "\xf1\x1f";
+    gsize data1_len = strlen(data1);
 
-    size_t alloc_len = (data_length * 2) + 1000;
-    char *hexstr1 = (char*) malloc(alloc_len);
+    gsize alloc_len = (length * 2) + 1000;
+    gchar *hexstr1 = (gchar*) malloc(alloc_len);
     memset(hexstr1, 0xef, alloc_len);
 
     HexCode::encode(hexstr1, data1, data1_len);
@@ -44,44 +40,46 @@ void HexCodeTest::testEncode1Method() {
 
 void HexCodeTest::testEncode2Method() {
 
-    size_t alloc_len = (data_length * 2) + 1000;
-    hex_string = (char*) malloc(alloc_len);
+    gsize alloc_len = (length * 2) + 1000;
+    hex_string = (gchar*) malloc(alloc_len);
     memset(hex_string, 0xef, alloc_len);
 
-    HexCode::encode(hex_string, data, data_length);
-    CPPUNIT_ASSERT(strlen(hex_string) == (data_length * 2));
-    CPPUNIT_ASSERT((unsigned char) hex_string[(data_length * 2) + 1] == 0xef);
+    HexCode::encode(hex_string, data, length);
+    CPPUNIT_ASSERT(strlen(hex_string) == (length * 2));
+    CPPUNIT_ASSERT((guchar) hex_string[(length * 2) + 1] == 0xef);
 }
 
 void HexCodeTest::testDecode1Method() {
 
-    char decode_buf[(data_length * 2) + 1000];
-    memset(decode_buf, 0xef, sizeof (decode_buf));
+    gchar buffer[(length * 2) + 1000];
+    memset(buffer, 0xef, sizeof (buffer));
 
-    size_t out_len = 0;
-    bool rc = HexCode::decode(decode_buf, 10, hex_string, &out_len);
+    gsize out_length = 0;
+    gboolean rc1 =
+            HexCode::decode(buffer, 10, hex_string, &out_length);
 
-    CPPUNIT_ASSERT(!rc);
-    CPPUNIT_ASSERT(out_len == 0);
+    CPPUNIT_ASSERT(!rc1);
+    CPPUNIT_ASSERT(out_length == 0);
 
-    memset(decode_buf, 0xef, sizeof (decode_buf));
-    rc = HexCode::decode(decode_buf, sizeof (decode_buf), hex_string, &out_len);
+    memset(buffer, 0xef, sizeof (buffer));
+    gboolean rc2 =
+            HexCode::decode(buffer, sizeof (buffer), hex_string, &out_length);
 
-    CPPUNIT_ASSERT(rc);
-    CPPUNIT_ASSERT(out_len == data_length);
-    CPPUNIT_ASSERT(memcmp(data, decode_buf, out_len) == 0);
-    CPPUNIT_ASSERT((unsigned char) decode_buf[out_len] == 0xef);
+    CPPUNIT_ASSERT(rc2);
+    CPPUNIT_ASSERT(out_length == length);
+    CPPUNIT_ASSERT(memcmp(data, buffer, out_length) == 0);
+    CPPUNIT_ASSERT((guchar) buffer[out_length] == 0xef);
 }
 
 void HexCodeTest::testDecode2Method() {
 
-    GString *s = HexCode::to_string(hex_string);
+    GString *string = HexCode::to_string(hex_string);
 
-    CPPUNIT_ASSERT(s != NULL);
-    CPPUNIT_ASSERT(s->len == data_length);
-    CPPUNIT_ASSERT(memcmp(s->str, data, data_length) == 0);
+    CPPUNIT_ASSERT(string != NULL);
+    CPPUNIT_ASSERT(string->len == length);
+    CPPUNIT_ASSERT(memcmp(string->str, data, length) == 0);
 
-    g_string_free(s, TRUE);
+    g_string_free(string, TRUE);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

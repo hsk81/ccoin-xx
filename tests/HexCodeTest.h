@@ -1,8 +1,6 @@
 /*
  * File:   HexCodeTest.h
  * Author: hsk81
- *
- * Created on Jul 9, 2013, 10:27:13 AM
  */
 
 #ifndef HEXCODETEST_H
