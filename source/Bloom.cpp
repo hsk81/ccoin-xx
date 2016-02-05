@@ -107,7 +107,7 @@ gboolean Bloom::init(struct bloom *bf, guint n_elements, gdouble fp_rate) {
     string_resize(bf->data, filter_size - 1);
 
     bf->n_hash_funcs = MIN(
-            (guint)(bf->data->len * 8 / n_elements * LN2),
+            (guint) (bf->data->len * 8 / n_elements * LN2),
             Bloom::MAX_HASH_FUNCS);
 
     return TRUE;

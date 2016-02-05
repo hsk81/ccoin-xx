@@ -1,8 +1,6 @@
 /*
  * File:   FileIOTest.h
  * Author: hsk81
- *
- * Created on Jul 9, 2013, 11:39:02 AM
  */
 
 #ifndef FILEIOTEST_H
@@ -12,6 +10,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <cppunit/extensions/HelperMacros.h>
+#include <glib.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -22,13 +21,17 @@ class FileIOTest : public CPPUNIT_NS::TestFixture {
     CPPUNIT_TEST_SUITE_END();
 
 public:
-    FileIOTest() {};
-    virtual ~FileIOTest() {};
+
+    FileIOTest() {
+    };
+
+    virtual ~FileIOTest() {
+    };
     void setUp();
     void tearDown();
 
 private:
-    char* filename;
+    gchar* filename;
 
 private:
     void testReadMethod();
