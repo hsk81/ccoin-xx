@@ -1,8 +1,6 @@
 /* 
  * File:   Net.h
  * Author: hsk81
- *
- * Created on July 9, 2013, 9:26 AM
  */
 
 #ifndef NET_H
@@ -11,16 +9,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <stdbool.h>
 #include <string.h>
+#include <glib.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-extern const char ipv4_mapped_prefix[];
+extern const gchar ipv4_mapped_prefix[];
 
 namespace Net {
-    inline bool is_ipv4_mapped(const unsigned char *ip_address) {
+    inline gboolean is_ipv4_mapped(const guchar *ip_address) {
         return memcmp(ip_address, ipv4_mapped_prefix, 12) == 0;
     }
 }

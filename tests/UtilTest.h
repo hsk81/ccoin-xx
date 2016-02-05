@@ -1,8 +1,6 @@
 /*
  * File:   UtilTest.h
  * Author: hsk81
- *
- * Created on Jul 8, 2013, 8:36:45 PM
  */
 
 #ifndef UTILTEST_H
