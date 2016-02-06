@@ -1,15 +1,12 @@
 /* 
  * File:   Util.cpp
  * Author: hsk81
- * 
- * Created on July 5, 2013, 6:37 PM
  */
 
 #include "../include/Util.h"
 
 #include <openssl/sha.h>
 #include <openssl/ripemd.h>
-#include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <string.h>
@@ -18,146 +15,143 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void Util::reverse_copy(unsigned char* target, const unsigned char* source,
-        size_t length) {
-    
-    for (unsigned int i = 0; i < length; i++) {
-        target[length - i - 1] = source[i];
+void Util::reverse_copy(guchar* target, const guchar* source, gsize size) {
+
+    for (guint i = 0; i < size; i++) {
+        target[size - i - 1] = source[i];
     }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void Util::Hash(unsigned char *md256, const void *data, size_t length) {
+void Util::Hash(guchar *md256, gconstpointer data, gsize size) {
 
-    unsigned char md1[SHA256_DIGEST_LENGTH];
-    SHA256((const unsigned char*)data, length, md1);
-    SHA256(md1, SHA256_DIGEST_LENGTH, md256);
+    guchar _md1[SHA256_DIGEST_LENGTH];
+    SHA256((const guchar*) data, size, _md1);
+    SHA256(_md1, SHA256_DIGEST_LENGTH, md256);
 }
 
-void Util::Hash4(unsigned char *md32, const void *data, size_t length) {
+void Util::Hash4(guchar *md32, gconstpointer data, gsize size) {
 
-    unsigned char md256[SHA256_DIGEST_LENGTH];
-    Util::Hash(md256, data, length);
-    memcpy(md32, md256, 4);
+    guchar _md256[SHA256_DIGEST_LENGTH];
+    Util::Hash(_md256, data, size);
+    memcpy(md32, _md256, 4);
 }
 
-void Util::Hash160(unsigned char *md160, const void *data, size_t length)
-{
-	unsigned char md1[SHA256_DIGEST_LENGTH];
-	SHA256((unsigned char*)data, length, md1);
-	RIPEMD160((unsigned char*)md1, SHA256_DIGEST_LENGTH, md160);
+void Util::Hash160(guchar *md160, gconstpointer data, gsize size) {
+
+    guchar _md1[SHA256_DIGEST_LENGTH];
+    SHA256((guchar*) data, size, _md1);
+    RIPEMD160((guchar*) _md1, SHA256_DIGEST_LENGTH, md160);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-int Util::open_file(const char *filename) {
+gint Util::open_file(const gchar *path) {
 
-	int fd = open(filename, O_RDONLY | O_LARGEFILE);
-	if (fd < 0) return -1;
+    gint _fd = open(path, O_RDONLY | O_LARGEFILE);
+    if (_fd < 0) return -1;
 
 #if _XOPEN_SOURCE >= 600 || _POSIX_C_SOURCE >= 200112L
-	posix_fadvise(fd, 0, 0, POSIX_FADV_SEQUENTIAL);
+    posix_fadvise(_fd, 0, 0, POSIX_FADV_SEQUENTIAL);
 #endif
 
-	return fd;
+    return _fd;
 }
 
-bool Util::read_file(const char *filename, void **data, size_t *length,
-        size_t max_file_size) {
+gboolean Util::read_file(
+        const gchar *path, gpointer *data, gsize *size, gsize max_size) {
 
-	void *data_;
-	struct stat st;
+    gpointer _data;
+    struct stat _stat;
 
-	*data = NULL;
-	*length = 0;
-    ssize_t rrc;
+    *data = NULL;
+    *size = 0;
+    glong _rrc;
 
-	int fd = Util::open_file(filename);
-	if (fd < 0) return false;
+    gint _fd = Util::open_file(path);
+    if (_fd < 0) return FALSE;
 
-	if (fstat(fd, &st) < 0) goto err_out_fd;
-	if (st.st_size > max_file_size) goto err_out_fd;
+    if (fstat(_fd, &_stat) < 0) goto exit;
+    if (_stat.st_size > max_size) goto exit;
 
-	data_ = malloc(st.st_size);
-	if (!data_) goto err_out_fd;
-	rrc = read(fd, data_, st.st_size);
-	if (rrc != st.st_size) goto err_out_mem;
+    _data = malloc(_stat.st_size);
+    if (!_data) goto exit;
+    _rrc = read(_fd, _data, _stat.st_size);
+    if (_rrc != _stat.st_size) goto exit_free;
 
-	close(fd);
-	fd = -1;
+    close(_fd);
+    _fd = -1;
 
-	*data = data_;
-	*length = st.st_size;
+    *data = _data;
+    *size = _stat.st_size;
 
-	return true;
-
-err_out_mem:
-	free(data_);
-err_out_fd:
-	if (fd >= 0) close(fd);
-	return false;
+    return TRUE;
+exit_free:
+    free(_data);
+exit:
+    if (_fd >= 0) close(_fd);
+    return FALSE;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void Util::BigNum::setvch(BIGNUM* value, const void* data, size_t length) {
-    
-    const unsigned char *data_ = (unsigned char*)data;
-    unsigned int vch_sz = length + 4;
-    unsigned char vch[vch_sz];
+void Util::BigNum::setvch(BIGNUM* value, gconstpointer data, gsize size) {
 
-    vch[0] = (length >> 24) & 0xff;
-    vch[1] = (length >> 16) & 0xff;
-    vch[2] = (length >> 8) & 0xff;
-    vch[3] = (length >> 0) & 0xff;
+    const guchar *_data = (guchar*) data;
+    guint _puch_size = size + 4;
+    guchar _puch[_puch_size];
 
-    reverse_copy(vch + 4, data_, length);
-    BN_mpi2bn(vch, vch_sz, value);
+    _puch[0] = (size >> 24) & 0xff;
+    _puch[1] = (size >> 16) & 0xff;
+    _puch[2] = (size >> 8) & 0xff;
+    _puch[3] = (size >> 0) & 0xff;
+
+    reverse_copy(_puch + 4, _data, size);
+    BN_mpi2bn(_puch, _puch_size, value);
 }
 
 GString *Util::BigNum::getvch(const BIGNUM* value) {
-    
-    /* get MPI format size */
-    unsigned int sz = BN_bn2mpi(value, NULL);
-    if (sz <= 4) return g_string_new(NULL);
 
-    /* store bignum as MPI */
-    GString *s_be = g_string_sized_new(sz);
-    g_string_set_size(s_be, sz);
-    BN_bn2mpi(value, (unsigned char *) s_be->str);
+    // get MPI format size
+    guint _size = BN_bn2mpi(value, NULL);
+    if (_size <= 4) return g_string_new(NULL);
 
-    /* copy-swap MPI to little endian, sans 32-bit size prefix */
-    unsigned int le_sz = sz - 4;
-    GString *s_le = g_string_sized_new(le_sz);
-    g_string_set_size(s_le, le_sz);
-    reverse_copy((unsigned char *)s_le->str,
-        (unsigned char *)s_be->str + 4, le_sz);
+    // store bignum as MPI
+    GString *_string_be = g_string_sized_new(_size);
+    g_string_set_size(_string_be, _size);
+    BN_bn2mpi(value, (guchar *) _string_be->str);
 
-    g_string_free(s_be, TRUE);
-    return s_le;
+    // copy-swap MPI to little endian, w/o 32-bit size prefix
+    guint _size_le = _size - 4;
+    GString *_string_le = g_string_sized_new(_size_le);
+    g_string_set_size(_string_le, _size_le);
+
+    reverse_copy(
+            (guchar*) _string_le->str, (guchar*) _string_be->str + 4, _size_le);
+
+    g_string_free(_string_be, TRUE);
+    return _string_le;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-unsigned long Util::Djb2::hash(unsigned long hash, const void *buffer,
-        size_t length) {
-    
-	const unsigned char *puch = (unsigned char*)buffer;
-	int ch;
+gulong Util::Djb2::hash(gulong hash, gconstpointer buffer, gsize size) {
 
-	while (length > 0) {
-		ch = *puch++;
-		length--;
-        
-		hash = ((hash << 5) + hash) ^ ch; /* hash * 33 ^ c */
-	}
+    const guchar *puch = (guchar*) buffer;
+    gint ch;
 
-	return hash;
+    while (size > 0) {
+        ch = *puch++;
+        size--;
+        hash = ((hash << 5) + hash) ^ ch;
+    }
+
+    return hash;
 }
 
 

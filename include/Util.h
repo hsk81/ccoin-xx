@@ -1,12 +1,10 @@
 /* 
  * File:   Util.h
  * Author: hsk81
- *
- * Created on July 5, 2013, 6:37 PM
  */
 
 #ifndef UTIL_H
-#define	UTIL_H
+#define UTIL_H
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -25,30 +23,27 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 namespace Util {
+    void reverse_copy(guchar *target, const guchar *source, gsize size);
 
-    void reverse_copy(unsigned char *target, const unsigned char *source,
-            size_t length);
+    void Hash(guchar *md256, gconstpointer data, gsize size);
+    void Hash4(guchar *md32, gconstpointer data, gsize size);
+    void Hash160(guchar *md160, gconstpointer data, gsize size);
 
-    void Hash(unsigned char *md256, const void *data, size_t length);
-    void Hash4(unsigned char *md32, const void *data, size_t length);
-    void Hash160(unsigned char *md160, const void *data, size_t length);
-
-    int open_file(const char *filename);
-    bool read_file(const char *filename, void **data, size_t *length,
-            size_t max_file_size);
+    gint open_file(const gchar *name);
+    gboolean read_file(
+            const gchar *name, gpointer *data, gsize *size, gsize max_size);
 
     namespace BigNum {
         GString *getvch(const BIGNUM *value);
-        void setvch(BIGNUM *value, const void *data, size_t length);
+        void setvch(BIGNUM *value, gconstpointer data, gsize size);
     }
-    
+
     namespace Djb2 {
-        unsigned long hash(unsigned long hash, const void *buffer,
-                size_t length);
+        gulong hash(gulong hash, gconstpointer buffer, gsize length);
     }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-#endif	/* UTIL_H */
+#endif /* UTIL_H */
