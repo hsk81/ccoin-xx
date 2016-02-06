@@ -128,12 +128,12 @@ void Bloom::free(struct bloom *bf) {
 ///////////////////////////////////////////////////////////////////////////////
 
 void Bloom::serialize(GString *g_string, const struct bloom *bf) {
-    Serialize::varstr(g_string, bf->data);
+    Serialize::var_string(g_string, bf->data);
     Serialize::u32(g_string, bf->n_hash_funcs);
 }
 
 gboolean Bloom::deserialize(struct bloom *bf, struct const_buffer *buffer) {
-    if (!Deserialize::varstr(&bf->data, buffer)) return FALSE;
+    if (!Deserialize::var_string(&bf->data, buffer)) return FALSE;
     if (!Deserialize::u32(&bf->n_hash_funcs, buffer)) return FALSE;
 
     return TRUE;
