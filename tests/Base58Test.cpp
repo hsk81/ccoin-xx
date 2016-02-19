@@ -164,11 +164,11 @@ void Base58Test::checkPublicKeyEnc(
 
     CPPUNIT_ASSERT(payload != NULL);
 
-    gboolean address_type_pubkey = (strcmp(address_type, "pubkey") == 0);
-    gboolean address_type_script = (strcmp(address_type, "script") == 0);
-    CPPUNIT_ASSERT(address_type_pubkey || address_type_script);
+    gboolean is_pubkey = (strcmp(address_type, "pubkey") == 0);
+    gboolean is_script = (strcmp(address_type, "script") == 0);
+    CPPUNIT_ASSERT(is_pubkey || is_script);
 
-    enum AddressType a_type = address_type_pubkey
+    enum AddressType a_type = is_pubkey
             ? is_testnet ? PUBKEY_ADDRESS_TEST : PUBKEY_ADDRESS
             : is_testnet ? SCRIPT_ADDRESS_TEST : SCRIPT_ADDRESS;
 
@@ -186,11 +186,11 @@ void Base58Test::checkPublicKeyDec(
 
     CPPUNIT_ASSERT(payload != NULL);
 
-    gboolean address_type_pubkey = (strcmp(address_type, "pubkey") == 0);
-    gboolean address_type_script = (strcmp(address_type, "script") == 0);
-    CPPUNIT_ASSERT(address_type_pubkey || address_type_script);
+    gboolean is_pubkey = (strcmp(address_type, "pubkey") == 0);
+    gboolean is_script = (strcmp(address_type, "script") == 0);
+    CPPUNIT_ASSERT(is_pubkey || is_script);
 
-    enum AddressType type = address_type_pubkey
+    enum AddressType type = is_pubkey
             ? is_testnet ? PUBKEY_ADDRESS_TEST : PUBKEY_ADDRESS
             : is_testnet ? SCRIPT_ADDRESS_TEST : SCRIPT_ADDRESS;
 
