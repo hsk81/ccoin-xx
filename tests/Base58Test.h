@@ -30,12 +30,8 @@ public:
     void tearDown() {};
 
 private:
-    void encode(
-            const gchar *hex_characters,
-            const gchar *b58_characters);
-    void decode(
-            const gchar *hex_characters,
-            const gchar *b58_characters);
+    void encode(const gchar *hex_chars, const gchar *b58_chars);
+    void decode(const gchar *hex_chars, const gchar *b58_chars);
 
 private:
     void testEncodeMethod();
@@ -44,26 +40,17 @@ private:
 
 private:
     void checkPrivateKeyEnc(
-            const gchar *b58_characters,
-            GString *payload,
-            gboolean do_compress,
-            gboolean is_testnet);
+            const gchar *b58_chars, GString *payload,
+            gboolean do_compress, gboolean is_testnet);
     void checkPrivateKeyDec(
-            const gchar *b58_characters,
-            GString *payload,
-            gboolean do_compress,
-            gboolean is_testnet);
-
+            const gchar *b58_chars, GString *payload,
+            gboolean do_compress, gboolean is_testnet);
     void checkPublicKeyEnc(
-            const gchar *b58_characters,
-            GString *payload,
-            const gchar *address_type,
-            gboolean is_testnet);
+            const gchar *b58_chars, GString *payload,
+            const gchar *address_type, gboolean is_testnet);
     void checkPublicKeyDec(
-            const gchar *b58_characters,
-            GString *payload,
-            const gchar *address_type,
-            gboolean is_testnet);
+            const gchar *b58_chars, GString *payload,
+            const gchar *address_type, gboolean is_testnet);
 
 private:
     void testKeysMethod();

@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   Base58.h
  * Author: hsk81
  */
@@ -16,21 +16,14 @@
 
 namespace Base58 {
     GString* encode(
-            gconstpointer data,
-            gsize size);
-
+            gconstpointer pointer, gsize size);
     GString* encode_check(
-            guchar address_type,
-            gboolean has_address_type,
-            gconstpointer data,
-            gsize size);
-
+            gconstpointer pointer, gsize size,
+            guchar address_type, gboolean has_address_type);
     GString* decode(
-            const gchar *characters);
-
+            const gchar *chars);
     GString* decode_check(
-            guchar *address_type,
-            const gchar *characters);
+            const gchar *chars, guchar *address_type);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
