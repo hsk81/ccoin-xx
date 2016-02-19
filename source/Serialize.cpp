@@ -38,15 +38,15 @@ void Serialize::u64(GString *string, guint64 value) {
 void Serialize::var_size(GString *string, guint32 size) {
 
     if (size < 253) {
-        guchar uch = size;
-        Serialize::bytes(string, &uch, 1);
+        guchar _uch = size;
+        Serialize::bytes(string, &_uch, 1);
     } else if (size < 0x10000) {
-        guchar uch = 253;
-        Serialize::bytes(string, &uch, 1);
+        guchar _uch = 253;
+        Serialize::bytes(string, &_uch, 1);
         Serialize::u16(string, (guint16) size);
     } else {
-        guchar uch = 254;
-        Serialize::bytes(string, &uch, 1);
+        guchar _uch = 254;
+        Serialize::bytes(string, &_uch, 1);
         Serialize::u32(string, size);
     }
 
@@ -114,20 +114,21 @@ gboolean Deserialize::var_size(guint32 *size, struct const_buffer *buffer) {
 
     guint32 _size;
     guchar _uch;
-    if (!Deserialize::bytes(&_uch, buffer, 1)) return FALSE;
-
+    if (!Deserialize::bytes(&_uch, buffer, 1)) {
+        return FALSE;
+    }
     if (_uch == 253) {
-        guint16 v16;
-        if (!Deserialize::u16(&v16, buffer)) return FALSE;
-        _size = v16;
+        guint16 _v16;
+        if (!Deserialize::u16(&_v16, buffer)) return FALSE;
+        _size = _v16;
     } else if (_uch == 254) {
-        guint32 v32;
-        if (!Deserialize::u32(&v32, buffer)) return FALSE;
-        _size = v32;
+        guint32 _v32;
+        if (!Deserialize::u32(&_v32, buffer)) return FALSE;
+        _size = _v32;
     } else if (_uch == 255) {
-        guint64 v64;
-        if (!Deserialize::u64(&v64, buffer)) return FALSE;
-        _size = (guint32) v64; // WARNING: truncate!
+        guint64 _v64;
+        if (!Deserialize::u64(&_v64, buffer)) return FALSE;
+        _size = (guint32) _v64; // WARNING: truncate!
     } else {
         _size = _uch;
     }

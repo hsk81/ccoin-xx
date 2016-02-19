@@ -17,8 +17,8 @@
 
 void Util::reverse_copy(guchar* target, const guchar* source, gsize size) {
 
-    for (guint i = 0; i < size; i++) {
-        target[size - i - 1] = source[i];
+    for (guint _i = 0; _i < size; _i++) {
+        target[size - _i - 1] = source[_i];
     }
 }
 
@@ -142,13 +142,13 @@ GString *Util::BigNum::getvch(const BIGNUM* value) {
 
 gulong Util::Djb2::hash(gulong hash, gconstpointer buffer, gsize size) {
 
-    const guchar *puch = (guchar*) buffer;
-    gint ch;
+    const guchar *_puch = (guchar*) buffer;
+    gint _ch;
 
     while (size > 0) {
-        ch = *puch++;
+        _ch = *_puch++;
         size--;
-        hash = ((hash << 5) + hash) ^ ch;
+        hash = ((hash << 5) + hash) ^ _ch;
     }
 
     return hash;
