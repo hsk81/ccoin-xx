@@ -31,11 +31,11 @@ public:
 
 private:
     void encode(
-            const gchar *hex_characters,
-            const gchar *b58_characters);
+            const gchar *pch_hex,
+            const gchar *pch_b58);
     void decode(
-            const gchar *hex_characters,
-            const gchar *b58_characters);
+            const gchar *pch_hex,
+            const gchar *pch_b58);
 
 private:
     void testEncodeMethod();
@@ -44,23 +44,23 @@ private:
 
 private:
     void checkPrivateKeyEnc(
-            const gchar *b58_characters,
+            const gchar *pch_b58,
             GString *payload,
             gboolean do_compress,
             gboolean is_testnet);
     void checkPrivateKeyDec(
-            const gchar *b58_characters,
+            const gchar *pch_b58,
             GString *payload,
             gboolean do_compress,
             gboolean is_testnet);
 
     void checkPublicKeyEnc(
-            const gchar *b58_characters,
+            const gchar *pch_b58,
             GString *payload,
             const gchar *address_type,
             gboolean is_testnet);
     void checkPublicKeyDec(
-            const gchar *b58_characters,
+            const gchar *pch_b58,
             GString *payload,
             const gchar *address_type,
             gboolean is_testnet);

@@ -12,7 +12,6 @@
 
 bool MBR::read_message(int fd, p2p_message* message, bool* read_ok) {
     
-    
     return false;
 }
 

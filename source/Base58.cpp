@@ -20,184 +20,186 @@ namespace Base58 {
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-GString *Base58::encode(gconstpointer data, gsize size) {
+GString *Base58::encode(gconstpointer pointer, gsize size) {
 
-    const guchar *data_pointer = (guchar*) data;
-    BIGNUM zero, divisor, dividend, quotient, remainder;
-    BN_CTX *context = BN_CTX_new();
+    const guchar *_pointer = (guchar*) pointer;
+    BIGNUM _zero, _divisor, _dividend, _quotient, _remainder;
+    BN_CTX *_context = BN_CTX_new();
 
-    BN_init(&zero);
-    BN_init(&divisor);
-    BN_init(&dividend);
-    BN_init(&quotient);
-    BN_init(&remainder);
+    BN_init(&_zero);
+    BN_init(&_divisor);
+    BN_init(&_dividend);
+    BN_init(&_quotient);
+    BN_init(&_remainder);
 
-    BN_set_word(&zero, 0);
-    BN_set_word(&divisor, 58);
+    BN_set_word(&_zero, 0);
+    BN_set_word(&_divisor, 58);
 
-    guchar swapbuf[size + 1];
-    Util::reverse_copy(swapbuf, data_pointer, size);
-    swapbuf[size] = 0;
+    guchar _puch_swap[size + 1];
+    Util::reverse_copy(_puch_swap, _pointer, size);
+    _puch_swap[size] = 0;
 
-    Util::BigNum::setvch(&dividend, swapbuf, sizeof (swapbuf));
-    GString *result = g_string_sized_new(size * 138 / 100 + 1);
-    GString *result_swap;
+    Util::BigNum::setvch(&_dividend, _puch_swap, sizeof (_puch_swap));
+    GString *_result = g_string_sized_new(size * 138 / 100 + 1);
+    GString *_result_swap;
 
-    while (BN_cmp(&dividend, &zero) > 0) {
-        if (!BN_div(&quotient, &remainder, &dividend, &divisor, context)) {
+    while (BN_cmp(&_dividend, &_zero) > 0) {
+        if (!BN_div(&_quotient, &_remainder, &_dividend, &_divisor, _context)) {
             goto exit_error;
         }
-
-        BN_copy(&dividend, &quotient);
-        gint index = BN_get_word(&remainder);
-        g_string_append_c(result, Base58::chars[index]);
+        BN_copy(&_dividend, &_quotient);
+        gint _index = BN_get_word(&_remainder);
+        g_string_append_c(_result, Base58::chars[_index]);
     }
 
     for (guint index = 0; index < size; index++) {
-        if (data_pointer[index] == 0) {
-            g_string_append_c(result, Base58::chars[0]);
+        if (_pointer[index] == 0) {
+            g_string_append_c(_result, Base58::chars[0]);
         } else {
             break;
         }
     }
 
-    result_swap = g_string_sized_new(result->len);
-    g_string_set_size(result_swap, result->len);
+    _result_swap = g_string_sized_new(_result->len);
+    g_string_set_size(_result_swap, _result->len);
 
     Util::reverse_copy(
-            (guchar *) result_swap->str, (guchar *) result->str, result->len);
+            (guchar*) _result_swap->str, (guchar*) _result->str, _result->len);
 
-    g_string_free(result, TRUE);
-    result = result_swap;
+    g_string_free(_result, TRUE);
+    _result = _result_swap;
 
 exit:
-    BN_clear_free(&divisor);
-    BN_clear_free(&zero);
-    BN_clear_free(&dividend);
-    BN_clear_free(&quotient);
-    BN_clear_free(&remainder);
-    BN_CTX_free(context);
+    BN_clear_free(&_divisor);
+    BN_clear_free(&_zero);
+    BN_clear_free(&_dividend);
+    BN_clear_free(&_quotient);
+    BN_clear_free(&_remainder);
+    BN_CTX_free(_context);
 
-    return result;
+    return _result;
 
 exit_error:
-    g_string_free(result, TRUE);
-    result = NULL;
+    g_string_free(_result, TRUE);
+    _result = NULL;
     goto exit;
 }
 
 GString *Base58::encode_check(
-        guchar address_type, gboolean has_address_type,
-        gconstpointer data_pointer, gsize data_length) {
+        gconstpointer pointer, gsize size,
+        guchar address_type, gboolean has_address_type) {
 
-    GString *string = g_string_sized_new(data_length + 1 + 4);
-    if (has_address_type) g_string_append_c(string, address_type);
-    g_string_append_len(string, (gchar*) data_pointer, data_length);
+    GString *_string = g_string_sized_new(size + 1 + 4);
+    if (has_address_type) g_string_append_c(_string, address_type);
+    g_string_append_len(_string, (gchar*) pointer, size);
 
-    guchar md32[4];
-    Util::Hash4(md32, string->str, string->len);
+    guchar _md32[4];
+    Util::Hash4(_md32, _string->str, _string->len);
 
-    g_string_append_len(string, (gchar*) md32, 4);
-    GString *string_enc = Base58::encode(string->str, string->len);
-    g_string_free(string, TRUE);
+    g_string_append_len(_string, (gchar*) _md32, 4);
+    GString *_string_enc = Base58::encode(_string->str, _string->len);
+    g_string_free(_string, TRUE);
 
-    return string_enc;
+    return _string_enc;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-GString *Base58::decode(const gchar* characters) {
+GString *Base58::decode(const gchar* pch) {
 
-    GString *result = NULL;
-    BIGNUM bn58, bn, bn_char;
+    GString *_string = NULL;
+    BIGNUM _bn58, _bn, _bn_char;
     BN_CTX *context;
 
-    guint leading_zero = 0;
-    GString *tmp_string;
-    guint be_length;
-    GString *be_string;
+    guint _leading_zero = 0;
+    GString *_tmp_string;
+    guint _be_length;
+    GString *_be_string;
 
     context = BN_CTX_new();
-    BN_init(&bn58);
-    BN_init(&bn);
-    BN_init(&bn_char);
+    BN_init(&_bn58);
+    BN_init(&_bn);
+    BN_init(&_bn_char);
 
-    BN_set_word(&bn58, 58);
-    BN_set_word(&bn, 0);
+    BN_set_word(&_bn58, 58);
+    BN_set_word(&_bn, 0);
 
-    while (isspace(*characters)) {
-        characters++;
+    while (isspace(*pch)) {
+        pch++;
     }
 
-    for (const gchar *pch = characters; *pch; pch++) {
-        const gchar *pch_b58 = strchr(Base58::chars, *pch);
-        if (!pch_b58) {
-            while (isspace(*pch)) pch++;
-            if (*pch != '\0') goto exit;
+    for (const gchar *_pch = _pch; *_pch; _pch++) {
+        const gchar *_pch_b58 = strchr(Base58::chars, *_pch);
+        if (!_pch_b58) {
+            while (isspace(*_pch)) _pch++;
+            if (*_pch != '\0') goto exit;
             break;
         }
 
-        BN_set_word(&bn_char, pch_b58 - Base58::chars);
-        if (!BN_mul(&bn, &bn, &bn58, context)) goto exit;
-        if (!BN_add(&bn, &bn, &bn_char)) goto exit;
+        BN_set_word(&_bn_char, _pch_b58 - Base58::chars);
+        if (!BN_mul(&_bn, &_bn, &_bn58, context)) goto exit;
+        if (!BN_add(&_bn, &_bn, &_bn_char)) goto exit;
     }
 
-    tmp_string = Util::BigNum::getvch(&bn);
+    _tmp_string = Util::BigNum::getvch(&_bn);
 
-    if ((tmp_string->len >= 2) &&
-            (tmp_string->str[tmp_string->len - 1] == 0) &&
-            ((guchar) tmp_string->str[tmp_string->len - 2] >= 0x80)) {
-        g_string_set_size(tmp_string, tmp_string->len - 1);
+    if ((_tmp_string->len >= 2) &&
+            (_tmp_string->str[_tmp_string->len - 1] == 0) &&
+            ((guchar) _tmp_string->str[_tmp_string->len - 2] >= 0x80)) {
+        g_string_set_size(_tmp_string, _tmp_string->len - 1);
     }
 
-    for (const gchar *pch = characters; *pch == Base58::chars[0]; pch++) {
-        leading_zero++;
+    for (const gchar *_pch = _pch; *_pch == Base58::chars[0]; _pch++) {
+        _leading_zero++;
     }
 
-    be_length = tmp_string->len + leading_zero;
-    be_string = g_string_sized_new(be_length);
-    g_string_set_size(be_string, be_length);
-    memset(be_string->str, 0, be_length);
+    _be_length = _tmp_string->len + _leading_zero;
+    _be_string = g_string_sized_new(_be_length);
+    g_string_set_size(_be_string, _be_length);
+    memset(_be_string->str, 0, _be_length);
 
     Util::reverse_copy(
-            (guchar *) be_string->str + leading_zero, 
-            (guchar *) tmp_string->str, tmp_string->len);
+            (guchar*) _be_string->str + _leading_zero,
+            (guchar*) _tmp_string->str, _tmp_string->len);
 
-    g_string_free(tmp_string, TRUE);
-    result = be_string;
+    g_string_free(_tmp_string, TRUE);
+    _string = _be_string;
 
 exit:
-    BN_clear_free(&bn58);
-    BN_clear_free(&bn);
-    BN_clear_free(&bn_char);
+    BN_clear_free(&_bn58);
+    BN_clear_free(&_bn);
+    BN_clear_free(&_bn_char);
     BN_CTX_free(context);
 
-    return result;
+    return _string;
 }
 
 GString *Base58::decode_check(
-        guchar* address_type, const gchar* characters) {
+        const gchar* pch, guchar* address_type) {
 
-    GString *result = Base58::decode(characters);
-    if (!result) return NULL;
-    if (result->len < 4) goto exit_error;
+    GString *_string = Base58::decode(pch);
+    if (!_string) return NULL;
+    if (_string->len < 4) goto exit_error;
 
-    guchar md32[4];
+    guchar _md32[4];
 
-    Util::Hash4(md32, result->str, result->len - 4);
-    if (memcmp(md32, &result->str[result->len - 4], 4)) goto exit_error;
-    g_string_set_size(result, result->len - 4);
-
-    if (address_type) {
-        *address_type = (guchar) result->str[0];
-        g_string_erase(result, 0, 1);
+    Util::Hash4(_md32, _string->str, _string->len - 4);
+    if (memcmp(_md32, &_string->str[_string->len - 4], 4)) {
+        goto exit_error;
     }
 
-    return result;
+    g_string_set_size(_string, _string->len - 4);
+
+    if (address_type) {
+        *address_type = (guchar) _string->str[0];
+        g_string_erase(_string, 0, 1);
+    }
+
+    return _string;
 
 exit_error:
-    g_string_free(result, TRUE);
+    g_string_free(_string, TRUE);
     return NULL;
 }
 

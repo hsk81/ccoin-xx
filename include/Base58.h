@@ -15,22 +15,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 namespace Base58 {
-    GString* encode(
-            gconstpointer data,
-            gsize size);
+    GString *encode(
+            gconstpointer pointer, gsize size);
+    GString *encode_check(
+            gconstpointer pointer, gsize size,
+            guchar address_type, gboolean has_address_type);
 
-    GString* encode_check(
-            guchar address_type,
-            gboolean has_address_type,
-            gconstpointer data,
-            gsize size);
-
-    GString* decode(
-            const gchar *characters);
-
-    GString* decode_check(
-            guchar *address_type,
-            const gchar *characters);
+    GString *decode(
+            const gchar *pch);
+    GString *decode_check(
+            const gchar *pch, guchar *address_type);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
