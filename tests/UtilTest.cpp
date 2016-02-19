@@ -25,12 +25,12 @@ static const gchar *pch_2 = "54321";
 void UtilTest::testReverseCopyMethod() {
 
     gsize _size = strlen(pch_1);
-    gchar _puch[_size + 1];
+    gchar _pch[_size + 1];
 
-    Util::reverse_copy((guchar *) _puch, (guchar *) pch_1, _size);
-    _puch[_size] = 0;
+    Util::reverse_copy((guchar *) _pch, (guchar *) pch_1, _size);
+    _pch[_size] = 0;
 
-    CPPUNIT_ASSERT(!strcmp(pch_2, _puch));
+    CPPUNIT_ASSERT(!strcmp(pch_2, _pch));
 }
 
 static const gchar *address_1 = "\0\0\0\0\0\0\0\0\0\0\xff\xff\x1\x2\x3\x4";
