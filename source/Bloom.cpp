@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   Bloom.cpp
  * Author: hsk81
  */
@@ -37,16 +37,17 @@ static void string_resize(GString *string, guint index) {
     memset(string->str + cur_size, 0, pad);
 }
 
-/** 
+/**
  * The following is MurmurHash3 (x86_32), see:
- * 
+ *
  * http://code.google.com/p/smhasher/source/browse/trunk/MurmurHash3.cpp
  */
 
 static guint bloom_hash(
-        struct bloom *bf, guint n_hash_num, struct const_buffer *buffer) {
+        struct BloomFilter *filter, guint n_hash_num,
+        struct const_buffer *buffer) {
 
-    guint32 h1 = n_hash_num * (0xffffffffU / (bf->n_hash_funcs - 1));
+    guint32 h1 = n_hash_num * (0xffffffffU / (filter->n_hash_funcs - 1));
     const guint32 c1 = 0xcc9e2d51;
     const guint32 c2 = 0x1b873593;
     const guchar *puch = (guchar*) buffer->pointer;
@@ -89,52 +90,57 @@ static guint bloom_hash(
     h1 *= 0xc2b2ae35;
     h1 ^= h1 >> 16;
 
-    return h1 % (bf->data->len * 8);
+    return h1 % (filter->data->len * 8);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-gboolean Bloom::init(struct bloom *bf, guint n_elements, gdouble fp_rate) {
+gboolean Bloom::init(
+        struct BloomFilter *filter, guint n_elements, gdouble fp_rate) {
 
-    memset(bf, 0, sizeof (*bf));
+    memset(filter, 0, sizeof (*filter));
 
     guint filter_size = MIN(
             (guint) (-1 / LN2SQUARED * n_elements * log(fp_rate)),
             Bloom::MAX_FILTER_SIZE * 8) / 8;
 
-    bf->data = g_string_sized_new(filter_size);
-    string_resize(bf->data, filter_size - 1);
+    filter->data = g_string_sized_new(filter_size);
+    string_resize(filter->data, filter_size - 1);
 
-    bf->n_hash_funcs = MIN(
-            (guint) (bf->data->len * 8 / n_elements * LN2),
+    filter->n_hash_funcs = MIN(
+            (guint) (filter->data->len * 8 / n_elements * LN2),
             Bloom::MAX_HASH_FUNCS);
 
     return TRUE;
 }
 
-void Bloom::init(struct bloom *bf) {
-    memset(bf, 0, sizeof (*bf));
+void Bloom::init(struct BloomFilter *filter) {
+    memset(filter, 0, sizeof (*filter));
 }
 
-void Bloom::free(struct bloom *bf) {
-    if (bf->data) {
-        g_string_free(bf->data, TRUE);
-        bf->data = NULL;
+void Bloom::free(struct BloomFilter *filter) {
+    if (filter->data) {
+        g_string_free(filter->data, TRUE);
+        filter->data = NULL;
     }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void Bloom::serialize(GString *g_string, const struct bloom *bf) {
-    Serialize::var_string(g_string, bf->data);
-    Serialize::u32(g_string, bf->n_hash_funcs);
+void Bloom::serialize(
+        GString *string, const struct BloomFilter *filter) {
+
+    Serialize::var_string(string, filter->data);
+    Serialize::u32(string, filter->n_hash_funcs);
 }
 
-gboolean Bloom::deserialize(struct bloom *bf, struct const_buffer *buffer) {
-    if (!Deserialize::var_string(&bf->data, buffer)) return FALSE;
-    if (!Deserialize::u32(&bf->n_hash_funcs, buffer)) return FALSE;
+gboolean Bloom::deserialize(
+        struct BloomFilter *filter, struct const_buffer *buffer) {
+
+    if (!Deserialize::var_string(&filter->data, buffer)) return FALSE;
+    if (!Deserialize::u32(&filter->n_hash_funcs, buffer)) return FALSE;
 
     return TRUE;
 }
@@ -142,29 +148,31 @@ gboolean Bloom::deserialize(struct bloom *bf, struct const_buffer *buffer) {
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void Bloom::insert(struct bloom *bf, gconstpointer data, gsize length) {
+void Bloom::insert(
+        struct BloomFilter *filter, gconstpointer data, gsize size) {
 
     struct const_buffer buffer = {
-        data, length
+        data, size
     };
 
-    for (guint i = 0; i < bf->n_hash_funcs; i++) {
-        guint n_index = bloom_hash(bf, i, &buffer);
-        string_resize(bf->data, n_index >> 3);
-        bf->data->str[n_index >> 3] |= bit_mask[7 & n_index];
+    for (guint i = 0; i < filter->n_hash_funcs; i++) {
+        guint n_index = bloom_hash(filter, i, &buffer);
+        string_resize(filter->data, n_index >> 3);
+        filter->data->str[n_index >> 3] |= bit_mask[7 & n_index];
     }
 }
 
-gboolean Bloom::contains(struct bloom *bf, gconstpointer data, gsize length) {
+gboolean Bloom::contains(
+        struct BloomFilter *filter, gconstpointer data, gsize size) {
 
     struct const_buffer buffer = {
-        data, length
+        data, size
     };
 
-    for (guint i = 0; i < bf->n_hash_funcs; i++) {
-        guint n = bloom_hash(bf, i, &buffer);
-        string_resize(bf->data, n >> 3);
-        if (!(bf->data->str[n >> 3] & bit_mask[7 & n])) {
+    for (guint i = 0; i < filter->n_hash_funcs; i++) {
+        guint n = bloom_hash(filter, i, &buffer);
+        string_resize(filter->data, n >> 3);
+        if (!(filter->data->str[n >> 3] & bit_mask[7 & n])) {
             return FALSE;
         }
     }

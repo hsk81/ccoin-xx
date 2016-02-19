@@ -34,7 +34,7 @@ private:
     void testSerializedAndDeserialize();
 
 private:
-    struct bloom *bloom1, *bloom2;
+    struct BloomFilter *filter1, *filter2;
     guchar *md1, *md2;
 };
 

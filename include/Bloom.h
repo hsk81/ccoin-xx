@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   Bloom.h
  * Author: hsk81
  */
@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-struct bloom {
+struct BloomFilter {
     GString *data;
     guint n_hash_funcs;
 };
@@ -31,15 +31,21 @@ namespace Bloom {
         MAX_HASH_FUNCS = 50,
     };
 
-    gboolean init(struct bloom *bf, guint n_elements, gdouble fp_rate);
-    void init(struct bloom *bf);
-    void free(struct bloom *bf);
+    gboolean init(
+            struct BloomFilter *filter, guint n_elements, gdouble fp_rate);
 
-    void serialize(GString *string, const struct bloom *bf);
-    gboolean deserialize(struct bloom *bf, struct const_buffer *buffer);
+    void init(struct BloomFilter *filter);
+    void free(struct BloomFilter *filter);
 
-    void insert(struct bloom *bf, gconstpointer data, gsize length);
-    gboolean contains(struct bloom *bf, gconstpointer data, gsize length);
+    void serialize(
+            GString *string, const struct BloomFilter *filter);
+    gboolean deserialize(
+            struct BloomFilter *filter, struct const_buffer *buffer);
+
+    void insert(
+            struct BloomFilter *filter, gconstpointer data, gsize size);
+    gboolean contains(
+            struct BloomFilter *filter, gconstpointer data, gsize size);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
