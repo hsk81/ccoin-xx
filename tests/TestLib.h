@@ -1,8 +1,6 @@
 /* 
  * File:   TestLib.h
  * Author: hsk81
- *
- * Created on July 7, 2013, 6:05 PM
  */
 
 #ifndef TESTLIB_H
@@ -12,14 +10,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <jansson.h>
+#include <glib.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
 namespace TestLib {
-    char *filename(const char *basename);
-    json_t *read_json(const char *filename);
-    void dumphex(const char *prefix, const void *pointer, size_t length);    
+    gchar *filename(const gchar *basename);
+    json_t *read_json(const gchar *filename);
+
+    void dumphex(const gchar *prefix, gconstpointer pointer, gsize size);    
 }
 
 ///////////////////////////////////////////////////////////////////////////////
