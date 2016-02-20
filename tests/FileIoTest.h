@@ -1,10 +1,10 @@
 /*
- * File:   FileIOTest.h
+ * File:   FileIoTest.h
  * Author: hsk81
  */
 
-#ifndef FILEIOTEST_H
-#define FILEIOTEST_H
+#ifndef FILE_IO_TEST_H
+#define FILE_IO_TEST_H
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -15,18 +15,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-class FileIOTest : public CPPUNIT_NS::TestFixture {
-    CPPUNIT_TEST_SUITE(FileIOTest);
+class FileIoTest : public CPPUNIT_NS::TestFixture {
+    CPPUNIT_TEST_SUITE(FileIoTest);
     CPPUNIT_TEST(testReadMethod);
     CPPUNIT_TEST_SUITE_END();
 
 public:
-
-    FileIOTest() {
-    };
-
-    virtual ~FileIOTest() {
-    };
+    FileIoTest() {};
+    virtual ~FileIoTest() {};
     void setUp();
     void tearDown();
 
@@ -40,4 +36,4 @@ private:
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-#endif /* FILEIOTEST_H */
+#endif /* FILE_IO_TEST_H */

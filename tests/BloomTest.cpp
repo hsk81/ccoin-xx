@@ -54,7 +54,7 @@ void bf_init(struct TBloom *filter) {
 
 void bf_free(struct TBloom *filter) {
     Bloom::free(filter);
-    CPPUNIT_ASSERT(filter->data == NULL);
+    CPPUNIT_ASSERT(filter->string == NULL);
 }
 
 void bf_op(struct TBloom *filter, guchar *md1, guchar *md2) {
@@ -79,9 +79,9 @@ void bf_serdes(
     CPPUNIT_ASSERT(Bloom::deserialize(filter2, &buffer));
 
     CPPUNIT_ASSERT(filter1->n_hash_funcs == filter2->n_hash_funcs);
-    CPPUNIT_ASSERT(filter1->data->len == filter2->data->len);
+    CPPUNIT_ASSERT(filter1->string->len == filter2->string->len);
     CPPUNIT_ASSERT(0 == memcmp(
-            filter1->data->str, filter2->data->str, filter2->data->len));
+            filter1->string->str, filter2->string->str, filter2->string->len));
 
     CPPUNIT_ASSERT(Bloom::contains(filter2, md1, sizeof (md1)) == TRUE);
     CPPUNIT_ASSERT(Bloom::contains(filter2, md2, sizeof (md2)) == FALSE);

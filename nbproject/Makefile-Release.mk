@@ -67,8 +67,8 @@ TESTOBJECTFILES= \
 	${TESTDIR}/tests/BlockTestRunner.o \
 	${TESTDIR}/tests/BloomTest.o \
 	${TESTDIR}/tests/BloomTestRunner.o \
-	${TESTDIR}/tests/FileIOTest.o \
-	${TESTDIR}/tests/FileIOTestRunner.o \
+	${TESTDIR}/tests/FileIoTest.o \
+	${TESTDIR}/tests/FileIoTestRunner.o \
 	${TESTDIR}/tests/HexCodeTest.o \
 	${TESTDIR}/tests/HexCodeTestRunner.o \
 	${TESTDIR}/tests/KeysetTest.o \
@@ -171,7 +171,7 @@ ${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/BloomTest.o ${TESTDIR}/tests/BloomTest
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
 
-${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/FileIOTest.o ${TESTDIR}/tests/FileIOTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/FileIoTest.o ${TESTDIR}/tests/FileIoTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
 
@@ -224,16 +224,16 @@ ${TESTDIR}/tests/BloomTestRunner.o: tests/BloomTestRunner.cpp
 	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/BloomTestRunner.o tests/BloomTestRunner.cpp
 
 
-${TESTDIR}/tests/FileIOTest.o: tests/FileIOTest.cpp 
+${TESTDIR}/tests/FileIoTest.o: tests/FileIoTest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/FileIOTest.o tests/FileIOTest.cpp
+	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/FileIoTest.o tests/FileIoTest.cpp
 
 
-${TESTDIR}/tests/FileIOTestRunner.o: tests/FileIOTestRunner.cpp 
+${TESTDIR}/tests/FileIoTestRunner.o: tests/FileIoTestRunner.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/FileIOTestRunner.o tests/FileIOTestRunner.cpp
+	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/FileIoTestRunner.o tests/FileIoTestRunner.cpp
 
 
 ${TESTDIR}/tests/HexCodeTest.o: tests/HexCodeTest.cpp 

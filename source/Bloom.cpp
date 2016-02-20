@@ -90,7 +90,7 @@ static guint bloom_hash(
     h1 *= 0xc2b2ae35;
     h1 ^= h1 >> 16;
 
-    return h1 % (filter->data->len * 8);
+    return h1 % (filter->string->len * 8);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -105,11 +105,11 @@ gboolean Bloom::init(
             (guint) (-1 / LN2SQUARED * n_elements * log(fp_rate)),
             Bloom::MAX_FILTER_SIZE * 8) / 8;
 
-    filter->data = g_string_sized_new(filter_size);
-    string_resize(filter->data, filter_size - 1);
+    filter->string = g_string_sized_new(filter_size);
+    string_resize(filter->string, filter_size - 1);
 
     filter->n_hash_funcs = MIN(
-            (guint) (filter->data->len * 8 / n_elements * LN2),
+            (guint) (filter->string->len * 8 / n_elements * LN2),
             Bloom::MAX_HASH_FUNCS);
 
     return TRUE;
@@ -120,9 +120,9 @@ void Bloom::init(struct TBloom *filter) {
 }
 
 void Bloom::free(struct TBloom *filter) {
-    if (filter->data) {
-        g_string_free(filter->data, TRUE);
-        filter->data = NULL;
+    if (filter->string) {
+        g_string_free(filter->string, TRUE);
+        filter->string = NULL;
     }
 }
 
@@ -132,14 +132,14 @@ void Bloom::free(struct TBloom *filter) {
 void Bloom::serialize(
         GString *string, const struct TBloom *filter) {
 
-    Serialize::var_string(string, filter->data);
+    Serialize::var_string(string, filter->string);
     Serialize::u32(string, filter->n_hash_funcs);
 }
 
 gboolean Bloom::deserialize(
         struct TBloom *filter, struct TConstantBuffer *buffer) {
 
-    if (!Deserialize::var_string(&filter->data, buffer)) return FALSE;
+    if (!Deserialize::var_string(&filter->string, buffer)) return FALSE;
     if (!Deserialize::u32(&filter->n_hash_funcs, buffer)) return FALSE;
 
     return TRUE;
@@ -157,8 +157,8 @@ void Bloom::insert(
 
     for (guint i = 0; i < filter->n_hash_funcs; i++) {
         guint n_index = bloom_hash(filter, i, &buffer);
-        string_resize(filter->data, n_index >> 3);
-        filter->data->str[n_index >> 3] |= bit_mask[7 & n_index];
+        string_resize(filter->string, n_index >> 3);
+        filter->string->str[n_index >> 3] |= bit_mask[7 & n_index];
     }
 }
 
@@ -171,8 +171,8 @@ gboolean Bloom::contains(
 
     for (guint i = 0; i < filter->n_hash_funcs; i++) {
         guint n = bloom_hash(filter, i, &buffer);
-        string_resize(filter->data, n >> 3);
-        if (!(filter->data->str[n >> 3] & bit_mask[7 & n])) {
+        string_resize(filter->string, n >> 3);
+        if (!(filter->string->str[n >> 3] & bit_mask[7 & n])) {
             return FALSE;
         }
     }

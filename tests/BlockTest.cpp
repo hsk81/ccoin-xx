@@ -1,8 +1,6 @@
 /*
  * File:   BlockTest.cpp
  * Author: hsk81
- *
- * Created on Feb 2, 2014, 6:01:07 PM
  */
 
 #include "BlockTest.h"
@@ -20,23 +18,23 @@ CPPUNIT_TEST_SUITE_REGISTRATION(BlockTest);
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void runTest(const char *filename_json, const char *filename_ser) {
+void runTest(const gchar *filename_json, const gchar *filename) {
 
-    char* path_json = TestLib::filename(filename_json);
+    gchar* path_json = TestLib::filename(filename_json);
     json_t *meta = TestLib::read_json(path_json);
     CPPUNIT_ASSERT(json_is_object(meta));
 
-    char* path_ser = TestLib::filename(filename_ser);
-    int fd_ser = Util::open_file(path_ser);
+    gchar* path = TestLib::filename(filename);
+    gint fd_ser = Util::open_file(path);
     if (fd_ser < 0) {
-        perror(path_ser);
+        perror(path);
         exit(1);
     }
 
     struct p2p_message msg = {};
 
     free(path_json);
-    free(path_ser);
+    free(path);
     json_decref(meta);
 }
 

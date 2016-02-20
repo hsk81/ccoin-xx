@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="94">
+<configurationDescriptor version="97">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -57,10 +57,10 @@
         <itemPath>tests/BloomTest.h</itemPath>
         <itemPath>tests/BloomTestRunner.cpp</itemPath>
       </logicalFolder>
-      <logicalFolder name="f4" displayName="FileIO" projectFiles="true" kind="TEST">
-        <itemPath>tests/FileIOTest.cpp</itemPath>
-        <itemPath>tests/FileIOTest.h</itemPath>
-        <itemPath>tests/FileIOTestRunner.cpp</itemPath>
+      <logicalFolder name="f4" displayName="FileIo" projectFiles="true" kind="TEST">
+        <itemPath>tests/FileIoTest.cpp</itemPath>
+        <itemPath>tests/FileIoTest.h</itemPath>
+        <itemPath>tests/FileIoTestRunner.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="HexCode" projectFiles="true" kind="TEST">
         <itemPath>tests/HexCodeTest.cpp</itemPath>
@@ -287,11 +287,11 @@
       </item>
       <item path="tests/BloomTestRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="tests/FileIOTest.cpp" ex="false" tool="1" flavor2="0">
+      <item path="tests/FileIoTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="tests/FileIOTest.h" ex="false" tool="3" flavor2="0">
+      <item path="tests/FileIoTest.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/FileIOTestRunner.cpp" ex="false" tool="1" flavor2="0">
+      <item path="tests/FileIoTestRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/HexCodeTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -527,11 +527,11 @@
       </item>
       <item path="tests/BloomTestRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="tests/FileIOTest.cpp" ex="false" tool="1" flavor2="0">
+      <item path="tests/FileIoTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="tests/FileIOTest.h" ex="false" tool="3" flavor2="0">
+      <item path="tests/FileIoTest.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/FileIOTestRunner.cpp" ex="false" tool="1" flavor2="0">
+      <item path="tests/FileIoTestRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/HexCodeTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
