@@ -26,13 +26,13 @@ namespace Serialize {
 }
 
 namespace Deserialize {
-    gboolean bytes(void *pointer, struct const_buffer *buffer, gsize size);
-    gboolean u16(guint16 *value, struct const_buffer *buffer);
-    gboolean u32(guint32 *value, struct const_buffer *buffer);
-    gboolean u64(guint64 *value, struct const_buffer *buffer);
+    gboolean bytes(void *pointer, struct TConstantBuffer *buffer, gsize size);
+    gboolean u16(guint16 *value, struct TConstantBuffer *buffer);
+    gboolean u32(guint32 *value, struct TConstantBuffer *buffer);
+    gboolean u64(guint64 *value, struct TConstantBuffer *buffer);
 
-    gboolean var_size(guint32 *size, struct const_buffer *buffer);
-    gboolean var_string(GString **string, struct const_buffer *buffer);
+    gboolean var_size(guint32 *size, struct TConstantBuffer *buffer);
+    gboolean var_string(GString **string, struct TConstantBuffer *buffer);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

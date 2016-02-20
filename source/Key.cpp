@@ -83,14 +83,14 @@ gboolean Keyset::add(struct keyset *keyset, struct key *key) {
         return FALSE;
     }
 
-    struct buffer *pubkey = (buffer*) malloc(sizeof (struct buffer));
+    struct TBuffer *pubkey = (TBuffer*) malloc(sizeof (struct TBuffer));
     pubkey->pointer = pointer;
     pubkey->size = size;
 
     guchar md160[RIPEMD160_DIGEST_LENGTH];
     Util::Hash160(md160, pointer, size);
 
-    struct buffer *pubkey_hash = Buffer::copy(md160, RIPEMD160_DIGEST_LENGTH);
+    struct TBuffer *pubkey_hash = Buffer::copy(md160, RIPEMD160_DIGEST_LENGTH);
 
     g_hash_table_replace(keyset->pubkey, pubkey, pubkey);
     g_hash_table_replace(keyset->pubkey_hash, pubkey_hash, pubkey_hash);
@@ -102,7 +102,7 @@ gboolean Keyset::lookup(
         const struct keyset *keyset, gconstpointer data, gsize size,
         gboolean is_hash) {
 
-    struct const_buffer buffer = {data, size};
+    struct TConstantBuffer buffer = {data, size};
     GHashTable *hash_table;
 
     if (is_hash) {

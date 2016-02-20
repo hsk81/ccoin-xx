@@ -15,13 +15,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 namespace HexCode {
-    void encode(gchar *hex_string, gconstpointer pointer, gsize length);
+    void encode(
+            gchar *hex_chars, gconstpointer pointer, gsize size);
     gboolean decode(
-            gpointer pointer, gsize max_length,
-            const gchar *hex_string, gsize *out_length);
+            gpointer pointer, gsize max_size,
+            const gchar *hex_chars, gsize *out_size);
 
-    GString *to_string(const gchar *hex_string);
-    gboolean is_hex(const gchar *hex_string, gboolean prefix);
+    GString *to_string(const gchar *hex_chars);
+    gboolean is_hex(const gchar *hex_chars, gboolean prefix);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

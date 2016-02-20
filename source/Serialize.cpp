@@ -68,7 +68,7 @@ void Serialize::var_string(GString *string, GString *string_in) {
 ///////////////////////////////////////////////////////////////////////////////
 
 gboolean Deserialize::bytes(
-        gpointer pointer, struct const_buffer *buffer, gsize size) {
+        gpointer pointer, struct TConstantBuffer *buffer, gsize size) {
 
     if (buffer->size < size) {
         return FALSE;
@@ -81,7 +81,7 @@ gboolean Deserialize::bytes(
     return TRUE;
 }
 
-gboolean Deserialize::u16(guint16 *value, struct const_buffer *buffer) {
+gboolean Deserialize::u16(guint16 *value, struct TConstantBuffer *buffer) {
 
     guint16 _value;
     if (!Deserialize::bytes(&_value, buffer, sizeof (_value))) return FALSE;
@@ -90,7 +90,7 @@ gboolean Deserialize::u16(guint16 *value, struct const_buffer *buffer) {
     return TRUE;
 }
 
-gboolean Deserialize::u32(guint32 *value, struct const_buffer *buffer) {
+gboolean Deserialize::u32(guint32 *value, struct TConstantBuffer *buffer) {
 
     guint32 _value;
     if (!Deserialize::bytes(&_value, buffer, sizeof (_value))) return FALSE;
@@ -99,7 +99,7 @@ gboolean Deserialize::u32(guint32 *value, struct const_buffer *buffer) {
     return TRUE;
 }
 
-gboolean Deserialize::u64(guint64 *value, struct const_buffer *buffer) {
+gboolean Deserialize::u64(guint64 *value, struct TConstantBuffer *buffer) {
 
     guint64 _value;
     if (!Deserialize::bytes(&_value, buffer, sizeof (_value))) return FALSE;
@@ -110,7 +110,7 @@ gboolean Deserialize::u64(guint64 *value, struct const_buffer *buffer) {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-gboolean Deserialize::var_size(guint32 *size, struct const_buffer *buffer) {
+gboolean Deserialize::var_size(guint32 *size, struct TConstantBuffer *buffer) {
 
     guint32 _size;
     guchar _uch;
@@ -137,7 +137,7 @@ gboolean Deserialize::var_size(guint32 *size, struct const_buffer *buffer) {
 }
 
 gboolean Deserialize::var_string(
-        GString **string, struct const_buffer *buffer) {
+        GString **string, struct TConstantBuffer *buffer) {
 
     if (*string) {
         g_string_free(*string, TRUE);

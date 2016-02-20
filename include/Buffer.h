@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   Buffer.h
  * Author: hsk81
  */
@@ -14,22 +14,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-struct buffer {
+struct TBuffer {
     gpointer pointer;
     gsize size;
 };
 
-struct const_buffer {
+struct TConstantBuffer {
     gconstpointer pointer;
     gsize size;
 };
 
 namespace Buffer {
     guint hash(gconstpointer key);
-    gboolean equal(gconstpointer lhs, gconstpointer rhs);
-    void free(struct buffer *buffer);
-    void free(gpointer data);
-    struct buffer *copy(gconstpointer data, gsize size);
+    gboolean equal(gconstpointer lhs_pointer, gconstpointer rhs_pointer);
+
+    void free(struct TBuffer *buffer);
+    void free(gpointer pointer);
+
+    struct TBuffer *copy(gconstpointer pointer, gsize size);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

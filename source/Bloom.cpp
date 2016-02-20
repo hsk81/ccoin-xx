@@ -44,8 +44,8 @@ static void string_resize(GString *string, guint index) {
  */
 
 static guint bloom_hash(
-        struct BloomFilter *filter, guint n_hash_num,
-        struct const_buffer *buffer) {
+        struct TBloom *filter, guint n_hash_num,
+        struct TConstantBuffer *buffer) {
 
     guint32 h1 = n_hash_num * (0xffffffffU / (filter->n_hash_funcs - 1));
     const guint32 c1 = 0xcc9e2d51;
@@ -97,7 +97,7 @@ static guint bloom_hash(
 ///////////////////////////////////////////////////////////////////////////////
 
 gboolean Bloom::init(
-        struct BloomFilter *filter, guint n_elements, gdouble fp_rate) {
+        struct TBloom *filter, guint n_elements, gdouble fp_rate) {
 
     memset(filter, 0, sizeof (*filter));
 
@@ -115,11 +115,11 @@ gboolean Bloom::init(
     return TRUE;
 }
 
-void Bloom::init(struct BloomFilter *filter) {
+void Bloom::init(struct TBloom *filter) {
     memset(filter, 0, sizeof (*filter));
 }
 
-void Bloom::free(struct BloomFilter *filter) {
+void Bloom::free(struct TBloom *filter) {
     if (filter->data) {
         g_string_free(filter->data, TRUE);
         filter->data = NULL;
@@ -130,14 +130,14 @@ void Bloom::free(struct BloomFilter *filter) {
 ///////////////////////////////////////////////////////////////////////////////
 
 void Bloom::serialize(
-        GString *string, const struct BloomFilter *filter) {
+        GString *string, const struct TBloom *filter) {
 
     Serialize::var_string(string, filter->data);
     Serialize::u32(string, filter->n_hash_funcs);
 }
 
 gboolean Bloom::deserialize(
-        struct BloomFilter *filter, struct const_buffer *buffer) {
+        struct TBloom *filter, struct TConstantBuffer *buffer) {
 
     if (!Deserialize::var_string(&filter->data, buffer)) return FALSE;
     if (!Deserialize::u32(&filter->n_hash_funcs, buffer)) return FALSE;
@@ -149,9 +149,9 @@ gboolean Bloom::deserialize(
 ///////////////////////////////////////////////////////////////////////////////
 
 void Bloom::insert(
-        struct BloomFilter *filter, gconstpointer data, gsize size) {
+        struct TBloom *filter, gconstpointer data, gsize size) {
 
-    struct const_buffer buffer = {
+    struct TConstantBuffer buffer = {
         data, size
     };
 
@@ -163,9 +163,9 @@ void Bloom::insert(
 }
 
 gboolean Bloom::contains(
-        struct BloomFilter *filter, gconstpointer data, gsize size) {
+        struct TBloom *filter, gconstpointer data, gsize size) {
 
-    struct const_buffer buffer = {
+    struct TConstantBuffer buffer = {
         data, size
     };
 

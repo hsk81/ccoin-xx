@@ -36,8 +36,8 @@ BloomTest::~BloomTest() {
 }
 
 void BloomTest::setUp() {
-    this->filter1 = new struct BloomFilter;
-    this->filter2 = new struct BloomFilter;
+    this->filter1 = new struct TBloom;
+    this->filter2 = new struct TBloom;
 }
 
 void BloomTest::tearDown() {
@@ -48,16 +48,16 @@ void BloomTest::tearDown() {
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void bf_init(struct BloomFilter *filter) {
+void bf_init(struct TBloom *filter) {
     CPPUNIT_ASSERT(Bloom::init(filter, 1000, 0.001));
 }
 
-void bf_free(struct BloomFilter *filter) {
+void bf_free(struct TBloom *filter) {
     Bloom::free(filter);
     CPPUNIT_ASSERT(filter->data == NULL);
 }
 
-void bf_op(struct BloomFilter *filter, guchar *md1, guchar *md2) {
+void bf_op(struct TBloom *filter, guchar *md1, guchar *md2) {
     Bloom::insert(filter, md1, sizeof (md1));
 
     gboolean has_md1 = Bloom::contains(filter, md1, sizeof (md1));
@@ -68,14 +68,14 @@ void bf_op(struct BloomFilter *filter, guchar *md1, guchar *md2) {
 }
 
 void bf_serdes(
-        struct BloomFilter *filter1, guchar *md1,
-        struct BloomFilter *filter2, guchar *md2) {
+        struct TBloom *filter1, guchar *md1,
+        struct TBloom *filter2, guchar *md2) {
 
     GString *string = g_string_sized_new(1024);
     Bloom::serialize(string, filter1);
     Bloom::init(filter2);
 
-    struct const_buffer buffer = {string->str, string->len};
+    struct TConstantBuffer buffer = {string->str, string->len};
     CPPUNIT_ASSERT(Bloom::deserialize(filter2, &buffer));
 
     CPPUNIT_ASSERT(filter1->n_hash_funcs == filter2->n_hash_funcs);

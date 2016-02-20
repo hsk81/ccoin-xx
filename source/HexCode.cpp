@@ -37,74 +37,74 @@ static const gchar hexdigit[] = "0123456789abcdef";
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void HexCode::encode(gchar *hex_string, gconstpointer pointer, gsize length) {
+void HexCode::encode(gchar *hex_chars, gconstpointer pointer, gsize size) {
 
     const guchar *puch = (guchar*) pointer;
-    for (guint i = 0; i < length; i++) {
+    for (guint i = 0; i < size; i++) {
         guchar v, n1, n2;
 
         v = puch[i];
         n1 = v >> 4;
         n2 = v & 0xf;
 
-        *hex_string++ = hexdigit[n1];
-        *hex_string++ = hexdigit[n2];
+        *hex_chars++ = hexdigit[n1];
+        *hex_chars++ = hexdigit[n2];
     }
 
-    *hex_string = 0;
+    *hex_chars = 0;
 }
 
 gboolean HexCode::decode(
-        gpointer pointer, gsize max_length,
-        const gchar *hex_string, gsize *hex_length) {
+        gpointer pointer, gsize max_size,
+        const gchar *hex_chars, gsize *hex_size) {
 
-    if (!pointer || !hex_string)
+    if (!pointer || !hex_chars)
         return FALSE;
-    if (!strncmp(hex_string, "0x", 2))
-        hex_string += 2;
-    if (strlen(hex_string) > (max_length * 2))
+    if (!strncmp(hex_chars, "0x", 2))
+        hex_chars += 2;
+    if (strlen(hex_chars) > (max_size * 2))
         return FALSE;
 
     guchar *buffer = (guchar*) pointer;
-    gsize length = 0;
+    gsize size = 0;
 
-    while (*hex_string) {
-        guchar c1 = (guchar) hex_string[0];
+    while (*hex_chars) {
+        guchar c1 = (guchar) hex_chars[0];
         guchar v1 = hexdigit_val[c1];
         if (!v1 && (c1 != '0')) return FALSE;
 
-        guchar c2 = (guchar) hex_string[1];
+        guchar c2 = (guchar) hex_chars[1];
         guchar v2 = hexdigit_val[c2];
         if (!v2 && (c2 != '0')) return FALSE;
 
         *buffer = (v1 << 4) | v2;
 
-        length++;
+        size++;
         buffer++;
-        hex_string += 2;
+        hex_chars += 2;
     }
 
-    if (hex_length) {
-        *hex_length = length;
+    if (hex_size) {
+        *hex_size = size;
     }
 
     return TRUE;
 }
 
-GString *HexCode::to_string(const gchar *hex_string) {
+GString *HexCode::to_string(const gchar *hex_chars) {
 
-    if (!hex_string || !*hex_string) return NULL;
-    if (!strncmp(hex_string, "0x", 2)) hex_string += 2;
+    if (!hex_chars || !*hex_chars) return NULL;
+    if (!strncmp(hex_chars, "0x", 2)) hex_chars += 2;
 
-    gsize length = strlen(hex_string) / 2;
-    GString *string = g_string_sized_new(length);
-    g_string_set_size(string, length);
-    memset(string->str, 0, length);
+    gsize size = strlen(hex_chars) / 2;
+    GString *string = g_string_sized_new(size);
+    g_string_set_size(string, size);
+    memset(string->str, 0, size);
 
-    gsize out_length = 0;
-    gboolean rc = HexCode::decode(string->str, length, hex_string, &out_length);
+    gsize out_size = 0;
+    gboolean rc = HexCode::decode(string->str, size, hex_chars, &out_size);
 
-    if (!rc || (length != out_length)) {
+    if (!rc || (size != out_size)) {
         g_string_free(string, TRUE);
         return NULL;
     }
@@ -112,7 +112,7 @@ GString *HexCode::to_string(const gchar *hex_string) {
     return string;
 }
 
-gboolean HexCode::is_hex(const gchar *hex_string, gboolean prefix) {
+gboolean HexCode::is_hex(const gchar *hex_chars, gboolean prefix) {
     throw "not implemented";
 }
 

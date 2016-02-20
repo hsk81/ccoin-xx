@@ -15,7 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-struct BloomFilter {
+struct TBloom {
     GString *data;
     guint n_hash_funcs;
 };
@@ -32,20 +32,19 @@ namespace Bloom {
     };
 
     gboolean init(
-            struct BloomFilter *filter, guint n_elements, gdouble fp_rate);
+            struct TBloom *filter, guint n_elements, gdouble fp_rate);
 
-    void init(struct BloomFilter *filter);
-    void free(struct BloomFilter *filter);
+    void init(struct TBloom *filter);
+    void free(struct TBloom *filter);
 
     void serialize(
-            GString *string, const struct BloomFilter *filter);
+            GString *string, const struct TBloom *filter);
     gboolean deserialize(
-            struct BloomFilter *filter, struct const_buffer *buffer);
-
+            struct TBloom *filter, struct TConstantBuffer *buffer);
     void insert(
-            struct BloomFilter *filter, gconstpointer data, gsize size);
+            struct TBloom *filter, gconstpointer data, gsize size);
     gboolean contains(
-            struct BloomFilter *filter, gconstpointer data, gsize size);
+            struct TBloom *filter, gconstpointer data, gsize size);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
