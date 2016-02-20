@@ -15,31 +15,31 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-struct key {
+struct TKey {
     EC_KEY *ec_key;
 };
 
 namespace Key {
-    gboolean init(struct key *key);
-    void free(struct key *key);
-    gboolean generate(struct key *key);
-    gboolean get_public(struct key *key, gpointer *pointer, gsize *size);
+    gboolean init(struct TKey *key);
+    void free(struct TKey *key);
+    gboolean generate(struct TKey *key);
+    gboolean get_public(struct TKey *key, gpointer *pointer, gsize *size);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-struct keyset {
+struct TKeyset {
     GHashTable *pubkey;
     GHashTable *pubkey_hash; //RIPEMD160
 };
 
 namespace Keyset {
-    void init(struct keyset *keyset);
-    void free(struct keyset *keyset);
-    gboolean add(struct keyset *keyset, struct key *key);
+    void init(struct TKeyset *keyset);
+    void free(struct TKeyset *keyset);
+    gboolean add(struct TKeyset *keyset, struct TKey *key);
     gboolean lookup(
-            const struct keyset *keyset, gconstpointer data, gsize size,
+            const struct TKeyset *keyset, gconstpointer pointer, gsize size,
             gboolean is_hash);
 }
 

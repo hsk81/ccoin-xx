@@ -18,17 +18,17 @@ CPPUNIT_TEST_SUITE_REGISTRATION(KeysetTest);
 ///////////////////////////////////////////////////////////////////////////////
 
 void KeysetTest::test() {
-    struct key keys[4];
+    struct TKey keys[4];
 
     // generate keys
     for (guint i = 0; i < ARRAY_SIZE(keys); i++) {
-        struct key *key = &keys[i];
+        struct TKey *key = &keys[i];
         CPPUNIT_ASSERT(Key::init(key) == TRUE);
         CPPUNIT_ASSERT(Key::generate(key) == TRUE);
     }
 
     // initialize keyset
-    struct keyset keyset;
+    struct TKeyset keyset;
     Keyset::init(&keyset);
 
     // add all but one to keyset
@@ -63,7 +63,7 @@ void KeysetTest::test() {
 
     // verify last key not in keyset
     {
-        struct key *key = &keys[ARRAY_SIZE(keys) - 1];
+        struct TKey *key = &keys[ARRAY_SIZE(keys) - 1];
         guchar md160[RIPEMD160_DIGEST_LENGTH];
         gpointer pubkey;
         gsize pklen;
@@ -92,7 +92,7 @@ void KeysetTest::test() {
 
     // free keys
     for (guint i = 0; i < ARRAY_SIZE(keys); i++) {
-        struct key *key = &keys[i];
+        struct TKey *key = &keys[i];
         Key::free(key);
     }
 }

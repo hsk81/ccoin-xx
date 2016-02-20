@@ -14,14 +14,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-gboolean Key::init(struct key *key) {
+gboolean Key::init(struct TKey *key) {
 
     memset(key, 0, sizeof (*key));
     key->ec_key = EC_KEY_new_by_curve_name(NID_secp256k1);
     return !!key->ec_key;
 }
 
-void Key::free(struct key *key) {
+void Key::free(struct TKey *key) {
 
     if (key->ec_key) {
         EC_KEY_free(key->ec_key);
@@ -29,7 +29,7 @@ void Key::free(struct key *key) {
     }
 }
 
-gboolean Key::generate(struct key *key) {
+gboolean Key::generate(struct TKey *key) {
 
     if (!key->ec_key) return FALSE;
     if (!EC_KEY_generate_key(key->ec_key)) return FALSE;
@@ -39,19 +39,19 @@ gboolean Key::generate(struct key *key) {
     return TRUE;
 }
 
-gboolean Key::get_public(struct key *key, gpointer *pointer, gsize *size) {
+gboolean Key::get_public(struct TKey *key, gpointer *pointer, gsize *size) {
 
     if (!EC_KEY_check_key(key->ec_key)) {
         return FALSE;
     }
 
-    gsize size_ = i2o_ECPublicKey(key->ec_key, 0);
-    guchar *puch = (guchar*) malloc(size_);
+    gsize puch_size = i2o_ECPublicKey(key->ec_key, 0);
+    guchar *puch = (guchar*) malloc(puch_size);
     guchar *puch_orig = puch;
     i2o_ECPublicKey(key->ec_key, &puch);
 
     *pointer = puch_orig;
-    *size = size_;
+    *size = puch_size;
 
     return TRUE;
 }
@@ -59,7 +59,7 @@ gboolean Key::get_public(struct key *key, gpointer *pointer, gsize *size) {
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-void Keyset::init(struct keyset *keyset) {
+void Keyset::init(struct TKeyset *keyset) {
 
     memset(keyset, 0, sizeof (*keyset));
     keyset->pubkey = g_hash_table_new_full(
@@ -68,13 +68,13 @@ void Keyset::init(struct keyset *keyset) {
             Buffer::hash, Buffer::equal, Buffer::free, NULL);
 }
 
-void Keyset::free(struct keyset *keyset) {
+void Keyset::free(struct TKeyset *keyset) {
 
     g_hash_table_unref(keyset->pubkey);
     g_hash_table_unref(keyset->pubkey_hash);
 }
 
-gboolean Keyset::add(struct keyset *keyset, struct key *key) {
+gboolean Keyset::add(struct TKeyset *keyset, struct TKey *key) {
 
     gpointer pointer = NULL;
     gsize size = 0;
@@ -99,10 +99,10 @@ gboolean Keyset::add(struct keyset *keyset, struct key *key) {
 }
 
 gboolean Keyset::lookup(
-        const struct keyset *keyset, gconstpointer data, gsize size,
+        const struct TKeyset *keyset, gconstpointer pointer, gsize size,
         gboolean is_hash) {
 
-    struct TConstantBuffer buffer = {data, size};
+    struct TConstantBuffer buffer = {pointer, size};
     GHashTable *hash_table;
 
     if (is_hash) {
