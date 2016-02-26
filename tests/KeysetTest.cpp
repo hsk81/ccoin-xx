@@ -27,67 +27,63 @@ void KeysetTest::test() {
         CPPUNIT_ASSERT(Key::generate(key) == TRUE);
     }
 
-    // initialize keyset
+    // initialize key set
     struct TKeyset keyset;
     Keyset::init(&keyset);
 
-    // add all but one to keyset
+    // add all but one to key set
     for (guint i = 0; i < (ARRAY_SIZE(keys) - 1); i++) {
         CPPUNIT_ASSERT(Keyset::add(&keyset, &keys[i]) == TRUE);
     }
 
-    // verify all-but-one are in keyset
+    // verify all-but-one are in key set
     for (guint i = 0; i < ARRAY_SIZE(keys) - 1; i++) {
         guchar md160[RIPEMD160_DIGEST_LENGTH];
         gpointer pubkey;
-        gsize length;
-        gboolean result;
+        gsize size;
 
-        result = Key::get_public(&keys[i], &pubkey, &length);
-        CPPUNIT_ASSERT(result == TRUE);
+        CPPUNIT_ASSERT(
+                Key::get_public(&keys[i], &pubkey, &size) == TRUE);
 
-        Util::Hash160(md160, pubkey, length);
+        Util::Hash160(md160, pubkey, size);
 
-        result = Keyset::lookup(&keyset, pubkey, length, TRUE);
-        CPPUNIT_ASSERT(result == FALSE);
-        result = Keyset::lookup(&keyset, pubkey, length, FALSE);
-        CPPUNIT_ASSERT(result == TRUE);
-
-        result = Keyset::lookup(&keyset, md160, sizeof (md160), TRUE);
-        CPPUNIT_ASSERT(result == TRUE);
-        result = Keyset::lookup(&keyset, md160, sizeof (md160), FALSE);
-        CPPUNIT_ASSERT(result == FALSE);
+        CPPUNIT_ASSERT(
+                Keyset::lookup(&keyset, pubkey, size, TRUE) == FALSE);
+        CPPUNIT_ASSERT(
+                Keyset::lookup(&keyset, pubkey, size, FALSE) == TRUE);
+        CPPUNIT_ASSERT(
+                Keyset::lookup(&keyset, md160, sizeof (md160), TRUE) == TRUE);
+        CPPUNIT_ASSERT(
+                Keyset::lookup(&keyset, md160, sizeof (md160), FALSE) == FALSE);
 
         free(pubkey);
     }
 
-    // verify last key not in keyset
+    // verify last key not in key set
     {
         struct TKey *key = &keys[ARRAY_SIZE(keys) - 1];
         guchar md160[RIPEMD160_DIGEST_LENGTH];
         gpointer pubkey;
-        gsize pklen;
-        gboolean result;
+        gsize size;
 
-        result = Key::get_public(key, &pubkey, &pklen);
-        CPPUNIT_ASSERT(result == TRUE);
+        CPPUNIT_ASSERT(
+                Key::get_public(key, &pubkey, &size) == TRUE);
 
-        Util::Hash160(md160, pubkey, pklen);
+        Util::Hash160(md160, pubkey, size);
 
-        result = Keyset::lookup(&keyset, pubkey, pklen, TRUE);
-        CPPUNIT_ASSERT(result == FALSE);
-        result = Keyset::lookup(&keyset, pubkey, pklen, FALSE);
-        CPPUNIT_ASSERT(result == FALSE);
-
-        result = Keyset::lookup(&keyset, md160, sizeof (md160), TRUE);
-        CPPUNIT_ASSERT(result == FALSE);
-        Keyset::lookup(&keyset, md160, sizeof (md160), FALSE);
-        CPPUNIT_ASSERT(result == FALSE);
+        CPPUNIT_ASSERT(
+                Keyset::lookup(&keyset, pubkey, size, TRUE) == FALSE);
+        CPPUNIT_ASSERT(
+                Keyset::lookup(&keyset, pubkey, size, FALSE) == FALSE);
+        CPPUNIT_ASSERT(
+                Keyset::lookup(&keyset, md160, sizeof (md160), TRUE) == FALSE);
+        CPPUNIT_ASSERT(
+                Keyset::lookup(&keyset, md160, sizeof (md160), FALSE) == FALSE);
 
         free(pubkey);
     }
 
-    // free keyset
+    // free key set
     Keyset::free(&keyset);
 
     // free keys
