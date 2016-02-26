@@ -57,10 +57,10 @@ void FileIoTest::testReadMethod() {
 
     guchar md[SHA_DIGEST_LENGTH];
     SHA1((const guchar*) pointer, size, md);
-    gchar hexstr[(SHA_DIGEST_LENGTH * 2) + 1];
-    HexCode::encode(hexstr, md, SHA_DIGEST_LENGTH);
+    gchar hex[(SHA_DIGEST_LENGTH * 2) + 1];
+    HexCode::encode(hex, md, SHA_DIGEST_LENGTH);
 
-    CPPUNIT_ASSERT(strcmp(hexstr, RANDOM_DATA_SHA1SUM) == 0);
+    CPPUNIT_ASSERT(strcmp(hex, RANDOM_DATA_SHA1SUM) == 0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
