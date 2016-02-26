@@ -55,6 +55,7 @@ TESTFILES= \
 	${TESTDIR}/TestFiles/f7 \
 	${TESTDIR}/TestFiles/f5 \
 	${TESTDIR}/TestFiles/f4 \
+	${TESTDIR}/TestFiles/f8 \
 	${TESTDIR}/TestFiles/f3 \
 	${TESTDIR}/TestFiles/f6 \
 	${TESTDIR}/TestFiles/f2
@@ -69,6 +70,8 @@ TESTOBJECTFILES= \
 	${TESTDIR}/tests/BloomTestRunner.o \
 	${TESTDIR}/tests/FileIoTest.o \
 	${TESTDIR}/tests/FileIoTestRunner.o \
+	${TESTDIR}/tests/HashTableTest.o \
+	${TESTDIR}/tests/HashTableTestRunner.o \
 	${TESTDIR}/tests/HexCodeTest.o \
 	${TESTDIR}/tests/HexCodeTestRunner.o \
 	${TESTDIR}/tests/KeysetTest.o \
@@ -175,6 +178,10 @@ ${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/FileIoTest.o ${TESTDIR}/tests/FileIoTe
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
 
+${TESTDIR}/TestFiles/f8: ${TESTDIR}/tests/HashTableTest.o ${TESTDIR}/tests/HashTableTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f8 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
+
 ${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/HexCodeTest.o ${TESTDIR}/tests/HexCodeTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs` `cppunit-config --libs`   
@@ -234,6 +241,18 @@ ${TESTDIR}/tests/FileIoTestRunner.o: tests/FileIoTestRunner.cpp
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/FileIoTestRunner.o tests/FileIoTestRunner.cpp
+
+
+${TESTDIR}/tests/HashTableTest.o: tests/HashTableTest.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/HashTableTest.o tests/HashTableTest.cpp
+
+
+${TESTDIR}/tests/HashTableTestRunner.o: tests/HashTableTestRunner.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/HashTableTestRunner.o tests/HashTableTestRunner.cpp
 
 
 ${TESTDIR}/tests/HexCodeTest.o: tests/HexCodeTest.cpp 
@@ -410,6 +429,7 @@ ${OBJECTDIR}/source/Util_nomain.o: ${OBJECTDIR}/source/Util.o source/Util.cpp
 	    ${TESTDIR}/TestFiles/f7 || true; \
 	    ${TESTDIR}/TestFiles/f5 || true; \
 	    ${TESTDIR}/TestFiles/f4 || true; \
+	    ${TESTDIR}/TestFiles/f8 || true; \
 	    ${TESTDIR}/TestFiles/f3 || true; \
 	    ${TESTDIR}/TestFiles/f6 || true; \
 	    ${TESTDIR}/TestFiles/f2 || true; \

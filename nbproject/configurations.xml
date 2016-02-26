@@ -62,6 +62,14 @@
         <itemPath>tests/FileIoTest.h</itemPath>
         <itemPath>tests/FileIoTestRunner.cpp</itemPath>
       </logicalFolder>
+      <logicalFolder name="f8"
+                     displayName="HashTable"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/HashTableTest.cpp</itemPath>
+        <itemPath>tests/HashTableTest.h</itemPath>
+        <itemPath>tests/HashTableTestRunner.cpp</itemPath>
+      </logicalFolder>
       <logicalFolder name="f3" displayName="HexCode" projectFiles="true" kind="TEST">
         <itemPath>tests/HexCodeTest.cpp</itemPath>
         <itemPath>tests/HexCodeTest.h</itemPath>
@@ -223,6 +231,20 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f8">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f8</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="include/Base58.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Bloom.h" ex="false" tool="3" flavor2="0">
@@ -292,6 +314,12 @@
       <item path="tests/FileIoTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/FileIoTestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/HashTableTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/HashTableTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/HashTableTestRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/HexCodeTest.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -463,6 +491,20 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f8">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f8</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="include/Base58.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Bloom.h" ex="false" tool="3" flavor2="0">
@@ -532,6 +574,12 @@
       <item path="tests/FileIoTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/FileIoTestRunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/HashTableTest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/HashTableTest.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/HashTableTestRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/HexCodeTest.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -16,6 +16,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 class Base58Test : public CPPUNIT_NS::TestFixture {
+
     CPPUNIT_TEST_SUITE(Base58Test);
     CPPUNIT_TEST(testEncodeMethod);
     CPPUNIT_TEST(testDecodeMethod);
