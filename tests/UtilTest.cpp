@@ -19,18 +19,18 @@ CPPUNIT_TEST_SUITE_REGISTRATION(UtilTest);
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-static const gchar *s_a = "12345";
-static const gchar *s_b = "54321";
+static const gchar *chars_lhs = "12345";
+static const gchar *chars_rhs = "54321";
 
 void UtilTest::testReverseCopyMethod() {
 
-    gsize a_len = strlen(s_a);
-    gchar buf[a_len + 1];
+    gsize size = strlen(chars_lhs);
+    gchar chars[size + 1];
 
-    Util::reverse_copy((guchar *) buf, (guchar *) s_a, a_len);
-    buf[a_len] = 0;
+    Util::reverse_copy((guchar*) chars, (guchar*) chars_lhs, size);
+    chars[size] = 0;
 
-    CPPUNIT_ASSERT(!strcmp(s_b, buf));
+    CPPUNIT_ASSERT(!strcmp(chars_rhs, chars));
 }
 
 static const gchar *addr1 = "\0\0\0\0\0\0\0\0\0\0\xff\xff\x1\x2\x3\x4";
@@ -38,10 +38,10 @@ static const gchar *addr2 = "\0\0\x32\0\0\0\0\0\0\0\xff\xff\x1\x2\x3\x4";
 
 void UtilTest::testIpv4MappedMethod() {
 
-    gboolean rc = Net::is_ipv4_mapped((const guchar*) addr1);
-    CPPUNIT_ASSERT(rc);
-    rc = Net::is_ipv4_mapped((const guchar*) addr2);
-    CPPUNIT_ASSERT(!rc);
+    gboolean is_mapped1 = Net::is_ipv4_mapped((const guchar*) addr1);
+    CPPUNIT_ASSERT(is_mapped1);
+    gboolean is_mapped2 = Net::is_ipv4_mapped((const guchar*) addr2);
+    CPPUNIT_ASSERT(!is_mapped2);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
