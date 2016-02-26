@@ -8,6 +8,7 @@
       <itemPath>include/Bloom.h</itemPath>
       <itemPath>include/Buffer.h</itemPath>
       <itemPath>include/CoreDefs.h</itemPath>
+      <itemPath>include/HashTable.h</itemPath>
       <itemPath>include/HexCode.h</itemPath>
       <itemPath>include/Key.h</itemPath>
       <itemPath>include/MBR.h</itemPath>
@@ -22,6 +23,7 @@
       <itemPath>source/Base58.cpp</itemPath>
       <itemPath>source/Bloom.cpp</itemPath>
       <itemPath>source/Buffer.cpp</itemPath>
+      <itemPath>source/HashTable.cpp</itemPath>
       <itemPath>source/HexCode.cpp</itemPath>
       <itemPath>source/Key.cpp</itemPath>
       <itemPath>source/MBR.cpp</itemPath>
@@ -253,6 +255,8 @@
       </item>
       <item path="include/CoreDefs.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/HashTable.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/HexCode.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Key.h" ex="false" tool="3" flavor2="0">
@@ -272,6 +276,8 @@
       <item path="source/Bloom.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/Buffer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/HashTable.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/HexCode.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -513,6 +519,8 @@
       </item>
       <item path="include/CoreDefs.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/HashTable.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/HexCode.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Key.h" ex="false" tool="3" flavor2="0">
@@ -532,6 +540,8 @@
       <item path="source/Bloom.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/Buffer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/HashTable.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/HexCode.cpp" ex="false" tool="1" flavor2="0">
       </item>

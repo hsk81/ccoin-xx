@@ -38,6 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/source/Base58.o \
 	${OBJECTDIR}/source/Bloom.o \
 	${OBJECTDIR}/source/Buffer.o \
+	${OBJECTDIR}/source/HashTable.o \
 	${OBJECTDIR}/source/HexCode.o \
 	${OBJECTDIR}/source/Key.o \
 	${OBJECTDIR}/source/MBR.o \
@@ -119,6 +120,11 @@ ${OBJECTDIR}/source/Buffer.o: source/Buffer.cpp
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Buffer.o source/Buffer.cpp
+
+${OBJECTDIR}/source/HashTable.o: source/HashTable.cpp 
+	${MKDIR} -p ${OBJECTDIR}/source
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/HashTable.o source/HashTable.cpp
 
 ${OBJECTDIR}/source/HexCode.o: source/HexCode.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
@@ -328,6 +334,19 @@ ${OBJECTDIR}/source/Buffer_nomain.o: ${OBJECTDIR}/source/Buffer.o source/Buffer.
 	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Buffer_nomain.o source/Buffer.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/source/Buffer.o ${OBJECTDIR}/source/Buffer_nomain.o;\
+	fi
+
+${OBJECTDIR}/source/HashTable_nomain.o: ${OBJECTDIR}/source/HashTable.o source/HashTable.cpp 
+	${MKDIR} -p ${OBJECTDIR}/source
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/HashTable.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/HashTable_nomain.o source/HashTable.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/source/HashTable.o ${OBJECTDIR}/source/HashTable_nomain.o;\
 	fi
 
 ${OBJECTDIR}/source/HexCode_nomain.o: ${OBJECTDIR}/source/HexCode.o source/HexCode.cpp 

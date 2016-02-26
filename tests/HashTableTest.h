@@ -16,7 +16,7 @@
 
 class HashTableTest : public CPPUNIT_NS::TestFixture {
     CPPUNIT_TEST_SUITE(HashTableTest);
-    CPPUNIT_TEST(testMethod);
+    CPPUNIT_TEST(testBasicsMethod);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -26,7 +26,7 @@ public:
     void tearDown() {};
 
 private:
-    void testMethod();
+    void testBasicsMethod();
 };
 
 ///////////////////////////////////////////////////////////////////////////////
