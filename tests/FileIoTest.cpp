@@ -49,7 +49,7 @@ void FileIoTest::testReadMethod() {
     CPPUNIT_ASSERT(size == 0);
 
     gboolean rc_100m =
-            Util::read_file(this->filename, &pointer, &size, 100 * 1024 * 1024);
+            Util::read_file(this->filename, &pointer, &size, 104857600);
 
     CPPUNIT_ASSERT(rc_100m);
     CPPUNIT_ASSERT(pointer != NULL);

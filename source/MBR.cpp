@@ -1,8 +1,6 @@
 /* 
  * File:   MBR.cpp
  * Author: hsk81
- *
- * Created on February 2, 2014, 10:26 PM
  */
 
 #include "../include/MBR.h"
@@ -10,10 +8,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-bool MBR::read_message(int fd, p2p_message* message, bool* read_ok) {
-    
-    
-    return false;
+gboolean MBR::read_message(gint fd, TMessage* message, gboolean* read_ok) {
+
+    return FALSE;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -1,8 +1,6 @@
 /* 
  * File:   Message.cpp
  * Author: hsk81
- *
- * Created on February 2, 2014, 6:32 PM
  */
 
 #include "../include/Message.h"

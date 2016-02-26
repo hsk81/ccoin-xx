@@ -1,8 +1,6 @@
 /* 
  * File:   Message.h
  * Author: hsk81
- *
- * Created on February 2, 2014, 6:32 PM
  */
 
 #ifndef MESSAGE_H
@@ -11,21 +9,21 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-#include <stdint.h>
+#include <glib.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-struct p2p_message_header {
-	unsigned char netmagic[4];
-	char command[12];
-	uint32_t data_length;
-	unsigned char hash[4];
+struct TMessageHeader {
+	guchar netmagic[4];
+	gchar command[12];
+	guint32 data_length;
+	guchar hash[4];
 };
 
-struct p2p_message {
-	struct p2p_message_header header;
-	void *data;
+struct TMessage {
+	struct TMessageHeader header;
+	gpointer pointer;
 };
 
 namespace Message {

@@ -31,7 +31,7 @@ void runTest(const gchar *filename_json, const gchar *filename) {
         exit(1);
     }
 
-    struct p2p_message msg = {};
+    struct TMessage msg = {};
 
     free(path_json);
     free(path);
