@@ -71,11 +71,13 @@ gboolean HexCode::decode(
     while (*hex_chars) {
         guchar c1 = (guchar) hex_chars[0];
         guchar v1 = hexdigit_val[c1];
-        if (!v1 && (c1 != '0')) return FALSE;
+        if (!v1 && (c1 != '0'))
+            return FALSE;
 
         guchar c2 = (guchar) hex_chars[1];
         guchar v2 = hexdigit_val[c2];
-        if (!v2 && (c2 != '0')) return FALSE;
+        if (!v2 && (c2 != '0'))
+            return FALSE;
 
         *buffer = (v1 << 4) | v2;
 
@@ -93,8 +95,10 @@ gboolean HexCode::decode(
 
 GString *HexCode::to_string(const gchar *hex_chars) {
 
-    if (!hex_chars || !*hex_chars) return NULL;
-    if (!strncmp(hex_chars, "0x", 2)) hex_chars += 2;
+    if (!hex_chars || !*hex_chars)
+        return NULL;
+    if (!strncmp(hex_chars, "0x", 2))
+        hex_chars += 2;
 
     gsize size = strlen(hex_chars) / 2;
     GString *string = g_string_sized_new(size);
@@ -111,6 +115,11 @@ GString *HexCode::to_string(const gchar *hex_chars) {
 
     return string;
 }
+
+GString *from_string(gconstpointer pointer, gsize size) {
+    throw "not implemented";
+}
+
 
 gboolean HexCode::is_hex(const gchar *hex_chars, gboolean prefix) {
     throw "not implemented";

@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="97">
+<configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <logicalFolder name="Crypto" displayName="Crypto" projectFiles="true">
+        <itemPath>include/Crypto/aes_util.h</itemPath>
+        <itemPath>include/Crypto/ctaes.h</itemPath>
+        <itemPath>include/Crypto/fortuna.h</itemPath>
+        <itemPath>include/Crypto/hmac.h</itemPath>
+        <itemPath>include/Crypto/prng.h</itemPath>
+        <itemPath>include/Crypto/rijndael.h</itemPath>
+        <itemPath>include/Crypto/rijndael.tbl</itemPath>
+        <itemPath>include/Crypto/ripemd160.h</itemPath>
+        <itemPath>include/Crypto/sha1.h</itemPath>
+        <itemPath>include/Crypto/sha2.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f1" displayName="Miscellanea" projectFiles="true">
+        <itemPath>include/Picocoin/clist.h</itemPath>
+        <itemPath>include/Picocoin/compat.h</itemPath>
+        <itemPath>include/Picocoin/coredefs.h</itemPath>
+        <itemPath>include/Picocoin/cstr.h</itemPath>
+        <itemPath>include/Picocoin/endian.h</itemPath>
+        <itemPath>include/Picocoin/util.h</itemPath>
+      </logicalFolder>
       <itemPath>include/Base58.h</itemPath>
       <itemPath>include/Bloom.h</itemPath>
       <itemPath>include/Buffer.h</itemPath>
@@ -20,6 +40,24 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="Crypto" displayName="Crypto" projectFiles="true">
+        <itemPath>source/Crypto/aes_util.c</itemPath>
+        <itemPath>source/Crypto/ctaes.c</itemPath>
+        <itemPath>source/Crypto/fortuna.c</itemPath>
+        <itemPath>source/Crypto/hmac.c</itemPath>
+        <itemPath>source/Crypto/prng.c</itemPath>
+        <itemPath>source/Crypto/random.c</itemPath>
+        <itemPath>source/Crypto/rijndael.c</itemPath>
+        <itemPath>source/Crypto/ripemd160.c</itemPath>
+        <itemPath>source/Crypto/sha1.c</itemPath>
+        <itemPath>source/Crypto/sha2.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f1" displayName="Miscellanea" projectFiles="true">
+        <itemPath>source/Miscellanea/clist.c</itemPath>
+        <itemPath>source/Miscellanea/cstr.c</itemPath>
+        <itemPath>source/Miscellanea/file_seq.c</itemPath>
+        <itemPath>source/Miscellanea/util.c</itemPath>
+      </logicalFolder>
       <itemPath>source/Base58.cpp</itemPath>
       <itemPath>source/Bloom.cpp</itemPath>
       <itemPath>source/Buffer.cpp</itemPath>
@@ -95,6 +133,9 @@
       <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>source</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="Debug" type="3">
@@ -104,7 +145,15 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <cTool>
+          <incDir>
+            <pElem>include</pElem>
+          </incDir>
+        </cTool>
         <ccTool>
+          <incDir>
+            <pElem>include</pElem>
+          </incDir>
           <commandLine>`pkg-config --cflags glib-2.0`</commandLine>
         </ccTool>
         <archiverTool>
@@ -116,6 +165,12 @@
         <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/ccoin-xx.tgz</output>
         <additionalOptions>-vz</additionalOptions>
         <packFileList>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}lib/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="644"
+                            owner="root"
+                            group="bin"/>
           <packFileListElem type="File"
                             to="${PACKAGE_TOP_DIR}lib/${OUTPUT_BASENAME}"
                             from="${OUTPUT_PATH}"
@@ -255,6 +310,26 @@
       </item>
       <item path="include/CoreDefs.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/Crypto/aes_util.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Crypto/ctaes.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Crypto/fortuna.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Crypto/hmac.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Crypto/prng.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Crypto/rijndael.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Crypto/rijndael.tbl" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Crypto/ripemd160.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Crypto/sha1.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Crypto/sha2.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/HashTable.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/HexCode.h" ex="false" tool="3" flavor2="0">
@@ -267,6 +342,18 @@
       </item>
       <item path="include/Net.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/Picocoin/clist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Picocoin/compat.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Picocoin/coredefs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Picocoin/cstr.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Picocoin/endian.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Picocoin/util.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Serialize.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Util.h" ex="false" tool="3" flavor2="0">
@@ -277,6 +364,26 @@
       </item>
       <item path="source/Buffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="source/Crypto/aes_util.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Crypto/ctaes.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Crypto/fortuna.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Crypto/hmac.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Crypto/prng.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Crypto/random.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Crypto/rijndael.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Crypto/ripemd160.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Crypto/sha1.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Crypto/sha2.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="source/HashTable.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/HexCode.cpp" ex="false" tool="1" flavor2="0">
@@ -286,6 +393,14 @@
       <item path="source/MBR.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/Message.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/Miscellanea/clist.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Miscellanea/cstr.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Miscellanea/file_seq.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Miscellanea/util.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="source/Net.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -386,6 +501,12 @@
                             perm="644"
                             owner="root"
                             group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}lib/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="644"
+                            owner="root"
+                            group="bin"/>
         </packFileList>
       </packaging>
       <folder path="TestFiles">
@@ -519,6 +640,26 @@
       </item>
       <item path="include/CoreDefs.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/Crypto/aes_util.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Crypto/ctaes.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Crypto/fortuna.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Crypto/hmac.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Crypto/prng.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Crypto/rijndael.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Crypto/rijndael.tbl" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Crypto/ripemd160.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Crypto/sha1.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Crypto/sha2.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/HashTable.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/HexCode.h" ex="false" tool="3" flavor2="0">
@@ -531,6 +672,18 @@
       </item>
       <item path="include/Net.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/Picocoin/clist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Picocoin/compat.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Picocoin/coredefs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Picocoin/cstr.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Picocoin/endian.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Picocoin/util.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Serialize.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Util.h" ex="false" tool="3" flavor2="0">
@@ -541,6 +694,26 @@
       </item>
       <item path="source/Buffer.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="source/Crypto/aes_util.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Crypto/ctaes.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Crypto/fortuna.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Crypto/hmac.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Crypto/prng.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Crypto/random.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Crypto/rijndael.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Crypto/ripemd160.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Crypto/sha1.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Crypto/sha2.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="source/HashTable.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/HexCode.cpp" ex="false" tool="1" flavor2="0">
@@ -550,6 +723,14 @@
       <item path="source/MBR.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="source/Message.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="source/Miscellanea/clist.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Miscellanea/cstr.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Miscellanea/file_seq.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="source/Miscellanea/util.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="source/Net.cpp" ex="false" tool="1" flavor2="0">
       </item>

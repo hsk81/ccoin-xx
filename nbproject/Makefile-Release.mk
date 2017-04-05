@@ -38,11 +38,25 @@ OBJECTFILES= \
 	${OBJECTDIR}/source/Base58.o \
 	${OBJECTDIR}/source/Bloom.o \
 	${OBJECTDIR}/source/Buffer.o \
+	${OBJECTDIR}/source/Crypto/aes_util.o \
+	${OBJECTDIR}/source/Crypto/ctaes.o \
+	${OBJECTDIR}/source/Crypto/fortuna.o \
+	${OBJECTDIR}/source/Crypto/hmac.o \
+	${OBJECTDIR}/source/Crypto/prng.o \
+	${OBJECTDIR}/source/Crypto/random.o \
+	${OBJECTDIR}/source/Crypto/rijndael.o \
+	${OBJECTDIR}/source/Crypto/ripemd160.o \
+	${OBJECTDIR}/source/Crypto/sha1.o \
+	${OBJECTDIR}/source/Crypto/sha2.o \
 	${OBJECTDIR}/source/HashTable.o \
 	${OBJECTDIR}/source/HexCode.o \
 	${OBJECTDIR}/source/Key.o \
 	${OBJECTDIR}/source/MBR.o \
 	${OBJECTDIR}/source/Message.o \
+	${OBJECTDIR}/source/Miscellanea/clist.o \
+	${OBJECTDIR}/source/Miscellanea/cstr.o \
+	${OBJECTDIR}/source/Miscellanea/file_seq.o \
+	${OBJECTDIR}/source/Miscellanea/util.o \
 	${OBJECTDIR}/source/Net.o \
 	${OBJECTDIR}/source/Serialize.o \
 	${OBJECTDIR}/source/Util.o
@@ -106,57 +120,127 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin-xx.a: ${OBJECTFILES}
 	${AR} -rv ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin-xx.a ${OBJECTFILES} 
 	$(RANLIB) ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin-xx.a
 
-${OBJECTDIR}/source/Base58.o: source/Base58.cpp 
+${OBJECTDIR}/source/Base58.o: source/Base58.cpp
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Base58.o source/Base58.cpp
 
-${OBJECTDIR}/source/Bloom.o: source/Bloom.cpp 
+${OBJECTDIR}/source/Bloom.o: source/Bloom.cpp
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Bloom.o source/Bloom.cpp
 
-${OBJECTDIR}/source/Buffer.o: source/Buffer.cpp 
+${OBJECTDIR}/source/Buffer.o: source/Buffer.cpp
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Buffer.o source/Buffer.cpp
 
-${OBJECTDIR}/source/HashTable.o: source/HashTable.cpp 
+${OBJECTDIR}/source/Crypto/aes_util.o: source/Crypto/aes_util.c
+	${MKDIR} -p ${OBJECTDIR}/source/Crypto
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Crypto/aes_util.o source/Crypto/aes_util.c
+
+${OBJECTDIR}/source/Crypto/ctaes.o: source/Crypto/ctaes.c
+	${MKDIR} -p ${OBJECTDIR}/source/Crypto
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Crypto/ctaes.o source/Crypto/ctaes.c
+
+${OBJECTDIR}/source/Crypto/fortuna.o: source/Crypto/fortuna.c
+	${MKDIR} -p ${OBJECTDIR}/source/Crypto
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Crypto/fortuna.o source/Crypto/fortuna.c
+
+${OBJECTDIR}/source/Crypto/hmac.o: source/Crypto/hmac.c
+	${MKDIR} -p ${OBJECTDIR}/source/Crypto
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Crypto/hmac.o source/Crypto/hmac.c
+
+${OBJECTDIR}/source/Crypto/prng.o: source/Crypto/prng.c
+	${MKDIR} -p ${OBJECTDIR}/source/Crypto
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Crypto/prng.o source/Crypto/prng.c
+
+${OBJECTDIR}/source/Crypto/random.o: source/Crypto/random.c
+	${MKDIR} -p ${OBJECTDIR}/source/Crypto
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Crypto/random.o source/Crypto/random.c
+
+${OBJECTDIR}/source/Crypto/rijndael.o: source/Crypto/rijndael.c
+	${MKDIR} -p ${OBJECTDIR}/source/Crypto
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Crypto/rijndael.o source/Crypto/rijndael.c
+
+${OBJECTDIR}/source/Crypto/ripemd160.o: source/Crypto/ripemd160.c
+	${MKDIR} -p ${OBJECTDIR}/source/Crypto
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Crypto/ripemd160.o source/Crypto/ripemd160.c
+
+${OBJECTDIR}/source/Crypto/sha1.o: source/Crypto/sha1.c
+	${MKDIR} -p ${OBJECTDIR}/source/Crypto
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Crypto/sha1.o source/Crypto/sha1.c
+
+${OBJECTDIR}/source/Crypto/sha2.o: source/Crypto/sha2.c
+	${MKDIR} -p ${OBJECTDIR}/source/Crypto
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Crypto/sha2.o source/Crypto/sha2.c
+
+${OBJECTDIR}/source/HashTable.o: source/HashTable.cpp
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/HashTable.o source/HashTable.cpp
 
-${OBJECTDIR}/source/HexCode.o: source/HexCode.cpp 
+${OBJECTDIR}/source/HexCode.o: source/HexCode.cpp
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/HexCode.o source/HexCode.cpp
 
-${OBJECTDIR}/source/Key.o: source/Key.cpp 
+${OBJECTDIR}/source/Key.o: source/Key.cpp
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Key.o source/Key.cpp
 
-${OBJECTDIR}/source/MBR.o: source/MBR.cpp 
+${OBJECTDIR}/source/MBR.o: source/MBR.cpp
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/MBR.o source/MBR.cpp
 
-${OBJECTDIR}/source/Message.o: source/Message.cpp 
+${OBJECTDIR}/source/Message.o: source/Message.cpp
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Message.o source/Message.cpp
 
-${OBJECTDIR}/source/Net.o: source/Net.cpp 
+${OBJECTDIR}/source/Miscellanea/clist.o: source/Miscellanea/clist.c
+	${MKDIR} -p ${OBJECTDIR}/source/Miscellanea
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Miscellanea/clist.o source/Miscellanea/clist.c
+
+${OBJECTDIR}/source/Miscellanea/cstr.o: source/Miscellanea/cstr.c
+	${MKDIR} -p ${OBJECTDIR}/source/Miscellanea
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Miscellanea/cstr.o source/Miscellanea/cstr.c
+
+${OBJECTDIR}/source/Miscellanea/file_seq.o: source/Miscellanea/file_seq.c
+	${MKDIR} -p ${OBJECTDIR}/source/Miscellanea
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Miscellanea/file_seq.o source/Miscellanea/file_seq.c
+
+${OBJECTDIR}/source/Miscellanea/util.o: source/Miscellanea/util.c
+	${MKDIR} -p ${OBJECTDIR}/source/Miscellanea
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Miscellanea/util.o source/Miscellanea/util.c
+
+${OBJECTDIR}/source/Net.o: source/Net.cpp
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Net.o source/Net.cpp
 
-${OBJECTDIR}/source/Serialize.o: source/Serialize.cpp 
+${OBJECTDIR}/source/Serialize.o: source/Serialize.cpp
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Serialize.o source/Serialize.cpp
 
-${OBJECTDIR}/source/Util.o: source/Util.cpp 
+${OBJECTDIR}/source/Util.o: source/Util.cpp
 	${MKDIR} -p ${OBJECTDIR}/source
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Util.o source/Util.cpp
@@ -170,35 +254,35 @@ ${OBJECTDIR}/source/Util.o: source/Util.cpp
 
 ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/Base58Test.o ${TESTDIR}/tests/Base58TestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
+	${LINK.cc} -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS}   `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f7: ${TESTDIR}/tests/BlockTest.o ${TESTDIR}/tests/BlockTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f7 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
+	${LINK.cc} -o ${TESTDIR}/TestFiles/f7 $^ ${LDLIBSOPTIONS}   `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/BloomTest.o ${TESTDIR}/tests/BloomTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
+	${LINK.cc} -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS}   `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/FileIoTest.o ${TESTDIR}/tests/FileIoTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
+	${LINK.cc} -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS}   `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f8: ${TESTDIR}/tests/HashTableTest.o ${TESTDIR}/tests/HashTableTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f8 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
+	${LINK.cc} -o ${TESTDIR}/TestFiles/f8 $^ ${LDLIBSOPTIONS}   `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/HexCodeTest.o ${TESTDIR}/tests/HexCodeTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs` `cppunit-config --libs`   
+	${LINK.cc} -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS}   `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs` `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f6: ${TESTDIR}/tests/KeysetTest.o ${TESTDIR}/tests/KeysetTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f6 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs` `cppunit-config --libs`   
+	${LINK.cc} -o ${TESTDIR}/TestFiles/f6 $^ ${LDLIBSOPTIONS}   `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs` `cppunit-config --libs`   
 
 ${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/UtilTest.o ${TESTDIR}/tests/UtilTestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
+	${LINK.cc} -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS}   `pkg-config --libs glib-2.0` `pkg-config --libs openssl` `pkg-config --libs jansson`   `cppunit-config --libs`   
 
 
 ${TESTDIR}/tests/Base58Test.o: tests/Base58Test.cpp 
@@ -336,6 +420,136 @@ ${OBJECTDIR}/source/Buffer_nomain.o: ${OBJECTDIR}/source/Buffer.o source/Buffer.
 	    ${CP} ${OBJECTDIR}/source/Buffer.o ${OBJECTDIR}/source/Buffer_nomain.o;\
 	fi
 
+${OBJECTDIR}/source/Crypto/aes_util_nomain.o: ${OBJECTDIR}/source/Crypto/aes_util.o source/Crypto/aes_util.c 
+	${MKDIR} -p ${OBJECTDIR}/source/Crypto
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Crypto/aes_util.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Crypto/aes_util_nomain.o source/Crypto/aes_util.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/source/Crypto/aes_util.o ${OBJECTDIR}/source/Crypto/aes_util_nomain.o;\
+	fi
+
+${OBJECTDIR}/source/Crypto/ctaes_nomain.o: ${OBJECTDIR}/source/Crypto/ctaes.o source/Crypto/ctaes.c 
+	${MKDIR} -p ${OBJECTDIR}/source/Crypto
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Crypto/ctaes.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Crypto/ctaes_nomain.o source/Crypto/ctaes.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/source/Crypto/ctaes.o ${OBJECTDIR}/source/Crypto/ctaes_nomain.o;\
+	fi
+
+${OBJECTDIR}/source/Crypto/fortuna_nomain.o: ${OBJECTDIR}/source/Crypto/fortuna.o source/Crypto/fortuna.c 
+	${MKDIR} -p ${OBJECTDIR}/source/Crypto
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Crypto/fortuna.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Crypto/fortuna_nomain.o source/Crypto/fortuna.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/source/Crypto/fortuna.o ${OBJECTDIR}/source/Crypto/fortuna_nomain.o;\
+	fi
+
+${OBJECTDIR}/source/Crypto/hmac_nomain.o: ${OBJECTDIR}/source/Crypto/hmac.o source/Crypto/hmac.c 
+	${MKDIR} -p ${OBJECTDIR}/source/Crypto
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Crypto/hmac.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Crypto/hmac_nomain.o source/Crypto/hmac.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/source/Crypto/hmac.o ${OBJECTDIR}/source/Crypto/hmac_nomain.o;\
+	fi
+
+${OBJECTDIR}/source/Crypto/prng_nomain.o: ${OBJECTDIR}/source/Crypto/prng.o source/Crypto/prng.c 
+	${MKDIR} -p ${OBJECTDIR}/source/Crypto
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Crypto/prng.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Crypto/prng_nomain.o source/Crypto/prng.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/source/Crypto/prng.o ${OBJECTDIR}/source/Crypto/prng_nomain.o;\
+	fi
+
+${OBJECTDIR}/source/Crypto/random_nomain.o: ${OBJECTDIR}/source/Crypto/random.o source/Crypto/random.c 
+	${MKDIR} -p ${OBJECTDIR}/source/Crypto
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Crypto/random.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Crypto/random_nomain.o source/Crypto/random.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/source/Crypto/random.o ${OBJECTDIR}/source/Crypto/random_nomain.o;\
+	fi
+
+${OBJECTDIR}/source/Crypto/rijndael_nomain.o: ${OBJECTDIR}/source/Crypto/rijndael.o source/Crypto/rijndael.c 
+	${MKDIR} -p ${OBJECTDIR}/source/Crypto
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Crypto/rijndael.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Crypto/rijndael_nomain.o source/Crypto/rijndael.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/source/Crypto/rijndael.o ${OBJECTDIR}/source/Crypto/rijndael_nomain.o;\
+	fi
+
+${OBJECTDIR}/source/Crypto/ripemd160_nomain.o: ${OBJECTDIR}/source/Crypto/ripemd160.o source/Crypto/ripemd160.c 
+	${MKDIR} -p ${OBJECTDIR}/source/Crypto
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Crypto/ripemd160.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Crypto/ripemd160_nomain.o source/Crypto/ripemd160.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/source/Crypto/ripemd160.o ${OBJECTDIR}/source/Crypto/ripemd160_nomain.o;\
+	fi
+
+${OBJECTDIR}/source/Crypto/sha1_nomain.o: ${OBJECTDIR}/source/Crypto/sha1.o source/Crypto/sha1.c 
+	${MKDIR} -p ${OBJECTDIR}/source/Crypto
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Crypto/sha1.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Crypto/sha1_nomain.o source/Crypto/sha1.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/source/Crypto/sha1.o ${OBJECTDIR}/source/Crypto/sha1_nomain.o;\
+	fi
+
+${OBJECTDIR}/source/Crypto/sha2_nomain.o: ${OBJECTDIR}/source/Crypto/sha2.o source/Crypto/sha2.c 
+	${MKDIR} -p ${OBJECTDIR}/source/Crypto
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Crypto/sha2.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Crypto/sha2_nomain.o source/Crypto/sha2.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/source/Crypto/sha2.o ${OBJECTDIR}/source/Crypto/sha2_nomain.o;\
+	fi
+
 ${OBJECTDIR}/source/HashTable_nomain.o: ${OBJECTDIR}/source/HashTable.o source/HashTable.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/HashTable.o`; \
@@ -401,6 +615,58 @@ ${OBJECTDIR}/source/Message_nomain.o: ${OBJECTDIR}/source/Message.o source/Messa
 	    ${CP} ${OBJECTDIR}/source/Message.o ${OBJECTDIR}/source/Message_nomain.o;\
 	fi
 
+${OBJECTDIR}/source/Miscellanea/clist_nomain.o: ${OBJECTDIR}/source/Miscellanea/clist.o source/Miscellanea/clist.c 
+	${MKDIR} -p ${OBJECTDIR}/source/Miscellanea
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Miscellanea/clist.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Miscellanea/clist_nomain.o source/Miscellanea/clist.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/source/Miscellanea/clist.o ${OBJECTDIR}/source/Miscellanea/clist_nomain.o;\
+	fi
+
+${OBJECTDIR}/source/Miscellanea/cstr_nomain.o: ${OBJECTDIR}/source/Miscellanea/cstr.o source/Miscellanea/cstr.c 
+	${MKDIR} -p ${OBJECTDIR}/source/Miscellanea
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Miscellanea/cstr.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Miscellanea/cstr_nomain.o source/Miscellanea/cstr.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/source/Miscellanea/cstr.o ${OBJECTDIR}/source/Miscellanea/cstr_nomain.o;\
+	fi
+
+${OBJECTDIR}/source/Miscellanea/file_seq_nomain.o: ${OBJECTDIR}/source/Miscellanea/file_seq.o source/Miscellanea/file_seq.c 
+	${MKDIR} -p ${OBJECTDIR}/source/Miscellanea
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Miscellanea/file_seq.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Miscellanea/file_seq_nomain.o source/Miscellanea/file_seq.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/source/Miscellanea/file_seq.o ${OBJECTDIR}/source/Miscellanea/file_seq_nomain.o;\
+	fi
+
+${OBJECTDIR}/source/Miscellanea/util_nomain.o: ${OBJECTDIR}/source/Miscellanea/util.o source/Miscellanea/util.c 
+	${MKDIR} -p ${OBJECTDIR}/source/Miscellanea
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Miscellanea/util.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/source/Miscellanea/util_nomain.o source/Miscellanea/util.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/source/Miscellanea/util.o ${OBJECTDIR}/source/Miscellanea/util_nomain.o;\
+	fi
+
 ${OBJECTDIR}/source/Net_nomain.o: ${OBJECTDIR}/source/Net.o source/Net.cpp 
 	${MKDIR} -p ${OBJECTDIR}/source
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/source/Net.o`; \
@@ -459,7 +725,6 @@ ${OBJECTDIR}/source/Util_nomain.o: ${OBJECTDIR}/source/Util.o source/Util.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libccoin-xx.a
 
 # Subprojects
 .clean-subprojects:

@@ -23,7 +23,7 @@ struct TMessageHeader {
 
 struct TMessage {
 	struct TMessageHeader header;
-	gpointer pointer;
+	gpointer data;
 };
 
 namespace Message {

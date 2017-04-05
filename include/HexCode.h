@@ -22,6 +22,8 @@ namespace HexCode {
             const gchar *hex_chars, gsize *out_size);
 
     GString *to_string(const gchar *hex_chars);
+    GString *from_string(gconstpointer pointer, gsize size);
+
     gboolean is_hex(const gchar *hex_chars, gboolean prefix);
 }
 
